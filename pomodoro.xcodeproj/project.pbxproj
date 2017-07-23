@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1ED5AEE6822B23B6A47D6E24 /* Pods_widget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FFC3A96E6FF0EC595DF55F /* Pods_widget.framework */; };
 		2D1D8DD0CDFCF39B4954EC23 /* Pods_pomodoro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67F1CB8C54C7B26AF56EF2F4 /* Pods_pomodoro.framework */; };
 		8738B74F1F249FBA00F3D38D /* ApplicationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8738B74E1F249FBA00F3D38D /* ApplicationSettings.swift */; };
+		8738B7571F24A58700F3D38D /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8738B7561F24A58700F3D38D /* NotificationCenter.framework */; };
+		8738B75A1F24A58700F3D38D /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8738B7591F24A58700F3D38D /* TodayViewController.swift */; };
+		8738B75D1F24A58700F3D38D /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8738B75B1F24A58700F3D38D /* MainInterface.storyboard */; };
+		8738B7611F24A58700F3D38D /* widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8738B7551F24A58700F3D38D /* widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8738B7661F24A6F500F3D38D /* ApplicationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8738B74E1F249FBA00F3D38D /* ApplicationSettings.swift */; };
 		87A829631F24991A00973732 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A829621F24991A00973732 /* AppDelegate.swift */; };
 		87A829651F24991A00973732 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A829641F24991A00973732 /* ViewController.swift */; };
 		87A829681F24991A00973732 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87A829661F24991A00973732 /* Main.storyboard */; };
@@ -16,11 +22,42 @@
 		87A8296D1F24991A00973732 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87A8296B1F24991A00973732 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		8738B75F1F24A58700F3D38D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 87A829571F24991A00973732 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8738B7541F24A58700F3D38D;
+			remoteInfo = widget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8738B7651F24A58700F3D38D /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8738B7611F24A58700F3D38D /* widget.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		40C94A1ABA2A38D96CF63EA0 /* Pods-pomodoro.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pomodoro.debug.xcconfig"; path = "Pods/Target Support Files/Pods-pomodoro/Pods-pomodoro.debug.xcconfig"; sourceTree = "<group>"; };
 		67F1CB8C54C7B26AF56EF2F4 /* Pods_pomodoro.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pomodoro.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		72959CA0917CB8BBED3FE102 /* Pods-widget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widget.debug.xcconfig"; path = "Pods/Target Support Files/Pods-widget/Pods-widget.debug.xcconfig"; sourceTree = "<group>"; };
 		8738B74E1F249FBA00F3D38D /* ApplicationSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationSettings.swift; sourceTree = "<group>"; };
 		8738B7501F249FCF00F3D38D /* pomodoro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pomodoro.entitlements; sourceTree = "<group>"; };
+		8738B7551F24A58700F3D38D /* widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = widget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8738B7561F24A58700F3D38D /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		8738B7591F24A58700F3D38D /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		8738B75C1F24A58700F3D38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		8738B75E1F24A58700F3D38D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8738B7671F24ABFA00F3D38D /* widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = widget.entitlements; sourceTree = "<group>"; };
 		87A8295F1F24991A00973732 /* pomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pomodoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87A829621F24991A00973732 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		87A829641F24991A00973732 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -28,10 +65,21 @@
 		87A829691F24991A00973732 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		87A8296C1F24991A00973732 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		87A8296E1F24991A00973732 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D448019C2D837AF786EE3D64 /* Pods-widget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-widget.release.xcconfig"; path = "Pods/Target Support Files/Pods-widget/Pods-widget.release.xcconfig"; sourceTree = "<group>"; };
 		DE2DCCBF7D8130312048A446 /* Pods-pomodoro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pomodoro.release.xcconfig"; path = "Pods/Target Support Files/Pods-pomodoro/Pods-pomodoro.release.xcconfig"; sourceTree = "<group>"; };
+		F5FFC3A96E6FF0EC595DF55F /* Pods_widget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_widget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8738B7521F24A58700F3D38D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8738B7571F24A58700F3D38D /* NotificationCenter.framework in Frameworks */,
+				1ED5AEE6822B23B6A47D6E24 /* Pods_widget.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87A8295C1F24991A00973732 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -47,14 +95,28 @@
 			isa = PBXGroup;
 			children = (
 				67F1CB8C54C7B26AF56EF2F4 /* Pods_pomodoro.framework */,
+				8738B7561F24A58700F3D38D /* NotificationCenter.framework */,
+				F5FFC3A96E6FF0EC595DF55F /* Pods_widget.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8738B7581F24A58700F3D38D /* widget */ = {
+			isa = PBXGroup;
+			children = (
+				8738B7671F24ABFA00F3D38D /* widget.entitlements */,
+				8738B7591F24A58700F3D38D /* TodayViewController.swift */,
+				8738B75B1F24A58700F3D38D /* MainInterface.storyboard */,
+				8738B75E1F24A58700F3D38D /* Info.plist */,
+			);
+			path = widget;
 			sourceTree = "<group>";
 		};
 		87A829561F24991A00973732 = {
 			isa = PBXGroup;
 			children = (
 				87A829611F24991A00973732 /* pomodoro */,
+				8738B7581F24A58700F3D38D /* widget */,
 				87A829601F24991A00973732 /* Products */,
 				B3943F7880CC8517D9A4C018 /* Pods */,
 				4438D73076F082DAE7518E24 /* Frameworks */,
@@ -65,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				87A8295F1F24991A00973732 /* pomodoro.app */,
+				8738B7551F24A58700F3D38D /* widget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -89,6 +152,8 @@
 			children = (
 				40C94A1ABA2A38D96CF63EA0 /* Pods-pomodoro.debug.xcconfig */,
 				DE2DCCBF7D8130312048A446 /* Pods-pomodoro.release.xcconfig */,
+				72959CA0917CB8BBED3FE102 /* Pods-widget.debug.xcconfig */,
+				D448019C2D837AF786EE3D64 /* Pods-widget.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -96,6 +161,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8738B7541F24A58700F3D38D /* widget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8738B7621F24A58700F3D38D /* Build configuration list for PBXNativeTarget "widget" */;
+			buildPhases = (
+				A9189CFD0A7A6B4DD5FA5607 /* [CP] Check Pods Manifest.lock */,
+				8738B7511F24A58700F3D38D /* Sources */,
+				8738B7521F24A58700F3D38D /* Frameworks */,
+				8738B7531F24A58700F3D38D /* Resources */,
+				6D41A134293E6B5940852501 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = widget;
+			productName = widget;
+			productReference = 8738B7551F24A58700F3D38D /* widget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		87A8295E1F24991A00973732 /* pomodoro */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 87A829711F24991A00973732 /* Build configuration list for PBXNativeTarget "pomodoro" */;
@@ -106,10 +190,12 @@
 				87A8295D1F24991A00973732 /* Resources */,
 				D91E09176958D3140F002B48 /* [CP] Embed Pods Frameworks */,
 				84A29B34CD0D81C367606AB9 /* [CP] Copy Pods Resources */,
+				8738B7651F24A58700F3D38D /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8738B7601F24A58700F3D38D /* PBXTargetDependency */,
 			);
 			name = pomodoro;
 			productName = pomodoro;
@@ -126,6 +212,16 @@
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Paul Traylor";
 				TargetAttributes = {
+					8738B7541F24A58700F3D38D = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = QX3B8ZS54S;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 					87A8295E1F24991A00973732 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = QX3B8ZS54S;
@@ -152,11 +248,20 @@
 			projectRoot = "";
 			targets = (
 				87A8295E1F24991A00973732 /* pomodoro */,
+				8738B7541F24A58700F3D38D /* widget */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8738B7531F24A58700F3D38D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8738B75D1F24A58700F3D38D /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87A8295D1F24991A00973732 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -170,6 +275,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		6D41A134293E6B5940852501 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-widget/Pods-widget-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		84A29B34CD0D81C367606AB9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -183,6 +303,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-pomodoro/Pods-pomodoro-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A9189CFD0A7A6B4DD5FA5607 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		D91E09176958D3140F002B48 /* [CP] Embed Pods Frameworks */ = {
@@ -218,6 +353,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8738B7511F24A58700F3D38D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8738B75A1F24A58700F3D38D /* TodayViewController.swift in Sources */,
+				8738B7661F24A6F500F3D38D /* ApplicationSettings.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87A8295B1F24991A00973732 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -230,7 +374,23 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		8738B7601F24A58700F3D38D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8738B7541F24A58700F3D38D /* widget */;
+			targetProxy = 8738B75F1F24A58700F3D38D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		8738B75B1F24A58700F3D38D /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8738B75C1F24A58700F3D38D /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		87A829661F24991A00973732 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -250,6 +410,36 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		8738B7631F24A58700F3D38D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 72959CA0917CB8BBED3FE102 /* Pods-widget.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = widget/widget.entitlements;
+				DEVELOPMENT_TEAM = QX3B8ZS54S;
+				INFOPLIST_FILE = widget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.kungfudiscomonkey.pomodoro.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		8738B7641F24A58700F3D38D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D448019C2D837AF786EE3D64 /* Pods-widget.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = widget/widget.entitlements;
+				DEVELOPMENT_TEAM = QX3B8ZS54S;
+				INFOPLIST_FILE = widget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.kungfudiscomonkey.pomodoro.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		87A8296F1F24991A00973732 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -349,6 +539,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 40C94A1ABA2A38D96CF63EA0 /* Pods-pomodoro.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = pomodoro/pomodoro.entitlements;
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
@@ -364,6 +555,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DE2DCCBF7D8130312048A446 /* Pods-pomodoro.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = pomodoro/pomodoro.entitlements;
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
@@ -378,6 +570,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8738B7621F24A58700F3D38D /* Build configuration list for PBXNativeTarget "widget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8738B7631F24A58700F3D38D /* Debug */,
+				8738B7641F24A58700F3D38D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		87A8295A1F24991A00973732 /* Build configuration list for PBXProject "pomodoro" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

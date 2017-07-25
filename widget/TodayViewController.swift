@@ -11,53 +11,68 @@ import NotificationCenter
 import Alamofire
 import SwiftyJSON
 
-class TodayViewController: UIViewController, NCWidgetProviding {
+class TodayViewController: UITableViewController, NCWidgetProviding {
     @IBOutlet weak var pomodoroLabel: UILabel!
     @IBOutlet weak var pomodoroCountdown: UILabel!
     @IBOutlet weak var pomodoroCategory: UILabel!
 
     var lastPomodoro : Pomodoro?
     var timer = Timer()
-        
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view from its nib.
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+
+        if let pomodoro = lastPomodoro {
+            switch indexPath.row {
+            case 0:
+                cell.textLabel?.text = "Title"
+                cell.detailTextLabel?.text = pomodoro.title
+            case 1:
+                cell.textLabel?.text = "Category"
+                cell.detailTextLabel?.text = pomodoro.category
+            case 2:
+                let formatter = DateComponentsFormatter()
+                formatter.allowedUnits = [.day, .hour, .minute, .second]
+                formatter.unitsStyle = .positional
+                cell.textLabel?.text = "Time"
+
+                var elapsed = Date().timeIntervalSince(pomodoro.end)
+                if elapsed > 0 {
+                    let formattedString = formatter.string(from: TimeInterval(elapsed))!
+                    cell.detailTextLabel?.text = "\(formattedString) ago"
+                    cell.detailTextLabel?.textColor = elapsed > 300 ? UIColor.red : UIColor.blue
+                } else {
+                    elapsed *= -1
+                    let formattedString = formatter.string(from: TimeInterval(elapsed))!
+                    cell.detailTextLabel?.text = "\(formattedString) remaining"
+                    cell.detailTextLabel?.textColor = UIColor.black
+                }
+            default:
+                NSLog("Error?")
+            }
+        } else {
+            cell.textLabel?.text = ""
+            cell.detailTextLabel?.text = ""
+        }
+        return cell
     }
 
     func updateCounter() {
-        if let pomodoro = self.lastPomodoro {
-            let formatter = DateComponentsFormatter()
-            formatter.allowedUnits = [.day, .hour, .minute, .second]
-            formatter.unitsStyle = .positional
-
-            self.pomodoroCategory.text = "Category: " + pomodoro.category
-            self.pomodoroLabel.text = "Title: " + pomodoro.title
-
-            var elapsed = Date().timeIntervalSince(pomodoro.end)
-            if elapsed > 0 {
-                let formattedString = formatter.string(from: TimeInterval(elapsed))!
-                self.pomodoroCountdown.text = "\(formattedString) ago"
-                self.pomodoroCountdown.textColor = elapsed > 300 ? UIColor.red : UIColor.blue
-            } else {
-                elapsed *= -1
-                let formattedString = formatter.string(from: TimeInterval(elapsed))!
-                self.pomodoroCountdown.text = "\(formattedString) remaining"
-                self.pomodoroCountdown.textColor = UIColor.black
-            }
-        }
+        self.tableView.reloadData()
     }
 
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-
         NSLog("update widget")
         if let token = ApplicationSettings.apiKey {
             print("make request ")

@@ -12,6 +12,17 @@ import SwiftyJSON
 
 class ViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var webview: UIWebView!
+    @IBOutlet weak var homeButton: UIBarButtonItem!
+    @IBOutlet weak var logoutButton: UIBarButtonItem!
+
+    @IBAction func goHome(_ sender: UIBarButtonItem) {
+        webview.loadRequest(URLRequest(url: URL(string: "https://tsundere.co/pomodoro")!))
+    }
+
+    @IBAction func logout(_ sender: UIBarButtonItem) {
+        ApplicationSettings.apiKey = nil
+        webview.loadRequest(URLRequest(url: URL(string: "https://tsundere.co/logout")!))
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -14,9 +14,9 @@ import SwiftyJSON
 class TodayViewController: UIViewController, NCWidgetProviding {
     @IBOutlet weak var pomodoroLabel: UILabel!
     @IBOutlet weak var pomodoroCountdown: UILabel!
+    @IBOutlet weak var pomodoroCategory: UILabel!
 
-    var lastPomodoro = Date.distantPast
-    var lastLabel : String?
+    var lastPomodoro : Pomodoro?
     var timer = Timer()
         
     override func viewDidLoad() {
@@ -31,22 +31,25 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
 
     func updateCounter() {
-        self.pomodoroLabel.text = self.lastLabel
+        if let pomodoro = self.lastPomodoro {
+            let formatter = DateComponentsFormatter()
+            formatter.allowedUnits = [.day, .hour, .minute, .second]
+            formatter.unitsStyle = .positional
 
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.day, .hour, .minute, .second]
-        formatter.unitsStyle = .positional
+            self.pomodoroCategory.text = "Category: " + pomodoro.category
+            self.pomodoroLabel.text = "Title: " + pomodoro.title
 
-        var elapsed = Date().timeIntervalSince(self.lastPomodoro)
-        if elapsed > 0 {
-            let formattedString = formatter.string(from: TimeInterval(elapsed))!
-            self.pomodoroCountdown.text = "\(formattedString) ago"
-            self.pomodoroCountdown.textColor = elapsed > 300 ? UIColor.red : UIColor.blue
-        } else {
-            elapsed *= -1
-            let formattedString = formatter.string(from: TimeInterval(elapsed))!
-            self.pomodoroCountdown.text = "\(formattedString) remaining"
-            self.pomodoroCountdown.textColor = UIColor.black
+            var elapsed = Date().timeIntervalSince(pomodoro.end)
+            if elapsed > 0 {
+                let formattedString = formatter.string(from: TimeInterval(elapsed))!
+                self.pomodoroCountdown.text = "\(formattedString) ago"
+                self.pomodoroCountdown.textColor = elapsed > 300 ? UIColor.red : UIColor.blue
+            } else {
+                elapsed *= -1
+                let formattedString = formatter.string(from: TimeInterval(elapsed))!
+                self.pomodoroCountdown.text = "\(formattedString) remaining"
+                self.pomodoroCountdown.textColor = UIColor.black
+            }
         }
     }
 
@@ -69,12 +72,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                     case .success:
                         let json = JSON(data: response.data!)
                         for result in json["results"].arrayValue {
-                            let title = result["title"].stringValue
-                            let category = result["title"].stringValue
-                            let end = dateFormatter.date(from: result["end"].stringValue)!
-                            if end > self.lastPomodoro {
-                                self.lastPomodoro = end
-                                self.lastLabel = "\(title) - \(category)"
+                            let pomodoro = Pomodoro(result)
+                            if self.lastPomodoro == nil || pomodoro.end > self.lastPomodoro!.end {
+                                self.lastPomodoro = pomodoro
                             }
                         }
                         completionHandler(NCUpdateResult.newData)

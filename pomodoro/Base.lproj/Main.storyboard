@@ -13,17 +13,49 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="pomodoro" customModuleProvider="target" sceneMemberID="viewController">
-                    <webView key="view" contentMode="scaleToFill" id="y0L-QH-cK2">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mZV-eS-Y9Z"/>
+                        <viewControllerLayoutGuide type="bottom" id="YJ6-gi-Zcp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9k3-Uh-iRQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </webView>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EcA-Mx-I7H">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Title" id="FjF-aq-JnI">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="bookmarks" id="rkN-Ed-qmE">
+                                            <connections>
+                                                <action selector="goHome:" destination="BYZ-38-t0r" id="zka-9C-hRy"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="jCw-W3-9cz">
+                                            <connections>
+                                                <action selector="logout:" destination="BYZ-38-t0r" id="mlE-og-EgU"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wtx-hF-Ftu">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
                     <connections>
-                        <outlet property="webview" destination="y0L-QH-cK2" id="1bc-vh-koI"/>
+                        <outlet property="homeButton" destination="rkN-Ed-qmE" id="czN-Ai-qXw"/>
+                        <outlet property="logoutButton" destination="jCw-W3-9cz" id="7EZ-Iw-3rP"/>
+                        <outlet property="webview" destination="wtx-hF-Ftu" id="JBJ-Md-WuN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="29.600000000000001" y="43.628185907046479"/>
         </scene>
     </scenes>
 </document>

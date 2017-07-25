@@ -15,6 +15,8 @@
 		8738B75D1F24A58700F3D38D /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8738B75B1F24A58700F3D38D /* MainInterface.storyboard */; };
 		8738B7611F24A58700F3D38D /* widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8738B7551F24A58700F3D38D /* widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8738B7661F24A6F500F3D38D /* ApplicationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8738B74E1F249FBA00F3D38D /* ApplicationSettings.swift */; };
+		87581B401F2750F100D8B521 /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87581B3F1F2750F100D8B521 /* Widget.swift */; };
+		87581B411F27514600D8B521 /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87581B3F1F2750F100D8B521 /* Widget.swift */; };
 		87A829631F24991A00973732 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A829621F24991A00973732 /* AppDelegate.swift */; };
 		87A829651F24991A00973732 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A829641F24991A00973732 /* ViewController.swift */; };
 		87A829681F24991A00973732 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87A829661F24991A00973732 /* Main.storyboard */; };
@@ -58,6 +60,7 @@
 		8738B75C1F24A58700F3D38D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		8738B75E1F24A58700F3D38D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8738B7671F24ABFA00F3D38D /* widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = widget.entitlements; sourceTree = "<group>"; };
+		87581B3F1F2750F100D8B521 /* Widget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Widget.swift; sourceTree = "<group>"; };
 		87A8295F1F24991A00973732 /* pomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pomodoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87A829621F24991A00973732 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		87A829641F24991A00973732 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +146,7 @@
 				87A829691F24991A00973732 /* Assets.xcassets */,
 				87A8296B1F24991A00973732 /* LaunchScreen.storyboard */,
 				87A8296E1F24991A00973732 /* Info.plist */,
+				87581B3F1F2750F100D8B521 /* Widget.swift */,
 			);
 			path = pomodoro;
 			sourceTree = "<group>";
@@ -359,6 +363,7 @@
 			files = (
 				8738B75A1F24A58700F3D38D /* TodayViewController.swift in Sources */,
 				8738B7661F24A6F500F3D38D /* ApplicationSettings.swift in Sources */,
+				87581B411F27514600D8B521 /* Widget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,6 +374,7 @@
 				87A829651F24991A00973732 /* ViewController.swift in Sources */,
 				87A829631F24991A00973732 /* AppDelegate.swift in Sources */,
 				8738B74F1F249FBA00F3D38D /* ApplicationSettings.swift in Sources */,
+				87581B401F2750F100D8B521 /* Widget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

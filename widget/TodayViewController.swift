@@ -16,7 +16,6 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
     @IBOutlet weak var pomodoroCountdown: UILabel!
     @IBOutlet weak var pomodoroCategory: UILabel!
 
-    var lastPomodoro : Pomodoro?
     var timer = Timer()
 
     override func viewDidLoad() {
@@ -33,7 +32,7 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-        if let pomodoro = lastPomodoro {
+        if let pomodoro = ApplicationSettings.lastPomodoro {
             switch indexPath.row {
             case 0:
                 cell.textLabel?.text = "Title"
@@ -86,12 +85,14 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
                     switch response.result {
                     case .success:
                         let json = JSON(data: response.data!)
+                        var lastPomodoro = ApplicationSettings.lastPomodoro
                         for result in json["results"].arrayValue {
                             let pomodoro = Pomodoro(result)
-                            if self.lastPomodoro == nil || pomodoro.end > self.lastPomodoro!.end {
-                                self.lastPomodoro = pomodoro
+                            if lastPomodoro == nil || pomodoro.end > lastPomodoro!.end {
+                                lastPomodoro = pomodoro
                             }
                         }
+                        ApplicationSettings.lastPomodoro = lastPomodoro
                         completionHandler(NCUpdateResult.newData)
                     case .failure(let error):
                         print(error)

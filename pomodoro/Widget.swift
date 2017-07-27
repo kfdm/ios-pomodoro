@@ -25,4 +25,11 @@ class Pomodoro {
         self.category = json["category"].stringValue
         self.end = dateFormatter.date(from: json["end"].stringValue)!
     }
+
+    init(id: String, title: String, category: String, end: Date) {
+        self.id = id
+        self.title = title
+        self.category = category
+        self.end = end
+    }
 }

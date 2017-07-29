@@ -129,38 +129,40 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		8738B7581F24A58700F3D38D /* widget */ = {
+		8738B7581F24A58700F3D38D /* ios-widget */ = {
 			isa = PBXGroup;
 			children = (
-				8738B7671F24ABFA00F3D38D /* widget.entitlements */,
-				8738B7591F24A58700F3D38D /* TodayViewController.swift */,
-				8738B75B1F24A58700F3D38D /* MainInterface.storyboard */,
 				8738B75E1F24A58700F3D38D /* Info.plist */,
+				8738B75B1F24A58700F3D38D /* MainInterface.storyboard */,
+				8738B7591F24A58700F3D38D /* TodayViewController.swift */,
+				8738B7671F24ABFA00F3D38D /* widget.entitlements */,
 			);
-			path = widget;
+			name = "ios-widget";
+			path = "ios-widget";
 			sourceTree = "<group>";
 		};
-		874A28DF1F2C97E3003F71CD /* nagger */ = {
+		874A28DF1F2C97E3003F71CD /* macos */ = {
 			isa = PBXGroup;
 			children = (
-				87BF1F461F2C989300E25F83 /* StatusMenuController.swift */,
 				874A28E01F2C97E3003F71CD /* AppDelegate.swift */,
 				874A28E41F2C97E3003F71CD /* Assets.xcassets */,
-				874A28E61F2C97E3003F71CD /* Main.storyboard */,
 				874A28E91F2C97E3003F71CD /* Info.plist */,
+				874A28E61F2C97E3003F71CD /* Main.storyboard */,
+				87BF1F461F2C989300E25F83 /* StatusMenuController.swift */,
 			);
-			path = nagger;
+			name = macos;
+			path = macos;
 			sourceTree = "<group>";
 		};
 		87A829561F24991A00973732 = {
 			isa = PBXGroup;
 			children = (
-				87A829611F24991A00973732 /* pomodoro */,
-				8738B7581F24A58700F3D38D /* widget */,
-				874A28DF1F2C97E3003F71CD /* nagger */,
-				87A829601F24991A00973732 /* Products */,
-				B3943F7880CC8517D9A4C018 /* Pods */,
 				4438D73076F082DAE7518E24 /* Frameworks */,
+				B3943F7880CC8517D9A4C018 /* Pods */,
+				87A829601F24991A00973732 /* Products */,
+				87A829611F24991A00973732 /* ios */,
+				8738B7581F24A58700F3D38D /* ios-widget */,
+				874A28DF1F2C97E3003F71CD /* macos */,
 			);
 			sourceTree = "<group>";
 		};
@@ -174,20 +176,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		87A829611F24991A00973732 /* pomodoro */ = {
+		87A829611F24991A00973732 /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				8738B7501F249FCF00F3D38D /* pomodoro.entitlements */,
 				87A829621F24991A00973732 /* AppDelegate.swift */,
-				87A829641F24991A00973732 /* ViewController.swift */,
 				8738B74E1F249FBA00F3D38D /* ApplicationSettings.swift */,
-				87A829661F24991A00973732 /* Main.storyboard */,
 				87A829691F24991A00973732 /* Assets.xcassets */,
-				87A8296B1F24991A00973732 /* LaunchScreen.storyboard */,
 				87A8296E1F24991A00973732 /* Info.plist */,
+				87A8296B1F24991A00973732 /* LaunchScreen.storyboard */,
+				87A829661F24991A00973732 /* Main.storyboard */,
+				87A829641F24991A00973732 /* ViewController.swift */,
 				87581B3F1F2750F100D8B521 /* Widget.swift */,
+				8738B7501F249FCF00F3D38D /* pomodoro.entitlements */,
 			);
-			path = pomodoro;
+			name = ios;
+			path = ios;
 			sourceTree = "<group>";
 		};
 		B3943F7880CC8517D9A4C018 /* Pods */ = {
@@ -527,6 +530,7 @@
 				8738B75C1F24A58700F3D38D /* Base */,
 			);
 			name = MainInterface.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		874A28E61F2C97E3003F71CD /* Main.storyboard */ = {
@@ -535,6 +539,7 @@
 				874A28E71F2C97E3003F71CD /* Base */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		87A829661F24991A00973732 /* Main.storyboard */ = {
@@ -543,6 +548,7 @@
 				87A829671F24991A00973732 /* Base */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		87A8296B1F24991A00973732 /* LaunchScreen.storyboard */ = {
@@ -551,6 +557,7 @@
 				87A8296C1F24991A00973732 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -562,7 +569,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = widget/widget.entitlements;
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
-				INFOPLIST_FILE = widget/Info.plist;
+				INFOPLIST_FILE = "ios-widget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.kungfudiscomonkey.pomodoro.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -577,7 +584,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = widget/widget.entitlements;
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
-				INFOPLIST_FILE = widget/Info.plist;
+				INFOPLIST_FILE = "ios-widget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.kungfudiscomonkey.pomodoro.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -594,7 +601,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
-				INFOPLIST_FILE = nagger/Info.plist;
+				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = net.kungfudiscomonkey.nagger;
@@ -612,7 +619,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
-				INFOPLIST_FILE = nagger/Info.plist;
+				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = net.kungfudiscomonkey.nagger;
@@ -725,7 +732,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = pomodoro/pomodoro.entitlements;
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
-				INFOPLIST_FILE = pomodoro/Info.plist;
+				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.kungfudiscomonkey.pomodoro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -741,7 +748,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = pomodoro/pomodoro.entitlements;
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
-				INFOPLIST_FILE = pomodoro/Info.plist;
+				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.kungfudiscomonkey.pomodoro;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -13,6 +13,7 @@ import SwiftyJSON
 
 class StatusMenuController: NSObject {
     @IBOutlet weak var statusMenu: NSMenu!
+    @IBOutlet weak var statusLastPomodoro: NSMenuItem!
 
     var stopwatch = Timer()
     var reload = Timer()
@@ -62,7 +63,10 @@ class StatusMenuController: NSObject {
                                 lastPomodoro = pomodoro
                             }
                         }
-                        ApplicationSettings.lastPomodoro = lastPomodoro
+                        if let pomodoro = lastPomodoro {
+                            ApplicationSettings.lastPomodoro = pomodoro
+                            self.statusLastPomodoro.title = "\(pomodoro.title) - \(pomodoro.category)"
+                        }
                     case .failure(let error):
                         print(error)
                     }
@@ -94,6 +98,9 @@ class StatusMenuController: NSObject {
 
             statusItem.attributedTitle = NSAttributedString(string: formattedString, attributes:attributes)
         }
+    }
+    @IBAction func updateClicked(_ sender: Any) {
+        fetchPomodoro()
     }
 
     @IBAction func quitClicked(_ sender: NSMenuItem) {

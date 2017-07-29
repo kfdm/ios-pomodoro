@@ -36,12 +36,19 @@
                 </customObject>
                 <customObject id="vsa-uZ-Ury" customClass="StatusMenuController" customModule="nagger" customModuleProvider="target">
                     <connections>
+                        <outlet property="statusLastPomodoro" destination="KN4-dq-HFi" id="4rn-VB-X3f"/>
                         <outlet property="statusMenu" destination="YSD-da-HZL" id="3wv-gr-gtY"/>
                     </connections>
                 </customObject>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <menu id="YSD-da-HZL">
                     <items>
+                        <menuItem title="Recent Pomodoro" id="KN4-dq-HFi">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="updateClicked:" target="vsa-uZ-Ury" id="luQ-Rf-H7D"/>
+                            </connections>
+                        </menuItem>
                         <menuItem title="Quit" id="3qa-5w-eF3">
                             <modifierMask key="keyEquivalentModifierMask"/>
                             <connections>

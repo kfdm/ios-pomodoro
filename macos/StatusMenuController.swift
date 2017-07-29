@@ -75,23 +75,24 @@ class StatusMenuController: NSObject {
     func updateCounter() {
         if let pomodoro = ApplicationSettings.lastPomodoro {
             let formatter = DateComponentsFormatter()
-            formatter.allowedUnits = [.day, .hour, .minute, .second]
+            formatter.allowedUnits = [.hour, .minute, .second]
             formatter.unitsStyle = .positional
+            formatter.zeroFormattingBehavior = .pad
 
-            var elapsed = Date().timeIntervalSince(pomodoro.end)
-            if elapsed > 0 {
-                let formattedString = formatter.string(from: TimeInterval(elapsed))!
-                let title = "\(formattedString) ago"
-                let myAttribute = [ NSForegroundColorAttributeName: elapsed > 600 ? NSColor.red : NSColor.blue ]
-                statusItem.attributedTitle = NSAttributedString(string: title, attributes: myAttribute)
-            } else {
-                elapsed *= -1
-                let formattedString = formatter.string(from: TimeInterval(elapsed))!
-                let title = "\(formattedString) remaining"
-                let myAttribute = [ NSForegroundColorAttributeName: NSColor.black ]
-                statusItem.attributedTitle = NSAttributedString(string: title, attributes: myAttribute)
+            let elapsed = Date().timeIntervalSince(pomodoro.end) * -1
+            let formattedString = formatter.string(from: TimeInterval(elapsed))!
+            var attributes: [String: Any]?
+
+            switch elapsed {
+            case _ where elapsed > 300:
+                attributes = [NSForegroundColorAttributeName: NSColor.red ]
+            case _ where elapsed < 0:
+                attributes = [NSForegroundColorAttributeName: NSColor.black ]
+            default:
+                attributes = [NSForegroundColorAttributeName: NSColor.blue ]
             }
 
+            statusItem.attributedTitle = NSAttributedString(string: formattedString, attributes:attributes)
         }
     }
 

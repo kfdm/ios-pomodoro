@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:nagger/nagger.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:pomodoro.xcodeproj">
    </FileRef>
    <FileRef

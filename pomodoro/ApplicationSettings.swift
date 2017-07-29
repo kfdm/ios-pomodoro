@@ -21,6 +21,7 @@ struct ApplicationSettings {
     static let defaults = UserDefaults(suiteName: ApplicationSettingsKeys.suiteName)!
     static let homeURL = "https://tsundere.co/pomodoro"
     static let pomodoroAPI = "https://tsundere.co/api/pomodoro"
+    static let logoutUrl = "https://tsundere.co/logout"
     static let tokenApi = "https://tsundere.co/api/token/"
 
     static var apiKey: String? {

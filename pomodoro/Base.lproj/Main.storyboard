@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -31,11 +32,18 @@
                                                 <action selector="goHome:" destination="BYZ-38-t0r" id="zka-9C-hRy"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="jCw-W3-9cz">
-                                            <connections>
-                                                <action selector="logout:" destination="BYZ-38-t0r" id="mlE-og-EgU"/>
-                                            </connections>
-                                        </barButtonItem>
+                                        <rightBarButtonItems>
+                                            <barButtonItem systemItem="trash" id="wTy-rA-jNR">
+                                                <connections>
+                                                    <action selector="logoutAction:" destination="BYZ-38-t0r" id="E0h-KU-ol8"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem systemItem="action" id="jCw-W3-9cz">
+                                                <connections>
+                                                    <action selector="shareAction:" destination="BYZ-38-t0r" id="jeA-Ub-aB0"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </rightBarButtonItems>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -49,7 +57,9 @@
                     </view>
                     <connections>
                         <outlet property="homeButton" destination="rkN-Ed-qmE" id="czN-Ai-qXw"/>
-                        <outlet property="logoutButton" destination="jCw-W3-9cz" id="7EZ-Iw-3rP"/>
+                        <outlet property="logoutButton" destination="wTy-rA-jNR" id="P6S-c3-6XV"/>
+                        <outlet property="shareButton" destination="jCw-W3-9cz" id="o75-xG-VaU"/>
+                        <outlet property="titleView" destination="FjF-aq-JnI" id="qE8-B8-nef"/>
                         <outlet property="webview" destination="wtx-hF-Ftu" id="JBJ-Md-WuN"/>
                     </connections>
                 </viewController>

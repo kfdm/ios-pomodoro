@@ -4,6 +4,7 @@ use_frameworks!
 
 target 'pomodoro' do
   use_frameworks!
+  pod '1PasswordExtension'
   pod 'Alamofire', '~> 4.4'
   pod 'SwiftLint'
   pod 'SwiftyJSON'

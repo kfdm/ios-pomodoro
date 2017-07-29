@@ -34,13 +34,18 @@
                         <outlet property="statusMenu" destination="YSD-da-HZL" id="c1x-8L-Lok"/>
                     </connections>
                 </customObject>
+                <customObject id="vsa-uZ-Ury" customClass="StatusMenuController" customModule="nagger" customModuleProvider="target">
+                    <connections>
+                        <outlet property="statusMenu" destination="YSD-da-HZL" id="3wv-gr-gtY"/>
+                    </connections>
+                </customObject>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <menu id="YSD-da-HZL">
                     <items>
                         <menuItem title="Quit" id="3qa-5w-eF3">
                             <modifierMask key="keyEquivalentModifierMask"/>
                             <connections>
-                                <action selector="quitClicked:" target="Voe-Tx-rLC" id="dbK-wD-caX"/>
+                                <action selector="quitClicked:" target="vsa-uZ-Ury" id="hi3-EC-wpG"/>
                             </connections>
                         </menuItem>
                     </items>

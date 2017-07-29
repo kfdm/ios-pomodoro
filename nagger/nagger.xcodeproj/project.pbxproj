@@ -8,16 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		876146A21F2C89FA001ECCE7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 876146A11F2C89FA001ECCE7 /* Assets.xcassets */; };
+		876146A41F2C8B54001ECCE7 /* StatusMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876146A31F2C8B54001ECCE7 /* StatusMenuController.swift */; };
+		876146A81F2C8D2E001ECCE7 /* ApplicationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876146A71F2C8D2E001ECCE7 /* ApplicationSettings.swift */; };
+		876146AA1F2C8D33001ECCE7 /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876146A91F2C8D33001ECCE7 /* Widget.swift */; };
+		876146AE1F2C8DEF001ECCE7 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876146AD1F2C8DEF001ECCE7 /* SwiftyJSON.swift */; };
 		87EBC76A1F2C8362007AD389 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EBC7691F2C8362007AD389 /* AppDelegate.swift */; };
-		87EBC76C1F2C8362007AD389 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EBC76B1F2C8362007AD389 /* ViewController.swift */; };
 		87EBC7711F2C8363007AD389 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87EBC76F1F2C8363007AD389 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		876146A11F2C89FA001ECCE7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		876146A31F2C8B54001ECCE7 /* StatusMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusMenuController.swift; sourceTree = "<group>"; };
+		876146A71F2C8D2E001ECCE7 /* ApplicationSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApplicationSettings.swift; path = ../../pomodoro/ApplicationSettings.swift; sourceTree = "<group>"; };
+		876146A91F2C8D33001ECCE7 /* Widget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Widget.swift; path = ../../pomodoro/Widget.swift; sourceTree = "<group>"; };
+		876146AD1F2C8DEF001ECCE7 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		87EBC7661F2C8362007AD389 /* nagger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nagger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87EBC7691F2C8362007AD389 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		87EBC76B1F2C8362007AD389 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		87EBC7701F2C8363007AD389 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		87EBC7721F2C8363007AD389 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,9 +58,12 @@
 		87EBC7681F2C8362007AD389 /* nagger */ = {
 			isa = PBXGroup;
 			children = (
+				876146AD1F2C8DEF001ECCE7 /* SwiftyJSON.swift */,
+				876146A91F2C8D33001ECCE7 /* Widget.swift */,
+				876146A71F2C8D2E001ECCE7 /* ApplicationSettings.swift */,
+				876146A31F2C8B54001ECCE7 /* StatusMenuController.swift */,
 				876146A11F2C89FA001ECCE7 /* Assets.xcassets */,
 				87EBC7691F2C8362007AD389 /* AppDelegate.swift */,
-				87EBC76B1F2C8362007AD389 /* ViewController.swift */,
 				87EBC76F1F2C8363007AD389 /* Main.storyboard */,
 				87EBC7721F2C8363007AD389 /* Info.plist */,
 			);
@@ -133,8 +142,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87EBC76C1F2C8362007AD389 /* ViewController.swift in Sources */,
+				876146A41F2C8B54001ECCE7 /* StatusMenuController.swift in Sources */,
 				87EBC76A1F2C8362007AD389 /* AppDelegate.swift in Sources */,
+				876146A81F2C8D2E001ECCE7 /* ApplicationSettings.swift in Sources */,
+				876146AE1F2C8DEF001ECCE7 /* SwiftyJSON.swift in Sources */,
+				876146AA1F2C8D33001ECCE7 /* Widget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

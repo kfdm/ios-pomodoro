@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import OnePasswordExtension
 
 class ViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var webview: UIWebView!
@@ -23,14 +24,24 @@ class ViewController: UIViewController, UIWebViewDelegate {
 
     @IBAction func logoutAction(_ sender: UIBarButtonItem) {
         ApplicationSettings.apiKey = nil
-        webview.loadRequest(URLRequest(url: URL(string: ApplicationSettings.logoutUrl)!))
+        let storage = HTTPCookieStorage.shared
+        for cookie in storage.cookies! {
+            storage.deleteCookie(cookie)
+        }
+        webview.loadRequest(URLRequest(url: URL(string: ApplicationSettings.homeURL)!))
     }
     @IBAction func shareAction(_ sender: UIBarButtonItem) {
+        OnePasswordExtension.shared().fillItem(intoWebView: self.webview, for: self, sender: sender, showOnlyLogins: false) { (success, error) -> Void in
+            if success == false {
+                print("Failed to fill into webview: <\(String(describing: error))>")
+            }
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         webview.delegate = self
+        shareButton.isEnabled = (false == OnePasswordExtension.shared().isAppExtensionAvailable())
     }
 
     func updateNavigation(_ title : String) {
@@ -61,7 +72,7 @@ class ViewController: UIViewController, UIWebViewDelegate {
                     case .success:
                         let json = JSON(data: response.data!)
                         ApplicationSettings.apiKey = json["token"].stringValue
-                        NSLog("Setting token \(ApplicationSettings.apiKey)")
+                        NSLog("Setting token \(String(describing: ApplicationSettings.apiKey))")
                         self.updateNavigation("")
                     case .failure(let error):
                         print(error)

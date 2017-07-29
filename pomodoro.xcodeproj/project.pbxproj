@@ -137,7 +137,6 @@
 				8738B7591F24A58700F3D38D /* TodayViewController.swift */,
 				8738B7671F24ABFA00F3D38D /* widget.entitlements */,
 			);
-			name = "ios-widget";
 			path = "ios-widget";
 			sourceTree = "<group>";
 		};
@@ -150,7 +149,6 @@
 				874A28E61F2C97E3003F71CD /* Main.storyboard */,
 				87BF1F461F2C989300E25F83 /* StatusMenuController.swift */,
 			);
-			name = macos;
 			path = macos;
 			sourceTree = "<group>";
 		};
@@ -189,7 +187,6 @@
 				87581B3F1F2750F100D8B521 /* Widget.swift */,
 				8738B7501F249FCF00F3D38D /* pomodoro.entitlements */,
 			);
-			name = ios;
 			path = ios;
 			sourceTree = "<group>";
 		};
@@ -567,7 +564,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 72959CA0917CB8BBED3FE102 /* Pods-widget.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = widget/widget.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "ios-widget/widget.entitlements";
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
 				INFOPLIST_FILE = "ios-widget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -582,7 +579,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D448019C2D837AF786EE3D64 /* Pods-widget.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = widget/widget.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "ios-widget/widget.entitlements";
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
 				INFOPLIST_FILE = "ios-widget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -598,14 +595,15 @@
 			baseConfigurationReference = D0C2773C8C34BA64BE1AFED7 /* Pods-nagger.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = QX3B8ZS54S;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = net.kungfudiscomonkey.nagger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 3.0;
 			};
@@ -616,14 +614,15 @@
 			baseConfigurationReference = 85B78AE93632BAC90AC753D7 /* Pods-nagger.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = QX3B8ZS54S;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = net.kungfudiscomonkey.nagger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 3.0;
 			};
@@ -730,7 +729,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = pomodoro/pomodoro.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ios/pomodoro.entitlements;
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -746,7 +745,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = pomodoro/pomodoro.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ios/pomodoro.entitlements;
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

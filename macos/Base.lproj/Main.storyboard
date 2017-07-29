@@ -40,7 +40,6 @@
                     </connections>
                 </customObject>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <customObject id="hQD-Pl-yR1" customClass="StatusMenuController"/>
                 <menu id="YSD-da-HZL">
                     <items>
                         <menuItem title="Quit" id="3qa-5w-eF3">

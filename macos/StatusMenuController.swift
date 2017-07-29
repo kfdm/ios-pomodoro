@@ -6,12 +6,16 @@
 //  Copyright © 2017年 Paul Traylor. All rights reserved.
 //
 
+import AppKit
 import Cocoa
+import Alamofire
+import SwiftyJSON
 
 class StatusMenuController: NSObject {
     @IBOutlet weak var statusMenu: NSMenu!
 
-    var timer = Timer()
+    var stopwatch = Timer()
+    var reload = Timer()
     let statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
 
     override func awakeFromNib() {
@@ -20,10 +24,17 @@ class StatusMenuController: NSObject {
         statusItem.image = icon
         statusItem.menu = statusMenu
 
-        timer = Timer.scheduledTimer(
+        stopwatch = Timer.scheduledTimer(
             timeInterval: 1.0,
             target: self,
             selector: #selector(updateCounter),
+            userInfo: nil,
+            repeats: true
+        )
+        reload = Timer.scheduledTimer(
+            timeInterval: 600.0,
+            target: self,
+            selector: #selector(fetchPomodoro),
             userInfo: nil,
             repeats: true
         )
@@ -31,11 +42,33 @@ class StatusMenuController: NSObject {
     }
 
     func fetchPomodoro() {
-        if let apikey = ApplicationSettings.apiKey {
-
+        NSLog("update widget")
+        if let token = ApplicationSettings.apiKey {
+            print("make request ")
+            let parameters: Parameters = [:]
+            let headers = ["Authorization": "Token \(token)"]
+            print(headers)
+            Alamofire.request(ApplicationSettings.pomodoroAPI, method: .get, parameters: parameters, headers:headers)
+                .validate(statusCode: 200..<300)
+                .validate(contentType: ["application/json"])
+                .responseData { response in
+                    switch response.result {
+                    case .success:
+                        let json = JSON(data: response.data!)
+                        var lastPomodoro = ApplicationSettings.lastPomodoro
+                        for result in json["results"].arrayValue {
+                            let pomodoro = Pomodoro(result)
+                            if lastPomodoro == nil || pomodoro.end > lastPomodoro!.end {
+                                lastPomodoro = pomodoro
+                            }
+                        }
+                        ApplicationSettings.lastPomodoro = lastPomodoro
+                    case .failure(let error):
+                        print(error)
+                    }
+            }
         } else {
             print("defaults write \(ApplicationSettingsKeys.suiteName) PLEASESETME")
-            ApplicationSettings.apiKey = "PLEASE SET ME"
         }
     }
 
@@ -48,14 +81,17 @@ class StatusMenuController: NSObject {
             var elapsed = Date().timeIntervalSince(pomodoro.end)
             if elapsed > 0 {
                 let formattedString = formatter.string(from: TimeInterval(elapsed))!
-                statusItem.title = "\(formattedString) ago"
-                //cell.detailTextLabel?.textColor = elapsed > 300 ? UIColor.red : UIColor.blue
+                let title = "\(formattedString) ago"
+                let myAttribute = [ NSForegroundColorAttributeName: elapsed > 600 ? NSColor.red : NSColor.blue ]
+                statusItem.attributedTitle = NSAttributedString(string: title, attributes: myAttribute)
             } else {
                 elapsed *= -1
                 let formattedString = formatter.string(from: TimeInterval(elapsed))!
-                statusItem.title = "\(formattedString) remaining"
-                //cell.detailTextLabel?.textColor = UIColor.black
+                let title = "\(formattedString) remaining"
+                let myAttribute = [ NSForegroundColorAttributeName: NSColor.black ]
+                statusItem.attributedTitle = NSAttributedString(string: title, attributes: myAttribute)
             }
+
         }
     }
 

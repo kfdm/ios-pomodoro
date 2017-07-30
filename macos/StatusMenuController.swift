@@ -83,7 +83,7 @@ class StatusMenuController: NSObject {
             formatter.unitsStyle = .positional
             formatter.zeroFormattingBehavior = .pad
 
-            let elapsed = Date().timeIntervalSince(pomodoro.end) * -1
+            let elapsed = Date().timeIntervalSince(pomodoro.end)
             let formattedString = formatter.string(from: TimeInterval(elapsed))!
             var attributes: [String: Any]?
 

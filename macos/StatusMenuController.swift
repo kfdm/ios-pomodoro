@@ -24,6 +24,7 @@ class StatusMenuController: NSObject {
         //icon?.isTemplate = true // best for dark mode
         statusItem.image = icon
         statusItem.menu = statusMenu
+        statusItem.highlightMode = false
 
         stopwatch = Timer.scheduledTimer(
             timeInterval: 1.0,
@@ -32,6 +33,7 @@ class StatusMenuController: NSObject {
             userInfo: nil,
             repeats: true
         )
+        RunLoop.main.add(stopwatch, forMode: RunLoopMode.commonModes)
         reload = Timer.scheduledTimer(
             timeInterval: 600.0,
             target: self,

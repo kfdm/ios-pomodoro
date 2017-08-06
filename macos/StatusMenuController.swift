@@ -58,7 +58,7 @@ class StatusMenuController: NSObject {
                     switch response.result {
                     case .success:
                         let json = JSON(data: response.data!)
-                        var lastPomodoro = ApplicationSettings.lastPomodoro
+                        var lastPomodoro: Pomodoro? = nil
                         for result in json["results"].arrayValue {
                             let pomodoro = Pomodoro(result)
                             if lastPomodoro == nil || pomodoro.end > lastPomodoro!.end {

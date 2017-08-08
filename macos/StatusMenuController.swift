@@ -11,7 +11,7 @@ import Cocoa
 import Alamofire
 import SwiftyJSON
 
-class StatusMenuController: NSObject {
+class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
     @IBOutlet weak var statusMenu: NSMenu!
     @IBOutlet weak var statusLastPomodoro: NSMenuItem!
 
@@ -42,8 +42,13 @@ class StatusMenuController: NSObject {
             repeats: true
         )
         fetchPomodoro()
+        NSUserNotificationCenter.default.delegate = self
     }
 
+    func userNotificationCenter(center: NSUserNotificationCenter, shouldPresentNotification notification: NSUserNotification) -> Bool {
+        return true
+    }
+    
     func fetchPomodoro() {
         NSLog("update widget")
         if let token = ApplicationSettings.apiKey {
@@ -98,7 +103,7 @@ class StatusMenuController: NSObject {
                 attributes = [NSForegroundColorAttributeName: NSColor.blue ]
             }
             
-            switch elapsed {
+            switch Int(elapsed) {
             case 300:
                 let notification = NSUserNotification()
                 notification.title = "Break Over"

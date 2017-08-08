@@ -97,6 +97,21 @@ class StatusMenuController: NSObject {
             default:
                 attributes = [NSForegroundColorAttributeName: NSColor.blue ]
             }
+            
+            switch elapsed {
+            case 300:
+                let notification = NSUserNotification()
+                notification.title = "Break Over"
+                notification.soundName = NSUserNotificationDefaultSoundName
+                NSUserNotificationCenter.default.deliver(notification)
+            case 0:
+                let notification = NSUserNotification()
+                notification.title = "Start Break"
+                notification.soundName = NSUserNotificationDefaultSoundName
+                NSUserNotificationCenter.default.deliver(notification)
+            default:
+                break
+            }
 
             statusItem.attributedTitle = NSAttributedString(string: formattedString, attributes:attributes)
         }

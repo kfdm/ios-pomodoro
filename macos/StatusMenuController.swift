@@ -90,7 +90,7 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
             formatter.unitsStyle = .positional
             formatter.zeroFormattingBehavior = .pad
 
-            let elapsed = Date().timeIntervalSince(pomodoro.end)
+            let elapsed = Int(Date().timeIntervalSince(pomodoro.end))
             let formattedString = formatter.string(from: TimeInterval(elapsed))!
             var attributes: [String: Any]?
 
@@ -100,19 +100,29 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
             case _ where elapsed < 0:
                 attributes = [NSForegroundColorAttributeName: NSColor.black ]
             default:
-                attributes = [NSForegroundColorAttributeName: NSColor.blue ]
+                attributes = [NSForegroundColorAttributeName: NSColor.blue  ]
             }
             
-            switch Int(elapsed) {
+            switch elapsed {
             case 300:
                 let notification = NSUserNotification()
-                notification.title = "Break Over"
+                notification.title = "Nag"
                 notification.soundName = NSUserNotificationDefaultSoundName
+                notification.contentImage = NSImage(named: "Break Over")
                 NSUserNotificationCenter.default.deliver(notification)
             case 0:
                 let notification = NSUserNotification()
-                notification.title = "Start Break"
+                notification.title = "Break"
                 notification.soundName = NSUserNotificationDefaultSoundName
+                notification.contentImage = NSImage(named: "Break")
+                NSUserNotificationCenter.default.deliver(notification)
+            case _ where elapsed % 300 == 0:
+                // Nag every 5 minutes
+                let notification = NSUserNotification()
+                notification.title = "Nag"
+                notification.informativeText = "\(formattedString) since last Pomodoro"
+                notification.soundName = NSUserNotificationDefaultSoundName
+                notification.contentImage = NSImage(named: "Nag")
                 NSUserNotificationCenter.default.deliver(notification)
             default:
                 break

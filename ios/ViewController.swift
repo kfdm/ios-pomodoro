@@ -44,7 +44,7 @@ class ViewController: UIViewController, UIWebViewDelegate {
         shareButton.isEnabled = (false == OnePasswordExtension.shared().isAppExtensionAvailable())
     }
 
-    func updateNavigation(_ title : String) {
+    func updateNavigation(_ title: String) {
         titleView.title = title
         shareButton.isEnabled = ApplicationSettings.apiKey == nil
         logoutButton.isEnabled = ApplicationSettings.apiKey != nil
@@ -81,4 +81,3 @@ class ViewController: UIViewController, UIWebViewDelegate {
         }
     }
 }
-

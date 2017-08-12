@@ -24,6 +24,7 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
     var stopwatch = Timer()
     var reload = Timer()
     var unpauseTimer = Timer()
+    let breakDuration = 300 // 5 minutes in seconds
     let statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
 
     // MARK: - Actions
@@ -67,36 +68,42 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
     }
 
     func fetchPomodoro() {
-        NSLog("update widget")
-        if let token = ApplicationSettings.apiKey {
-            print("make request ")
-            let parameters: Parameters = [:]
-            let headers = ["Authorization": "Token \(token)"]
-            print(headers)
-            Alamofire.request(ApplicationSettings.pomodoroAPI, method: .get, parameters: parameters, headers:headers)
-                .validate(statusCode: 200..<300)
-                .validate(contentType: ["application/json"])
-                .responseData { response in
-                    switch response.result {
-                    case .success:
-                        let json = JSON(data: response.data!)
-                        var lastPomodoro: Pomodoro? = nil
-                        for result in json["results"].arrayValue {
-                            let pomodoro = Pomodoro(result)
-                            if lastPomodoro == nil || pomodoro.end > lastPomodoro!.end {
-                                lastPomodoro = pomodoro
+        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+            if let token = ApplicationSettings.apiKey {
+                print("Fetching update")
+                let parameters: Parameters = [:]
+                let headers = ["Authorization": "Token \(token)"]
+                Alamofire.request(ApplicationSettings.pomodoroAPI, method: .get, parameters: parameters, headers:headers)
+                    .validate(statusCode: 200..<300)
+                    .validate(contentType: ["application/json"])
+                    .responseData { response in
+                        switch response.result {
+                        case .success:
+                            let json = JSON(data: response.data!)
+                            var lastPomodoro: Pomodoro? = nil
+                            for result in json["results"].arrayValue {
+                                let pomodoro = Pomodoro(result)
+                                if lastPomodoro == nil || pomodoro.end > lastPomodoro!.end {
+                                    lastPomodoro = pomodoro
+                                }
                             }
+                            if let pomodoro = lastPomodoro {
+                                ApplicationSettings.lastPomodoro = pomodoro
+                                self.statusLastPomodoro.title = "\(pomodoro.title) - \(pomodoro.category)"
+                            }
+                        case .failure(let error):
+                            print(error)
                         }
-                        if let pomodoro = lastPomodoro {
-                            ApplicationSettings.lastPomodoro = pomodoro
-                            self.statusLastPomodoro.title = "\(pomodoro.title) - \(pomodoro.category)"
-                        }
-                    case .failure(let error):
-                        print(error)
-                    }
+                }
+            } else {
+                print("defaults write \(ApplicationSettingsKeys.suiteName) \(ApplicationSettingsKeys.apiKey) PLEASESETME")
             }
-        } else {
-            print("defaults write \(ApplicationSettingsKeys.suiteName) PLEASESETME")
+        }
+    }
+
+    func setTitle(_ title: String, color: NSColor) {
+        DispatchQueue.main.async {
+            self.statusItem.attributedTitle = NSAttributedString(string: title, attributes:[NSForegroundColorAttributeName: color])
         }
     }
 
@@ -109,20 +116,18 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
 
             let elapsed = Int(Date().timeIntervalSince(pomodoro.end))
             let formattedString = formatter.string(from: TimeInterval(elapsed))!
-            let muted = ApplicationSettings.muteUntil != nil
-            var attributes: [String: Any]?
 
             switch elapsed {
-            case _ where elapsed > 300:
-                attributes = muted ? [NSForegroundColorAttributeName: NSColor.brown] : [NSForegroundColorAttributeName: NSColor.red ]
+            case _ where elapsed > breakDuration:
+                setTitle(formattedString, color: unpauseTimer.isValid ? NSColor.brown : NSColor.red)
             case _ where elapsed < 0:
-                attributes = [NSForegroundColorAttributeName: NSColor.black ]
+                setTitle(formattedString, color: NSColor.black)
             default:
-                attributes = [NSForegroundColorAttributeName: NSColor.blue  ]
+                setTitle(formattedString, color: NSColor.blue)
             }
 
             switch elapsed {
-            case 300:
+            case breakDuration:
                 let notification = NSUserNotification()
                 notification.title = "Nag"
                 notification.soundName = NSUserNotificationDefaultSoundName
@@ -134,14 +139,15 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
                 notification.soundName = NSUserNotificationDefaultSoundName
                 notification.contentImage = NSImage(named: "Break")
                 NSUserNotificationCenter.default.deliver(notification)
-            case _ where elapsed % 300 == 0:
+            case _ where elapsed % breakDuration == 0:
                 // Nag every 5 minutes if not muted
                 if elapsed > 0 {
-                    if muted {
+                    if unpauseTimer.isValid {
                         print("Skipping nag because muted")
                     } else {
                         let notification = NSUserNotification()
                         notification.title = "Nag"
+                        notification.identifier = "Nag"
                         notification.informativeText = "\(formattedString) since last Pomodoro"
                         notification.soundName = NSUserNotificationDefaultSoundName
                         notification.contentImage = NSImage(named: "Nag")
@@ -151,8 +157,6 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
             default:
                 break
             }
-
-            statusItem.attributedTitle = NSAttributedString(string: formattedString, attributes:attributes)
         }
     }
     func pauseUntil(_ date: Date) {

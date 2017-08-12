@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
@@ -36,18 +36,59 @@
                 </customObject>
                 <customObject id="vsa-uZ-Ury" customClass="StatusMenuController" customModule="nagger" customModuleProvider="target">
                     <connections>
+                        <outlet property="pauseMenu" destination="KPe-th-qco" id="5rO-Eo-PsO"/>
                         <outlet property="statusLastPomodoro" destination="KN4-dq-HFi" id="4rn-VB-X3f"/>
                         <outlet property="statusMenu" destination="YSD-da-HZL" id="3wv-gr-gtY"/>
+                        <outlet property="unpauseMenu" destination="Vuz-3f-p9O" id="nwq-cg-JhC"/>
                     </connections>
                 </customObject>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <menu id="YSD-da-HZL">
                     <items>
+                        <menuItem title="About" id="c1Z-3p-f9i">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="clickedAbout:" target="vsa-uZ-Ury" id="uXK-kf-ici"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem isSeparatorItem="YES" id="M91-f7-6xh"/>
                         <menuItem title="Recent Pomodoro" id="KN4-dq-HFi">
                             <modifierMask key="keyEquivalentModifierMask"/>
                             <connections>
                                 <action selector="updateClicked:" target="vsa-uZ-Ury" id="luQ-Rf-H7D"/>
                             </connections>
+                        </menuItem>
+                        <menuItem isSeparatorItem="YES" id="GyR-FH-tUZ"/>
+                        <menuItem title="Unpause" hidden="YES" id="Vuz-3f-p9O">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="clickedUnpause:" target="vsa-uZ-Ury" id="KSa-2I-V2f"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Pause" id="KPe-th-qco">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <menu key="submenu" title="Pause" id="fVi-ko-1zb">
+                                <items>
+                                    <menuItem title="15 Minutes" id="7xL-Bl-CN3">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                        <connections>
+                                            <action selector="click15Min:" target="vsa-uZ-Ury" id="U72-Cu-ppe"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="1 Hour" id="6wb-5v-LO3">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                        <connections>
+                                            <action selector="click1Hour:" target="vsa-uZ-Ury" id="KVd-5N-XEA"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="Until Tomorrow" id="XdO-LK-OfZ">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                        <connections>
+                                            <action selector="clickPause:" target="vsa-uZ-Ury" id="xJn-cb-4sp"/>
+                                        </connections>
+                                    </menuItem>
+                                </items>
+                            </menu>
                         </menuItem>
                         <menuItem title="Quit" id="3qa-5w-eF3">
                             <modifierMask key="keyEquivalentModifierMask"/>

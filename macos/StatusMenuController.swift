@@ -12,16 +12,25 @@ import Alamofire
 import SwiftyJSON
 
 class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
+    // MARK: - IBOutlet
+
     @IBOutlet weak var statusMenu: NSMenu!
     @IBOutlet weak var statusLastPomodoro: NSMenuItem!
+    @IBOutlet weak var pauseMenu: NSMenuItem!
+    @IBOutlet weak var unpauseMenu: NSMenuItem!
+
+    // MARK: - Vars
 
     var stopwatch = Timer()
     var reload = Timer()
+    var unpauseTimer = Timer()
     let statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
+
+    // MARK: - Actions
 
     override func awakeFromNib() {
         let icon = NSImage(named: "statusIcon")
-        //icon?.isTemplate = true // best for dark mode
+
         statusItem.image = icon
         statusItem.menu = statusMenu
         statusItem.highlightMode = false
@@ -43,12 +52,20 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
         )
         fetchPomodoro()
         NSUserNotificationCenter.default.delegate = self
+
+        if let pause = ApplicationSettings.muteUntil {
+            if pause < Date() {
+                unpause()
+            } else {
+                pauseUntil(pause)
+            }
+        }
     }
 
     func userNotificationCenter(center: NSUserNotificationCenter, shouldPresentNotification notification: NSUserNotification) -> Bool {
         return true
     }
-    
+
     func fetchPomodoro() {
         NSLog("update widget")
         if let token = ApplicationSettings.apiKey {
@@ -92,17 +109,18 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
 
             let elapsed = Int(Date().timeIntervalSince(pomodoro.end))
             let formattedString = formatter.string(from: TimeInterval(elapsed))!
+            let muted = ApplicationSettings.muteUntil != nil
             var attributes: [String: Any]?
 
             switch elapsed {
             case _ where elapsed > 300:
-                attributes = [NSForegroundColorAttributeName: NSColor.red ]
+                attributes = muted ? [NSForegroundColorAttributeName: NSColor.brown] : [NSForegroundColorAttributeName: NSColor.red ]
             case _ where elapsed < 0:
                 attributes = [NSForegroundColorAttributeName: NSColor.black ]
             default:
                 attributes = [NSForegroundColorAttributeName: NSColor.blue  ]
             }
-            
+
             switch elapsed {
             case 300:
                 let notification = NSUserNotification()
@@ -117,13 +135,19 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
                 notification.contentImage = NSImage(named: "Break")
                 NSUserNotificationCenter.default.deliver(notification)
             case _ where elapsed % 300 == 0:
-                // Nag every 5 minutes
-                let notification = NSUserNotification()
-                notification.title = "Nag"
-                notification.informativeText = "\(formattedString) since last Pomodoro"
-                notification.soundName = NSUserNotificationDefaultSoundName
-                notification.contentImage = NSImage(named: "Nag")
-                NSUserNotificationCenter.default.deliver(notification)
+                // Nag every 5 minutes if not muted
+                if elapsed > 0 {
+                    if muted {
+                        print("Skipping nag because muted")
+                    } else {
+                        let notification = NSUserNotification()
+                        notification.title = "Nag"
+                        notification.informativeText = "\(formattedString) since last Pomodoro"
+                        notification.soundName = NSUserNotificationDefaultSoundName
+                        notification.contentImage = NSImage(named: "Nag")
+                        NSUserNotificationCenter.default.deliver(notification)
+                    }
+                }
             default:
                 break
             }
@@ -131,8 +155,70 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
             statusItem.attributedTitle = NSAttributedString(string: formattedString, attributes:attributes)
         }
     }
+    func pauseUntil(_ date: Date) {
+        print("Pausing until \(date)")
+        unpauseMenu.isHidden = false
+        pauseMenu.isHidden = true
+        ApplicationSettings.muteUntil = date
+
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone.current
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .medium
+        let formattedString = formatter.string(from: date)
+
+        unpauseMenu.title = "Paused until \(formattedString)"
+
+        unpauseTimer = Timer(
+            fireAt: date,
+            interval: 0,
+            target: self,
+            selector: #selector(unpause),
+            userInfo: nil,
+            repeats: false
+        )
+        RunLoop.main.add(unpauseTimer, forMode: .commonModes)
+    }
+
+    func unpause() {
+        print("Unpaused")
+        ApplicationSettings.muteUntil = nil
+        pauseMenu.isHidden = false
+        unpauseMenu.isHidden = true
+        unpauseTimer.invalidate()
+    }
+
+    // MARK: - IBActions
+
+    @IBAction func clickedAbout(_ sender: NSMenuItem) {
+        let url = URL(string:"https://github.com/kfdm/ios-pomodoro")!
+        NSWorkspace.shared().open(url)
+    }
+
+    @IBAction func clickedUnpause(_ sender: NSMenuItem) {
+        unpause()
+    }
+
     @IBAction func updateClicked(_ sender: Any) {
         fetchPomodoro()
+    }
+
+    @IBAction func click15Min(_ sender: NSMenuItem) {
+        let pause = Date() + TimeInterval(integerLiteral: 15 * 60)
+        pauseUntil(pause)
+    }
+
+    @IBAction func click1Hour(_ sender: NSMenuItem) {
+        let pause = Date() + TimeInterval(integerLiteral: 60 * 50)
+        pauseUntil(pause)
+    }
+
+    @IBAction func clickPause(_ sender: NSMenuItem) {
+        let date = Date()
+        var cal = Calendar(identifier: .gregorian)
+        cal.timeZone = TimeZone.current
+        let pause = cal.date(bySettingHour: 23, minute: 59, second: 59, of: date)!
+        pauseUntil(pause)
     }
 
     @IBAction func quitClicked(_ sender: NSMenuItem) {

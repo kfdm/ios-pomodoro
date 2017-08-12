@@ -15,6 +15,7 @@ struct ApplicationSettingsKeys {
     static let pomodoroId = "id"
     static let pomodoroCategory = "category"
     static let pomodoroDate = "date"
+    static let muteUntil = "mute"
 }
 
 struct ApplicationSettings {
@@ -26,6 +27,11 @@ struct ApplicationSettings {
     static var apiKey: String? {
         get { return defaults.string(forKey: ApplicationSettingsKeys.apiKey) }
         set { defaults.set(newValue, forKey: ApplicationSettingsKeys.apiKey) }
+    }
+
+    static var muteUntil: Date? {
+        get { return defaults.object(forKey: ApplicationSettingsKeys.muteUntil) as? Date}
+        set { defaults.set(newValue, forKey: ApplicationSettingsKeys.muteUntil) }
     }
 
     static var lastPomodoro: Pomodoro? {

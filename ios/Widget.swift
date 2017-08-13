@@ -9,6 +9,21 @@
 import Foundation
 import SwiftyJSON
 
+func jsonDate(_ string: String) -> Date {
+    let dateParser = ISO8601DateFormatter()
+    dateParser.formatOptions = .withInternetDateTime
+    if let date = dateParser.date(from: string) {
+        return date
+    }
+    let split = string.components(separatedBy: ".")
+    print("Attemping to parse without milliseconds \(split)")
+    if let date = dateParser.date(from: split[0] + "Z") {
+        return date
+    }
+    print("Unable to parse date \(string)")
+    return Date()
+}
+
 class Pomodoro {
     var id: String
     var title: String
@@ -16,14 +31,10 @@ class Pomodoro {
     var end: Date
 
     init(_ json: JSON) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-
         self.id = json["id"].stringValue
         self.title = json["title"].stringValue
         self.category = json["category"].stringValue
-        self.end = dateFormatter.date(from: json["end"].stringValue)!
+        self.end = jsonDate(json["end"].stringValue)
     }
 
     init(id: String, title: String, category: String, end: Date) {

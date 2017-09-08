@@ -39,23 +39,23 @@
                         <outlet property="pauseMenu" destination="KPe-th-qco" id="5rO-Eo-PsO"/>
                         <outlet property="statusLastPomodoro" destination="KN4-dq-HFi" id="4rn-VB-X3f"/>
                         <outlet property="statusMenu" destination="YSD-da-HZL" id="3wv-gr-gtY"/>
+                        <outlet property="stopMenu" destination="Mh3-vN-M7T" id="YQp-q7-ktC"/>
                         <outlet property="unpauseMenu" destination="Vuz-3f-p9O" id="nwq-cg-JhC"/>
                     </connections>
                 </customObject>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <menu id="YSD-da-HZL">
                     <items>
-                        <menuItem title="About" id="c1Z-3p-f9i">
-                            <modifierMask key="keyEquivalentModifierMask"/>
-                            <connections>
-                                <action selector="clickedAbout:" target="vsa-uZ-Ury" id="uXK-kf-ici"/>
-                            </connections>
-                        </menuItem>
-                        <menuItem isSeparatorItem="YES" id="M91-f7-6xh"/>
                         <menuItem title="Recent Pomodoro" id="KN4-dq-HFi">
                             <modifierMask key="keyEquivalentModifierMask"/>
                             <connections>
                                 <action selector="updateClicked:" target="vsa-uZ-Ury" id="luQ-Rf-H7D"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Stop" id="Mh3-vN-M7T">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="stopClicked:" target="vsa-uZ-Ury" id="MfU-4y-pB2"/>
                             </connections>
                         </menuItem>
                         <menuItem isSeparatorItem="YES" id="GyR-FH-tUZ"/>
@@ -89,6 +89,12 @@
                                     </menuItem>
                                 </items>
                             </menu>
+                        </menuItem>
+                        <menuItem title="About" id="c1Z-3p-f9i">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="clickedAbout:" target="vsa-uZ-Ury" id="uXK-kf-ici"/>
+                            </connections>
                         </menuItem>
                         <menuItem title="Quit" id="3qa-5w-eF3">
                             <modifierMask key="keyEquivalentModifierMask"/>

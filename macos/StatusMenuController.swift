@@ -18,6 +18,7 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
     @IBOutlet weak var statusLastPomodoro: NSMenuItem!
     @IBOutlet weak var pauseMenu: NSMenuItem!
     @IBOutlet weak var unpauseMenu: NSMenuItem!
+    @IBOutlet weak var stopMenu: NSMenuItem!
 
     // MARK: - Vars
 
@@ -120,10 +121,13 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
             switch elapsed {
             case _ where elapsed > breakDuration:
                 setTitle(formattedString, color: unpauseTimer.isValid ? NSColor.brown : NSColor.red)
+                self.stopMenu.isHidden = true
             case _ where elapsed < 0:
                 setTitle(formattedString, color: NSColor.black)
+                self.stopMenu.isHidden = false
             default:
                 setTitle(formattedString, color: NSColor.blue)
+                self.stopMenu.isHidden = false
             }
 
             switch elapsed {
@@ -227,5 +231,12 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
 
     @IBAction func quitClicked(_ sender: NSMenuItem) {
         NSApplication.shared().terminate(self)
+    }
+    @IBAction func stopClicked(_ sender: Any) {
+        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+            if let token = ApplicationSettings.apiKey {
+                print("Stopping pomodoro")
+            }
+        }
     }
 }

@@ -39,6 +39,7 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
         mqtt?.password = ApplicationSettings.password
         mqtt?.keepAlive = 60
         mqtt?.delegate = self
+        mqtt?.autoReconnect = true
         mqtt?.connect()
 
         statusItem.image = icon

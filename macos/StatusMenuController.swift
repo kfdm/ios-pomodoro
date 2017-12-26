@@ -10,6 +10,7 @@ import AppKit
 import Cocoa
 import Alamofire
 import SwiftyJSON
+import CocoaMQTT
 
 class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
     // MARK: - IBOutlet
@@ -27,11 +28,19 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
     var unpauseTimer = Timer()
     let breakDuration = 300 // 5 minutes in seconds
     let statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
+    var mqtt: CocoaMQTT?
 
     // MARK: - Actions
-
     override func awakeFromNib() {
         let icon = NSImage(named: "statusIcon")
+
+        let clientID = "CocoaMQTT-" + String(ProcessInfo().processIdentifier)
+        mqtt = CocoaMQTT(clientID: clientID, host: "tsundere.co", port: 1883)
+        mqtt?.username = ApplicationSettings.username
+        mqtt?.password = ApplicationSettings.password
+        mqtt?.keepAlive = 60
+        mqtt?.delegate = self
+        mqtt?.connect()
 
         statusItem.image = icon
         statusItem.menu = statusMenu
@@ -45,14 +54,6 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
             repeats: true
         )
         RunLoop.main.add(stopwatch, forMode: RunLoopMode.commonModes)
-        reload = Timer.scheduledTimer(
-            timeInterval: 600.0,
-            target: self,
-            selector: #selector(fetchPomodoro),
-            userInfo: nil,
-            repeats: true
-        )
-        fetchPomodoro()
         NSUserNotificationCenter.default.delegate = self
 
         if let pause = ApplicationSettings.muteUntil {
@@ -64,42 +65,8 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
         }
     }
 
-    func userNotificationCenter(center: NSUserNotificationCenter, shouldPresentNotification notification: NSUserNotification) -> Bool {
+    func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
         return true
-    }
-
-    func fetchPomodoro() {
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            if let token = ApplicationSettings.apiKey {
-                print("Fetching update")
-                let parameters: Parameters = [:]
-                let headers = ["Authorization": "Token \(token)"]
-                Alamofire.request(ApplicationSettings.pomodoroAPI, method: .get, parameters: parameters, headers:headers)
-                    .validate(statusCode: 200..<300)
-                    .validate(contentType: ["application/json"])
-                    .responseData { response in
-                        switch response.result {
-                        case .success:
-                            let json = JSON(data: response.data!)
-                            var lastPomodoro: Pomodoro? = nil
-                            for result in json["results"].arrayValue {
-                                let pomodoro = Pomodoro(result)
-                                if lastPomodoro == nil || pomodoro.end > lastPomodoro!.end {
-                                    lastPomodoro = pomodoro
-                                }
-                            }
-                            if let pomodoro = lastPomodoro {
-                                ApplicationSettings.lastPomodoro = pomodoro
-                                self.statusLastPomodoro.title = "\(pomodoro.title) - \(pomodoro.category)"
-                            }
-                        case .failure(let error):
-                            print(error)
-                        }
-                }
-            } else {
-                print("defaults write \(ApplicationSettingsKeys.suiteName) \(ApplicationSettingsKeys.apiKey) PLEASESETME")
-            }
-        }
     }
 
     func setTitle(_ title: String, color: NSColor) {
@@ -117,7 +84,6 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
 
             let elapsed = Int(Date().timeIntervalSince(pomodoro.end))
             let formattedString = formatter.string(from: TimeInterval(elapsed))!
-
             switch elapsed {
             case _ where elapsed > breakDuration:
                 setTitle(formattedString, color: unpauseTimer.isValid ? NSColor.brown : NSColor.red)
@@ -207,10 +173,6 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
         unpause()
     }
 
-    @IBAction func updateClicked(_ sender: Any) {
-        fetchPomodoro()
-    }
-
     @IBAction func click15Min(_ sender: NSMenuItem) {
         let pause = Date() + TimeInterval(integerLiteral: 15 * 60)
         pauseUntil(pause)
@@ -238,5 +200,55 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
                 print("Stopping pomodoro")
             }
         }
+    }
+}
+
+extension StatusMenuController: CocoaMQTTDelegate {
+    func mqtt(_ mqtt: CocoaMQTT, didConnectAck ack: CocoaMQTTConnAck) {
+        print("didConnectAck: \(ack)，rawValue: \(ack.rawValue)")
+        if ack == .accept {
+            mqtt.subscribe("pomodoro/kfdm/recent", qos: CocoaMQTTQOS.qos1)
+        }
+    }
+
+    func mqtt(_ mqtt: CocoaMQTT, didPublishMessage message: CocoaMQTTMessage, id: UInt16) {
+        print("didPublishMessage with message: \(message.string ?? "")")
+    }
+
+    func mqtt(_ mqtt: CocoaMQTT, didPublishAck id: UInt16) {
+        print("didPublishAck with id: \(id)")
+    }
+
+    func mqtt(_ mqtt: CocoaMQTT, didReceiveMessage message: CocoaMQTTMessage, id: UInt16 ) {
+        print("didReceivedMessage: \(message.string ?? "") with id \(id)")
+        if let msg = message.string {
+            let json = JSON(parseJSON: msg)
+            let pomodoro = Pomodoro(json)
+            ApplicationSettings.lastPomodoro = pomodoro
+        }
+    }
+
+    func mqtt(_ mqtt: CocoaMQTT, didSubscribeTopic topic: String) {
+        print("didSubscribeTopic to \(topic)")
+    }
+
+    func mqtt(_ mqtt: CocoaMQTT, didUnsubscribeTopic topic: String) {
+        print("didUnsubscribeTopic to \(topic)")
+    }
+
+    func mqttDidPing(_ mqtt: CocoaMQTT) {
+        print("didPing")
+    }
+
+    func mqttDidReceivePong(_ mqtt: CocoaMQTT) {
+        _console("didReceivePong")
+    }
+
+    func mqttDidDisconnect(_ mqtt: CocoaMQTT, withError err: Error?) {
+        _console("mqttDidDisconnect")
+    }
+
+    func _console(_ info: String) {
+        print("Delegate: \(info)")
     }
 }

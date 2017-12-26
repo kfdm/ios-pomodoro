@@ -6,6 +6,7 @@ target 'nagger' do
   pod 'Alamofire', '~> 4.4'
   pod 'SwiftLint'
   pod 'SwiftyJSON'
+  pod 'CocoaMQTT'
 end
 
 target 'pomodoro' do

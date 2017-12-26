@@ -24,7 +24,6 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
     // MARK: - Vars
 
     var stopwatch = Timer()
-    var reload = Timer()
     var unpauseTimer = Timer()
     let breakDuration = 300 // 5 minutes in seconds
     let statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
@@ -207,7 +206,7 @@ extension StatusMenuController: CocoaMQTTDelegate {
     func mqtt(_ mqtt: CocoaMQTT, didConnectAck ack: CocoaMQTTConnAck) {
         print("didConnectAck: \(ack)，rawValue: \(ack.rawValue)")
         if ack == .accept {
-            mqtt.subscribe("pomodoro/kfdm/recent", qos: CocoaMQTTQOS.qos1)
+            mqtt.subscribe("pomodoro/\(mqtt.username!)/recent", qos: CocoaMQTTQOS.qos1)
         }
     }
 

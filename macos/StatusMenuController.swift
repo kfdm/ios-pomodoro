@@ -205,9 +205,11 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
 
 extension StatusMenuController: CocoaMQTTDelegate {
     func mqtt(_ mqtt: CocoaMQTT, didConnectAck ack: CocoaMQTTConnAck) {
-        print("didConnectAck: \(ack)，rawValue: \(ack.rawValue)")
-        if ack == .accept {
+        switch ack {
+        case .accept:
             mqtt.subscribe("pomodoro/\(mqtt.username!)/recent", qos: CocoaMQTTQOS.qos1)
+        default:
+            print("didConnectAck: \(ack)，rawValue: \(ack.rawValue)")
         }
     }
 

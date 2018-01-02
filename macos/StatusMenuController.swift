@@ -103,12 +103,20 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
                 notification.soundName = NSUserNotificationDefaultSoundName
                 notification.contentImage = NSImage(named: "Break Over")
                 NSUserNotificationCenter.default.deliver(notification)
+
+                if let mqtt = mqtt {
+                    mqtt.publish("pomodoro/\(mqtt.username!)/nag", withString: "Break Over")
+                }
             case 0:
                 let notification = NSUserNotification()
                 notification.title = "Break"
                 notification.soundName = NSUserNotificationDefaultSoundName
                 notification.contentImage = NSImage(named: "Break")
                 NSUserNotificationCenter.default.deliver(notification)
+
+                if let mqtt = mqtt {
+                    mqtt.publish("pomodoro/\(mqtt.username!)/break", withString: "\(breakDuration) min break")
+                }
             case _ where elapsed % breakDuration == 0:
                 // Nag every 5 minutes if not muted
                 if elapsed > 0 {
@@ -122,6 +130,10 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
                         notification.soundName = NSUserNotificationDefaultSoundName
                         notification.contentImage = NSImage(named: "Nag")
                         NSUserNotificationCenter.default.deliver(notification)
+
+                        if let mqtt = mqtt {
+                            mqtt.publish("pomodoro/\(mqtt.username!)/nag", withString: "\(formattedString) since last Pomodoro")
+                        }
                     }
                 }
             default:

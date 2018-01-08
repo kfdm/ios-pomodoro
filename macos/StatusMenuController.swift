@@ -105,7 +105,10 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
                 NSUserNotificationCenter.default.deliver(notification)
 
                 if let mqtt = mqtt {
-                    mqtt.publish("pomodoro/\(mqtt.username!)/nag", withString: "Break Over")
+                    mqtt.publish("pomodoro/\(mqtt.username!)/nag", withDict: [
+                        "elapsed": elapsed,
+                        "comment": "Break Over"
+                        ])
                 }
             case 0:
                 let notification = NSUserNotification()
@@ -115,7 +118,10 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
                 NSUserNotificationCenter.default.deliver(notification)
 
                 if let mqtt = mqtt {
-                    mqtt.publish("pomodoro/\(mqtt.username!)/break", withString: "\(breakDuration) min break")
+                    mqtt.publish("pomodoro/\(mqtt.username!)/nag", withDict: [
+                        "elapsed": elapsed,
+                        "comment": "Break"
+                        ])
                 }
             case _ where elapsed % breakDuration == 0:
                 // Nag every 5 minutes if not muted
@@ -132,7 +138,10 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
                         NSUserNotificationCenter.default.deliver(notification)
 
                         if let mqtt = mqtt {
-                            mqtt.publish("pomodoro/\(mqtt.username!)/nag", withString: "\(formattedString) since last Pomodoro")
+                            mqtt.publish("pomodoro/\(mqtt.username!)/nag", withDict: [
+                                "elapsed": elapsed,
+                                "comment": "\(formattedString) since last Pomodoro"
+                            ])
                         }
                     }
                 }
@@ -141,6 +150,7 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
             }
         }
     }
+
     func pauseUntil(_ date: Date) {
         print("Pausing until \(date)")
         unpauseMenu.isHidden = false
@@ -210,6 +220,16 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             if let token = ApplicationSettings.apiKey {
                 print("Stopping pomodoro")
+            }
+        }
+    }
+}
+
+extension CocoaMQTT {
+    func publish(_ topic: String, withDict: [String: Any]) {
+        if let jsonData = try? JSONSerialization.data(withJSONObject: withDict, options: []) {
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+                self.publish(topic, withString: jsonString)
             }
         }
     }

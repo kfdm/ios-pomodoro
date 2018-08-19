@@ -116,7 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				87B6518C2128F258006D88AF /* LoginViewController.swift */,
-				87B6518A2128F184006D88AF /* TabBarController.swift */,
 				87B6517A2128F0AD006D88AF /* SecondViewController.swift */,
 				87B651782128F0AD006D88AF /* FirstViewController.swift */,
 				8756548A212947AA00D69D6D /* FavoritesViewController.swift */,
@@ -149,13 +148,14 @@
 		87B651752128F0AD006D88AF /* NextPomodoro */ = {
 			isa = PBXGroup;
 			children = (
+				87B651A42128F45E006D88AF /* PomodoroAPI.swift */,
+				87B6518A2128F184006D88AF /* TabBarController.swift */,
 				8756548921293C2400D69D6D /* Views */,
 				87B651762128F0AD006D88AF /* AppDelegate.swift */,
 				87B6517C2128F0AD006D88AF /* Main.storyboard */,
 				87B6517F2128F0AE006D88AF /* Assets.xcassets */,
 				87B651812128F0AE006D88AF /* LaunchScreen.storyboard */,
 				87B651842128F0AE006D88AF /* Info.plist */,
-				87B651A42128F45E006D88AF /* PomodoroAPI.swift */,
 			);
 			path = NextPomodoro;
 			sourceTree = "<group>";

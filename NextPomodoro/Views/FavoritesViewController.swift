@@ -9,6 +9,13 @@
 import Foundation
 import UIKit
 
+class FavoritesCell : UITableViewCell {
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var countLabel: UILabel!
+    @IBOutlet weak var durationLabel: UILabel!
+}
+
 class FavoritesViewController : UITableViewController {
     var data : [Favorite] = []
 
@@ -19,15 +26,19 @@ class FavoritesViewController : UITableViewController {
         getFavorites(completionHandler: { favorites in
             self.data = favorites.sorted(by: { $0.count > $1.count })
 
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         })
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Favorite", for: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Favorite", for: indexPath) as! FavoritesCell
 
-        cell.textLabel?.text = data[indexPath.row].title
-        cell.detailTextLabel?.text = "\(data[indexPath.row].category) \(data[indexPath.row].count) "
+        cell.titleLabel.text = data[indexPath.row].title
+        cell.categoryLabel.text = data[indexPath.row].category
+        cell.durationLabel.text = "\(data[indexPath.row].duration) minutes"
+        cell.countLabel.text = "\(data[indexPath.row].count) times"
 
         return cell
     }

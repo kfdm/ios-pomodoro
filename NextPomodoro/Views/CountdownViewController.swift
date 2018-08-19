@@ -25,12 +25,19 @@ class CountdownViewController : UITableViewController {
     @IBOutlet weak var categoryInput: UITextField!
 
     func updateView() {
-        if let data = data {
-            self.titleLabel.text = data.title
-            self.categoryLabel.text = data.category
+        DispatchQueue.main.async {
+            if let data = self.data {
+                self.titleLabel.text = data.title
+                self.categoryLabel.text = data.category
 
-            self.startLabel.detailTextLabel?.text = "\(data.start)"
-            self.endLabel.detailTextLabel?.text = "\(data.end)"
+                let formatter = DateFormatter()
+                formatter.dateStyle = .medium
+                formatter.timeStyle = .medium
+                formatter.timeZone = TimeZone.current
+
+                self.startLabel.detailTextLabel?.text = formatter.string(for: data.start)
+                self.endLabel.detailTextLabel?.text = formatter.string(for: data.end)
+            }
         }
     }
 
@@ -73,36 +80,45 @@ class CountdownViewController : UITableViewController {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        getHistory(completionHandler: { favorites in
-            self.data = favorites.sorted(by: { $0.id > $1.id })[0]
-            DispatchQueue.main.async {
+
+        if ApplicationSettings.username != nil {
+            getHistory(completionHandler: { favorites in
+                self.data = favorites.sorted(by: { $0.id > $1.id })[0]
                 self.updateView()
-            }
-        })
+            })
+        }
     }
 
     @IBAction func extendButton(_ sender: UIButton) {
         print("Extend Pomodoro")
     }
+
     @IBAction func stopButton(_ sender: UIButton) {
-        print("Stop Pomodoro")
+        if let currentPomodoro = self.data {
+            let end = Date.init()
+            let editPomodoro = Pomodoro.init(id: currentPomodoro.id, title: currentPomodoro.title, start: currentPomodoro.start, end: end, category: currentPomodoro.category, owner: "")
+            print("Stopping Pomodoro")
+            updatePomodoro(pomodoro: editPomodoro, completionHandler: {  pomodoro in
+                print("Stopped?")
+                self.data = pomodoro
+                self.updateView()
+            })
+        } else {
+            print("Missing pomodoro?")
+        }
     }
 
     @IBAction func submit25Button(_ sender: UIButton) {
         submitPomodoro(title: titleInput!.text!, category: categoryInput!.text!, duration: 1500, completionHandler: {  pomodoro in
             self.data = pomodoro
-            DispatchQueue.main.async {
-                self.updateView()
-            }
+            self.updateView()
         })
     }
 
     @IBAction func submitHourButton(_ sender: UIButton) {
         submitPomodoro(title: titleInput!.text!, category: categoryInput!.text!, duration: 3600, completionHandler: { pomodoro in
             self.data = pomodoro
-            DispatchQueue.main.async {
-                self.updateView()
-            }
+            self.updateView()
         })
     }
 }

@@ -102,7 +102,7 @@ func authRequest(username: String, password: String, url: String, completionHand
     task.resume()
 }
 
-func postRequest(postBody: Data, url: String, completionHandler: @escaping (HTTPURLResponse, Data) -> Void) {
+func postRequest(postBody: Data, method:String, url: String, completionHandler: @escaping (HTTPURLResponse, Data) -> Void) {
     let username = ApplicationSettings.username!
     let password = ApplicationSettings.password!
     var request = URLRequest.init(url: URL.init(string: url)!)
@@ -114,7 +114,7 @@ func postRequest(postBody: Data, url: String, completionHandler: @escaping (HTTP
     }
     let base64LoginString = loginData.base64EncodedString()
 
-    request.httpMethod = "POST"
+    request.httpMethod = method
     request.httpBody = postBody
     request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -174,9 +174,6 @@ func dateDecode(decoder: Decoder) throws -> Date {
 }
 
 func getHistory(completionHandler: @escaping ([Pomodoro]) -> Void) {
-    guard let username = ApplicationSettings.username else { return }
-    guard let password = ApplicationSettings.password else { return }
-
     authRequest(username: ApplicationSettings.username!, password: ApplicationSettings.password!, url: ApplicationSettings.pomodoroAPI, completionHandler: {response, data in
         do {
             let decoder = JSONDecoder()
@@ -192,6 +189,29 @@ func getHistory(completionHandler: @escaping ([Pomodoro]) -> Void) {
     })
 }
 
+func updatePomodoro(pomodoro: Pomodoro, completionHandler: @escaping (Pomodoro) -> Void) {
+    let encoder = JSONEncoder()
+    encoder.dateEncodingStrategy = .iso8601
+    do {
+        let data = try encoder.encode(pomodoro)
+
+        postRequest(postBody: data, method: "PUT", url: ApplicationSettings.pomodoroAPI + "/\(pomodoro.id)", completionHandler: {response, data in
+            do {
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .custom(dateDecode)
+                do {
+                    let newPomodoro = try decoder.decode(Pomodoro.self, from: data)
+                    completionHandler(newPomodoro)
+                } catch let error {
+                    print(error)
+                }
+            }
+        })
+    } catch let error {
+        print(error)
+    }
+}
+
 func submitPomodoro(title: String, category: String, duration: Int, completionHandler: @escaping (Pomodoro) -> Void) {
 
     let start = Date.init()
@@ -205,7 +225,7 @@ func submitPomodoro(title: String, category: String, duration: Int, completionHa
     do {
         let data = try encoder.encode(pomodoro)
 
-        postRequest(postBody: data, url: ApplicationSettings.pomodoroAPI, completionHandler: {response, data in
+        postRequest(postBody: data, method: "POST", url: ApplicationSettings.pomodoroAPI, completionHandler: {response, data in
             do {
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .custom(dateDecode)

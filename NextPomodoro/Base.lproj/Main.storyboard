@@ -67,7 +67,7 @@
         <!--Login-->
         <scene sceneID="FAg-Yg-ANJ">
             <objects>
-                <viewController id="PK6-VC-WTy" customClass="LoginViewController" sceneMemberID="viewController">
+                <viewController id="PK6-VC-WTy" customClass="LoginViewController" customModule="NextPomodoro" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="N4U-QY-Eit">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -76,11 +76,17 @@
                                 <rect key="frame" x="95" y="184" width="28" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="1P" image="onepassword-button"/>
+                                <connections>
+                                    <action selector="OnePasswordClick:" destination="PK6-VC-WTy" eventType="touchDown" id="l2S-vN-dhM"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Boh-0V-wB9">
                                 <rect key="frame" x="134" y="182" width="225" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Login"/>
+                                <connections>
+                                    <action selector="LoginClick:" destination="PK6-VC-WTy" eventType="touchDown" id="EUq-wI-6la"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xpp-aS-spl">
                                 <rect key="frame" x="134" y="138" width="225" height="30"/>
@@ -115,6 +121,11 @@
                         <viewLayoutGuide key="safeArea" id="c5M-tP-Jo0"/>
                     </view>
                     <navigationItem key="navigationItem" title="Login" id="aPY-Ga-ncJ"/>
+                    <connections>
+                        <outlet property="OnepasswordButton" destination="ckf-ng-XcH" id="u2p-cn-RrM"/>
+                        <outlet property="PasswordField" destination="xpp-aS-spl" id="G2y-Zu-cee"/>
+                        <outlet property="UsernameField" destination="cMf-of-CxR" id="Z6b-a7-lh3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BHS-TH-Fc4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

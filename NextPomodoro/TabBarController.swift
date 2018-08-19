@@ -11,8 +11,9 @@ import UIKit
 
 class TabBarController: UITabBarController {
     override func viewDidLoad() {
-
-        // self.navigationController?.pushViewController(<#T##viewController: UIViewController##UIViewController#>, animated: <#T##Bool#>)
+        if ApplicationSettings.username == nil {
+            self.navigationController?.performSegue(withIdentifier: "ShowLogin", sender: self)
+        }
         super.viewDidLoad()
     }
 }

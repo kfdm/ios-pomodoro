@@ -1,0 +1,16 @@
+PODS:
+  - 1PasswordExtension (1.8.5)
+
+DEPENDENCIES:
+  - 1PasswordExtension (~> 1.8.5)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - 1PasswordExtension
+
+SPEC CHECKSUMS:
+  1PasswordExtension: 0e95bdea64ec8ff2f4f693be5467a09fac42a83d
+
+PODFILE CHECKSUM: 43df18fd44b3a7bd1a6a826430c09a83914d26b1
+
+COCOAPODS: 1.5.3

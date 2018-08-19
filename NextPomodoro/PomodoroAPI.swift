@@ -54,8 +54,8 @@ struct FavoriteResponse : Codable {
 struct Pomodoro: Codable {
     let id: Int
     let title: String
-    let start: String
-    let end: String
+    let start: Date
+    let end: Date
     let category: String
     let owner: String
 }
@@ -112,11 +112,33 @@ func getFavorites(completionHandler: @escaping ([Favorite]) -> Void) {
     })
 }
 
+enum DateError: String, Error {
+    case invalidDate
+}
+
 func getHistory(completionHandler: @escaping ([Pomodoro]) -> Void) {
     authRequest(username: ApplicationSettings.username!, password: ApplicationSettings.password!, url: ApplicationSettings.pomodoroAPI, completionHandler: {response, data in
         do {
             let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            // https://stackoverflow.com/a/46538676
+            decoder.dateDecodingStrategy = .custom({ (decoder) -> Date in
+                let container = try decoder.singleValueContainer()
+                let dateStr = try container.decode(String.self)
+
+                let formatter = DateFormatter()
+                formatter.calendar = Calendar(identifier: .iso8601)
+                formatter.locale = Locale(identifier: "en_US_POSIX")
+                formatter.timeZone = TimeZone(secondsFromGMT: 0)
+                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+                if let date = formatter.date(from: dateStr) {
+                    return date
+                }
+                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
+                if let date = formatter.date(from: dateStr) {
+                    return date
+                }
+                throw DateError.invalidDate
+            })
             do {
                 let pomodoros = try decoder.decode(PomodoroResponse.self, from: data)
                 completionHandler(pomodoros.results)

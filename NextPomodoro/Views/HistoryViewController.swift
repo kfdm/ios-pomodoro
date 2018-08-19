@@ -36,7 +36,7 @@ class HistoryViewController : UITableViewController {
 
         cell.titleLabel.text = data[indexPath.row].title
         cell.categoryLabel.text = data[indexPath.row].category
-        cell.durationLabel.text = data[indexPath.row].end
+        cell.durationLabel.text = "\(data[indexPath.row].end)"
 
         return cell
     }

@@ -139,60 +139,21 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Countdown" rowHeight="128" id="rEQ-3T-nzc">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Countdown" textLabel="hcu-9n-IS1" rowHeight="128" style="IBUITableViewCellStyleDefault" id="rEQ-3T-nzc">
                                         <rect key="frame" x="0.0" y="123" width="375" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rEQ-3T-nzc" id="Fic-m9-bA5">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="127.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bdh-PS-cwI">
-                                                    <rect key="frame" x="126" y="26" width="47" height="75"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hcu-9n-IS1">
+                                                    <rect key="frame" x="16" y="0.0" width="343" height="127.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
                                                     <attributedString key="attributedText">
-                                                        <fragment content="H">
+                                                        <fragment content="Title">
                                                             <attributes>
-                                                                <font key="NSFont" size="64" name=".SFNSText"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0AK-hH-zPi">
-                                                    <rect key="frame" x="206" y="26" width="56" height="75"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <attributedString key="attributedText">
-                                                        <fragment content="M">
-                                                            <attributes>
-                                                                <font key="NSFont" size="64" name=".SFNSText"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pga-rx-1yV">
-                                                    <rect key="frame" x="280" y="26" width="42" height="75"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <attributedString key="attributedText">
-                                                        <fragment content="S">
-                                                            <attributes>
-                                                                <font key="NSFont" size="64" name=".SFNSText"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zsr-iz-A8F">
-                                                    <rect key="frame" x="54" y="26" width="46" height="75"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <attributedString key="attributedText">
-                                                        <fragment content="D">
-                                                            <attributes>
-                                                                <font key="NSFont" size="64" name=".SFNSText"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                <font key="NSFont" size="72" name=".SFNSText"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
                                                     </attributedString>
@@ -365,11 +326,8 @@
                     <tabBarItem key="tabBarItem" systemItem="mostViewed" id="TzZ-hz-ysM"/>
                     <connections>
                         <outlet property="categoryLabel" destination="Woi-2k-3z0" id="bRD-vy-rjf"/>
-                        <outlet property="dayLabel" destination="zsr-iz-A8F" id="6t1-nc-JlF"/>
+                        <outlet property="countdownLabel" destination="rEQ-3T-nzc" id="Xgy-Od-lZN"/>
                         <outlet property="endLabel" destination="qj0-kt-RBq" id="E2e-D8-YVt"/>
-                        <outlet property="hourLabel" destination="bdh-PS-cwI" id="19z-N3-Ukx"/>
-                        <outlet property="minuteLabel" destination="0AK-hH-zPi" id="uzP-fo-iTe"/>
-                        <outlet property="secondLabel" destination="pga-rx-1yV" id="TPX-7x-041"/>
                         <outlet property="startLabel" destination="vA5-Es-Fqw" id="0HK-Zt-QoM"/>
                         <outlet property="titleLabel" destination="5IV-Lq-sXm" id="qcQ-h3-mxS"/>
                     </connections>

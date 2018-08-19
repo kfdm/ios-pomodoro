@@ -11,6 +11,7 @@
 		8756548821292E3800D69D6D /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8756548721292E3800D69D6D /* 1Password.xcassets */; };
 		8756548B212947AA00D69D6D /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548A212947AA00D69D6D /* FavoritesViewController.swift */; };
 		8756548D2129586000D69D6D /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548C2129586000D69D6D /* HistoryViewController.swift */; };
+		8756548F2129679100D69D6D /* CountdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548E2129679100D69D6D /* CountdownViewController.swift */; };
 		87B651772128F0AD006D88AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B651762128F0AD006D88AF /* AppDelegate.swift */; };
 		87B6517E2128F0AD006D88AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87B6517C2128F0AD006D88AF /* Main.storyboard */; };
 		87B651802128F0AE006D88AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87B6517F2128F0AE006D88AF /* Assets.xcassets */; };
@@ -56,6 +57,7 @@
 		8756548721292E3800D69D6D /* 1Password.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = 1Password.xcassets; path = Pods/1PasswordExtension/1Password.xcassets; sourceTree = "<group>"; };
 		8756548A212947AA00D69D6D /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		8756548C2129586000D69D6D /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		8756548E2129679100D69D6D /* CountdownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownViewController.swift; sourceTree = "<group>"; };
 		87B651732128F0AD006D88AF /* NextPomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextPomodoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87B651762128F0AD006D88AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		87B6517D2128F0AD006D88AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				87B6518C2128F258006D88AF /* LoginViewController.swift */,
 				8756548A212947AA00D69D6D /* FavoritesViewController.swift */,
 				8756548C2129586000D69D6D /* HistoryViewController.swift */,
+				8756548E2129679100D69D6D /* CountdownViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8756548F2129679100D69D6D /* CountdownViewController.swift in Sources */,
 				87B651A52128F45E006D88AF /* PomodoroAPI.swift in Sources */,
 				8756548B212947AA00D69D6D /* FavoritesViewController.swift in Sources */,
 				87B6518B2128F184006D88AF /* TabBarController.swift in Sources */,

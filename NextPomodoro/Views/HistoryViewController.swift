@@ -22,10 +22,18 @@ class HistoryViewController : UITableViewController {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        self.refreshData()
+    }
+
+    @objc func refreshData() {
+        print("Refreshing History")
         getHistory(completionHandler: { pomodoros in
+            print("Got New History")
             self.data = pomodoros.sorted(by: { $0.id > $1.id })
 
             DispatchQueue.main.async {
+                self.tableView.refreshControl?.endRefreshing()
                 self.tableView.reloadData()
             }
         })

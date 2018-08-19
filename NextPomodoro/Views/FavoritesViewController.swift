@@ -23,10 +23,18 @@ class FavoritesViewController : UITableViewController {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        self.refreshData()
+    }
+
+    @objc func refreshData() {
+        print("Refreshing Favorites")
         getFavorites(completionHandler: { favorites in
+            print("Got New Favorites")
             self.data = favorites.sorted(by: { $0.count > $1.count })
 
             DispatchQueue.main.async {
+                self.tableView.refreshControl?.endRefreshing()
                 self.tableView.reloadData()
             }
         })
@@ -41,6 +49,12 @@ class FavoritesViewController : UITableViewController {
         cell.countLabel.text = "\(data[indexPath.row].count) times"
 
         return cell
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let favorite = self.data[indexPath.row]
+        print(favorite)
+
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

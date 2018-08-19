@@ -425,6 +425,10 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" systemItem="favorites" id="58b-Co-2CY"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="0iY-Bj-AUV">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle"/>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AGl-xy-USh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -482,6 +486,9 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" systemItem="history" id="oZd-GN-is5"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="GEt-cu-DFH">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0aN-hh-iLB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

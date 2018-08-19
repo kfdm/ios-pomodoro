@@ -21,6 +21,9 @@ class CountdownViewController : UITableViewController {
 
     @IBOutlet weak var countdownLabel: UITableViewCell!
 
+    @IBOutlet weak var titleInput: UITextField!
+    @IBOutlet weak var categoryInput: UITextField!
+
     func updateView() {
         if let data = data {
             self.titleLabel.text = data.title
@@ -72,8 +75,31 @@ class CountdownViewController : UITableViewController {
         tableView.delegate = self
         getHistory(completionHandler: { favorites in
             self.data = favorites.sorted(by: { $0.id > $1.id })[0]
-            print("Updating")
-            print(self.data)
+            DispatchQueue.main.async {
+                self.updateView()
+            }
+        })
+    }
+
+    @IBAction func extendButton(_ sender: UIButton) {
+        print("Extend Pomodoro")
+    }
+    @IBAction func stopButton(_ sender: UIButton) {
+        print("Stop Pomodoro")
+    }
+
+    @IBAction func submit25Button(_ sender: UIButton) {
+        submitPomodoro(title: titleInput!.text!, category: categoryInput!.text!, duration: 1500, completionHandler: {  pomodoro in
+            self.data = pomodoro
+            DispatchQueue.main.async {
+                self.updateView()
+            }
+        })
+    }
+
+    @IBAction func submitHourButton(_ sender: UIButton) {
+        submitPomodoro(title: titleInput!.text!, category: categoryInput!.text!, duration: 3600, completionHandler: { pomodoro in
+            self.data = pomodoro
             DispatchQueue.main.async {
                 self.updateView()
             }

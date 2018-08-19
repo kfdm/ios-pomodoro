@@ -225,6 +225,9 @@
                                                     <rect key="frame" x="16" y="13" width="343" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" title="+5"/>
+                                                    <connections>
+                                                        <action selector="extendButton:" destination="Mhl-wr-sS5" eventType="touchUpInside" id="cfN-8g-Fe0"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -243,6 +246,9 @@
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" red="1" green="0.075984515929999996" blue="0.18098845729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="stopButton:" destination="Mhl-wr-sS5" eventType="touchUpInside" id="dq4-Ba-Dcu"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -265,6 +271,13 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eVf-uh-dle">
+                                                    <rect key="frame" x="106" y="6" width="253" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -282,6 +295,13 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uad-Lc-WLx">
+                                                    <rect key="frame" x="106" y="9" width="253" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -296,6 +316,9 @@
                                                     <rect key="frame" x="16" y="6" width="343" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" title="Pomodoro (25 Minutes)"/>
+                                                    <connections>
+                                                        <action selector="submit25Button:" destination="Mhl-wr-sS5" eventType="touchUpInside" id="NGz-xl-e06"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -311,6 +334,9 @@
                                                     <rect key="frame" x="16" y="6" width="343" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" title="Hour"/>
+                                                    <connections>
+                                                        <action selector="submitHourButton:" destination="Mhl-wr-sS5" eventType="touchUpInside" id="vdo-xv-95r"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -325,10 +351,12 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" systemItem="mostViewed" id="TzZ-hz-ysM"/>
                     <connections>
+                        <outlet property="categoryInput" destination="uad-Lc-WLx" id="qyv-Jt-j4M"/>
                         <outlet property="categoryLabel" destination="Woi-2k-3z0" id="bRD-vy-rjf"/>
                         <outlet property="countdownLabel" destination="rEQ-3T-nzc" id="Xgy-Od-lZN"/>
                         <outlet property="endLabel" destination="qj0-kt-RBq" id="E2e-D8-YVt"/>
                         <outlet property="startLabel" destination="vA5-Es-Fqw" id="0HK-Zt-QoM"/>
+                        <outlet property="titleInput" destination="eVf-uh-dle" id="hYO-JG-sq7"/>
                         <outlet property="titleLabel" destination="5IV-Lq-sXm" id="qcQ-h3-mxS"/>
                     </connections>
                 </tableViewController>

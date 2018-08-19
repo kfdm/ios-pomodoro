@@ -8,6 +8,17 @@
 
 import Foundation
 
+extension DateFormatter {
+    static let iso8601Full: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter
+    }()
+}
+
 struct ApplicationSettingsKeys {
     static let apiKey = "apiKey"
     static let suiteName = "group.net.kungfudiscomonkey.pomodoro"
@@ -91,6 +102,33 @@ func authRequest(username: String, password: String, url: String, completionHand
     task.resume()
 }
 
+func postRequest(postBody: Data, url: String, completionHandler: @escaping (HTTPURLResponse, Data) -> Void) {
+    let username = ApplicationSettings.username!
+    let password = ApplicationSettings.password!
+    var request = URLRequest.init(url: URL.init(string: url)!)
+
+    let loginString = "\(username):\(password)"
+
+    guard let loginData = loginString.data(using: String.Encoding.utf8) else {
+        return
+    }
+    let base64LoginString = loginData.base64EncodedString()
+
+    request.httpMethod = "POST"
+    request.httpBody = postBody
+    request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+    let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, error -> Void in
+        if let httpResponse = response as? HTTPURLResponse {
+            completionHandler(httpResponse, data!)
+        }
+    })
+
+    task.resume()
+}
+
 func checkLogin(username: String, password: String, completionHandler: @escaping (HTTPURLResponse) -> Void) {
     authRequest(username: username, password: password, url: ApplicationSettings.pomodoroAPI, completionHandler: {response, data in
         completionHandler(response)
@@ -116,29 +154,34 @@ enum DateError: String, Error {
     case invalidDate
 }
 
+func dateDecode(decoder: Decoder) throws -> Date {
+    let container = try decoder.singleValueContainer()
+    let dateStr = try container.decode(String.self)
+
+    let formatter = DateFormatter()
+    formatter.calendar = Calendar(identifier: .iso8601)
+    formatter.locale = Locale(identifier: "en_US_POSIX")
+    formatter.timeZone = TimeZone(secondsFromGMT: 0)
+    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+    if let date = formatter.date(from: dateStr) {
+        return date
+    }
+    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
+    if let date = formatter.date(from: dateStr) {
+        return date
+    }
+    throw DateError.invalidDate
+}
+
 func getHistory(completionHandler: @escaping ([Pomodoro]) -> Void) {
+    guard let username = ApplicationSettings.username else { return }
+    guard let password = ApplicationSettings.password else { return }
+
     authRequest(username: ApplicationSettings.username!, password: ApplicationSettings.password!, url: ApplicationSettings.pomodoroAPI, completionHandler: {response, data in
         do {
             let decoder = JSONDecoder()
             // https://stackoverflow.com/a/46538676
-            decoder.dateDecodingStrategy = .custom({ (decoder) -> Date in
-                let container = try decoder.singleValueContainer()
-                let dateStr = try container.decode(String.self)
-
-                let formatter = DateFormatter()
-                formatter.calendar = Calendar(identifier: .iso8601)
-                formatter.locale = Locale(identifier: "en_US_POSIX")
-                formatter.timeZone = TimeZone(secondsFromGMT: 0)
-                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
-                if let date = formatter.date(from: dateStr) {
-                    return date
-                }
-                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
-                if let date = formatter.date(from: dateStr) {
-                    return date
-                }
-                throw DateError.invalidDate
-            })
+            decoder.dateDecodingStrategy = .custom(dateDecode)
             do {
                 let pomodoros = try decoder.decode(PomodoroResponse.self, from: data)
                 completionHandler(pomodoros.results)
@@ -147,4 +190,34 @@ func getHistory(completionHandler: @escaping ([Pomodoro]) -> Void) {
             }
         }
     })
+}
+
+func submitPomodoro(title: String, category: String, duration: Int, completionHandler: @escaping (Pomodoro) -> Void) {
+
+    let start = Date.init()
+    let end = Date.init(timeIntervalSinceNow: TimeInterval.init(duration))
+
+    let pomodoro = Pomodoro.init(id: 0, title: title, start: start, end: end, category: category, owner: "")
+    print(pomodoro)
+
+    let encoder = JSONEncoder()
+    encoder.dateEncodingStrategy = .iso8601
+    do {
+        let data = try encoder.encode(pomodoro)
+
+        postRequest(postBody: data, url: ApplicationSettings.pomodoroAPI, completionHandler: {response, data in
+            do {
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .custom(dateDecode)
+                do {
+                    let newPomodoro = try decoder.decode(Pomodoro.self, from: data)
+                    completionHandler(newPomodoro)
+                } catch let error {
+                    print(error)
+                }
+            }
+        })
+    } catch let error {
+        print(error)
+    }
 }

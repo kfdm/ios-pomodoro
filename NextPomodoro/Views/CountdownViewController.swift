@@ -51,22 +51,21 @@ class CountdownViewController : UITableViewController {
             formatter.unitsStyle = .positional
 
             var elapsed = Date().timeIntervalSince(data.end)
+            active = elapsed < 0
 
             if elapsed > 0 {
-                active = false
-                if elapsed > 300 {
-                    countdownLabel.textLabel?.backgroundColor = UIColor.red
-                } else {
-                    countdownLabel.textLabel?.backgroundColor = UIColor.yellow
-                }
-
-                countdownLabel.textLabel?.text =  formatter.string(from: TimeInterval(elapsed))!
+                setCountdown(color: elapsed > 300 ? UIColor.red : UIColor.yellow, text: formatter.string(from: TimeInterval(elapsed))!)
             } else {
-                active = true
                 elapsed *= -1
-                countdownLabel.textLabel?.backgroundColor = UIColor.green
-                countdownLabel.textLabel?.text =  formatter.string(from: TimeInterval(elapsed))!
+                setCountdown(color: UIColor.green, text: formatter.string(from: TimeInterval(elapsed))!)
             }
+        }
+    }
+
+    func setCountdown(color: UIColor, text: String) {
+        DispatchQueue.main.async {
+            self.countdownLabel.textLabel?.backgroundColor = color
+            self.countdownLabel.textLabel?.text = text
         }
     }
 
@@ -79,6 +78,8 @@ class CountdownViewController : UITableViewController {
             userInfo: nil,
             repeats: true
         )
+
+
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

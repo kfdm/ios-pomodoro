@@ -44,7 +44,14 @@ class HistoryViewController : UITableViewController {
 
         cell.titleLabel.text = data[indexPath.row].title
         cell.categoryLabel.text = data[indexPath.row].category
-        cell.durationLabel.text = "\(data[indexPath.row].end)"
+
+        let duration = data[indexPath.row].end.timeIntervalSince(data[indexPath.row].start)
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+
+        cell.durationLabel.text = formatter.string(from: duration)
 
         return cell
     }

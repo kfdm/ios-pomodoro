@@ -47,8 +47,9 @@ class CountdownViewController : UITableViewController {
     @objc func updateCounter() {
         if let data = data {
             let formatter = DateComponentsFormatter()
-            formatter.allowedUnits = [.day, .hour, .minute, .second]
+            formatter.allowedUnits = [.hour, .minute, .second]
             formatter.unitsStyle = .positional
+            formatter.zeroFormattingBehavior = .pad
 
             var elapsed = Date().timeIntervalSince(data.end)
             active = elapsed < 0
@@ -78,8 +79,6 @@ class CountdownViewController : UITableViewController {
             userInfo: nil,
             repeats: true
         )
-
-
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

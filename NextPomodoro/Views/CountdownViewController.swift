@@ -12,6 +12,7 @@ import UIKit
 class CountdownViewController : UITableViewController {
     var data : Pomodoro?
     var timer = Timer()
+    var active = false
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
@@ -38,6 +39,8 @@ class CountdownViewController : UITableViewController {
                 self.startLabel.detailTextLabel?.text = formatter.string(for: data.start)
                 self.endLabel.detailTextLabel?.text = formatter.string(for: data.end)
             }
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
         }
     }
 
@@ -50,6 +53,7 @@ class CountdownViewController : UITableViewController {
             var elapsed = Date().timeIntervalSince(data.end)
 
             if elapsed > 0 {
+                active = false
                 if elapsed > 300 {
                     countdownLabel.textLabel?.backgroundColor = UIColor.red
                 } else {
@@ -58,6 +62,7 @@ class CountdownViewController : UITableViewController {
 
                 countdownLabel.textLabel?.text =  formatter.string(from: TimeInterval(elapsed))!
             } else {
+                active = true
                 elapsed *= -1
                 countdownLabel.textLabel?.backgroundColor = UIColor.green
                 countdownLabel.textLabel?.text =  formatter.string(from: TimeInterval(elapsed))!
@@ -76,6 +81,36 @@ class CountdownViewController : UITableViewController {
         )
     }
 
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if active {
+            if indexPath.section == 2 { return 0 }
+            return super.tableView(tableView, heightForRowAt: indexPath)
+        } else {
+            if indexPath.section == 1 { return 0 }
+            return super.tableView(tableView, heightForRowAt: indexPath)
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if active {
+            if section == 2 { return 0.1 }
+            return super.tableView(tableView, heightForHeaderInSection: section)
+        } else {
+            if section == 1 { return 0.1 }
+            return super.tableView(tableView, heightForHeaderInSection: section)
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if active {
+            if section == 2 { return 0.1 }
+            return super.tableView(tableView, heightForFooterInSection: section)
+        } else {
+            if section == 1 { return 0.1 }
+            return super.tableView(tableView, heightForFooterInSection: section)
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
@@ -84,6 +119,7 @@ class CountdownViewController : UITableViewController {
         if ApplicationSettings.username != nil {
             getHistory(completionHandler: { favorites in
                 self.data = favorites.sorted(by: { $0.id > $1.id })[0]
+                self.updateCounter()
                 self.updateView()
             })
         }
@@ -101,6 +137,7 @@ class CountdownViewController : UITableViewController {
             updatePomodoro(pomodoro: editPomodoro, completionHandler: {  pomodoro in
                 print("Stopped?")
                 self.data = pomodoro
+                self.updateCounter()
                 self.updateView()
             })
         } else {
@@ -111,6 +148,7 @@ class CountdownViewController : UITableViewController {
     @IBAction func submit25Button(_ sender: UIButton) {
         submitPomodoro(title: titleInput!.text!, category: categoryInput!.text!, duration: 1500, completionHandler: {  pomodoro in
             self.data = pomodoro
+            self.updateCounter()
             self.updateView()
         })
     }
@@ -118,6 +156,7 @@ class CountdownViewController : UITableViewController {
     @IBAction func submitHourButton(_ sender: UIButton) {
         submitPomodoro(title: titleInput!.text!, category: categoryInput!.text!, duration: 3600, completionHandler: { pomodoro in
             self.data = pomodoro
+            self.updateCounter()
             self.updateView()
         })
     }

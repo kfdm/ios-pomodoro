@@ -8,6 +8,7 @@ target 'NextPomodoro' do
 
   # Pods for NextPomodoro
   pod '1PasswordExtension', '~> 1.8.5' 
+  pod 'SwiftLint'
 
 end
 

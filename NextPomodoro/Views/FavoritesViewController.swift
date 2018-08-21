@@ -9,15 +9,15 @@
 import Foundation
 import UIKit
 
-class FavoritesCell : UITableViewCell {
+class FavoritesCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
 }
 
-class FavoritesViewController : UITableViewController {
-    var data : [Favorite] = []
+class FavoritesViewController: UITableViewController {
+    var data: [Favorite] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,14 +61,14 @@ class FavoritesViewController : UITableViewController {
         return data.count
     }
 
-    override func tableView(_ tableView: UITableView,editActionsForRowAt indexPath: IndexPath)-> [UITableViewRowAction]? {
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let submitTitle = NSLocalizedString("Submit", comment: "Submit Favorite")
         let submitAction = UITableViewRowAction(style: .default, title: submitTitle, handler: submitFavorite)
         submitAction.backgroundColor = UIColor.blue
         return [submitAction]
     }
 
-    func submitFavorite(action: UITableViewRowAction ,indexPath: IndexPath) {
+    func submitFavorite(action: UITableViewRowAction, indexPath: IndexPath) {
         print(self.data[indexPath.row])
     }
 

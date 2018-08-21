@@ -1,16 +1,20 @@
 PODS:
   - 1PasswordExtension (1.8.5)
+  - SwiftLint (0.27.0)
 
 DEPENDENCIES:
   - 1PasswordExtension (~> 1.8.5)
+  - SwiftLint
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - 1PasswordExtension
+    - SwiftLint
 
 SPEC CHECKSUMS:
   1PasswordExtension: 0e95bdea64ec8ff2f4f693be5467a09fac42a83d
+  SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
 
-PODFILE CHECKSUM: 43df18fd44b3a7bd1a6a826430c09a83914d26b1
+PODFILE CHECKSUM: cb1316bd6bb8b43632c2d1356848518b656f187b
 
 COCOAPODS: 1.5.3

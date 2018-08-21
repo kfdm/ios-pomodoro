@@ -10,10 +10,10 @@ import Foundation
 import UIKit
 
 class TabBarController: UITabBarController {
-    override func viewDidLoad() {
+    override func viewWillAppear(_ animated: Bool) {
         if ApplicationSettings.username == nil {
             self.navigationController?.performSegue(withIdentifier: "ShowLogin", sender: self)
         }
-        super.viewDidLoad()
+        super.viewWillAppear(animated)
     }
 }

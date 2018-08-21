@@ -61,4 +61,15 @@ class FavoritesViewController : UITableViewController {
         return data.count
     }
 
+    override func tableView(_ tableView: UITableView,editActionsForRowAt indexPath: IndexPath)-> [UITableViewRowAction]? {
+        let submitTitle = NSLocalizedString("Submit", comment: "Submit Favorite")
+        let submitAction = UITableViewRowAction(style: .default, title: submitTitle, handler: submitFavorite)
+        submitAction.backgroundColor = UIColor.blue
+        return [submitAction]
+    }
+
+    func submitFavorite(action: UITableViewRowAction ,indexPath: IndexPath) {
+        print(self.data[indexPath.row])
+    }
+
 }

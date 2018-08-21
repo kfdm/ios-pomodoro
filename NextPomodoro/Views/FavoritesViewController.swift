@@ -61,15 +61,21 @@ class FavoritesViewController: UITableViewController {
         return data.count
     }
 
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let submitTitle = NSLocalizedString("Submit", comment: "Submit Favorite")
-        let submitAction = UITableViewRowAction(style: .default, title: submitTitle, handler: submitFavorite)
-        submitAction.backgroundColor = UIColor.blue
-        return [submitAction]
-    }
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
-    func submitFavorite(action: UITableViewRowAction, indexPath: IndexPath) {
-        print(self.data[indexPath.row])
-    }
+        let title = NSLocalizedString("Favorite", comment: "Favorite")
 
+        let action = UIContextualAction(style: .normal, title: title, handler: { (_, _, completionHandler) in
+//            PomodoroAPI.startFavorite(favorite: self.data[indexPath.row], completionHandler: {  pomodoro in
+//                print(pomodoro)
+//            })
+            print("Start Favorite")
+            completionHandler(true)
+        })
+
+        action.image = UIImage(named: "heart")
+        action.backgroundColor = .green
+        let configuration = UISwipeActionsConfiguration(actions: [action])
+        return configuration
+    }
 }

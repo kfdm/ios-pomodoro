@@ -9,14 +9,14 @@
 import Foundation
 import UIKit
 
-class HistoryCell : UITableViewCell {
+class HistoryCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
 }
 
-class HistoryViewController : UITableViewController {
-    var data : [Pomodoro] = []
+class HistoryViewController: UITableViewController {
+    var data: [Pomodoro] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +58,24 @@ class HistoryViewController : UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
+    }
+
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+        let title = NSLocalizedString("Repeat", comment: "Repeat")
+
+        let action = UIContextualAction(style: .normal, title: title, handler: { (_, _, completionHandler) in
+//            PomodoroAPI.startFavorite(favorite: self.data[indexPath.row], completionHandler: {  pomodoro in
+//                print(pomodoro)
+//            })
+            print("Re-launch Pomodoro")
+            completionHandler(true)
+        })
+
+        action.image = UIImage(named: "heart")
+        action.backgroundColor = .green
+        let configuration = UISwipeActionsConfiguration(actions: [action])
+        return configuration
     }
 
 }

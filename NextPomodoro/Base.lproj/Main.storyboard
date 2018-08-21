@@ -390,6 +390,9 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" systemItem="mostViewed" id="TzZ-hz-ysM"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="tgq-GH-q8r">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                     <connections>
                         <outlet property="categoryInput" destination="uad-Lc-WLx" id="qyv-Jt-j4M"/>
                         <outlet property="categoryLabel" destination="Woi-2k-3z0" id="bRD-vy-rjf"/>

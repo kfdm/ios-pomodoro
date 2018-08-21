@@ -121,6 +121,7 @@ func postRequest(postBody: Data, method: String, url: String, completionHandler:
 
     let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, _ -> Void in
         if let httpResponse = response as? HTTPURLResponse {
+            print(httpResponse)
             completionHandler(httpResponse, data!)
         }
     })
@@ -238,5 +239,32 @@ func submitPomodoro(title: String, category: String, duration: Int, completionHa
         })
     } catch let error {
         print(error)
+    }
+}
+
+class PomodoroAPI {
+    static func startFavorite(favorite: Favorite, completionHandler: @escaping (Pomodoro) -> Void) {
+        let url = "\(ApplicationSettings.baseURL)api/favorites/\(favorite.id)/start"
+        let encoder = JSONEncoder()
+
+        do {
+            let data = try encoder.encode(favorite)
+
+            postRequest(postBody: data, method: "POST", url: url, completionHandler: {_, data in
+                do {
+                    print(data)
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .custom(dateDecode)
+                    do {
+                        let newPomodoro = try decoder.decode(Pomodoro.self, from: data)
+                        completionHandler(newPomodoro)
+                    } catch let error {
+                        print(error)
+                    }
+                }
+            })
+        } catch let error {
+            print(error)
+        }
     }
 }

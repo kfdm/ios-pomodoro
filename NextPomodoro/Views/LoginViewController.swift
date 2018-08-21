@@ -15,7 +15,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var PasswordField: UITextField!
     @IBOutlet weak var OnepasswordButton: UIButton!
 
-
     override func viewDidLoad() {
         //self.OnepasswordButton.isHidden = (false == OnePasswordExtension.shared().isAppExtensionAvailable())
         super.viewDidLoad()

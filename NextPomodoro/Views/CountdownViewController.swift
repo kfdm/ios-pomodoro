@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-class CountdownViewController : UITableViewController {
-    var data : Pomodoro?
+class CountdownViewController: UITableViewController {
+    var data: Pomodoro?
     var timer = Timer()
     var active = false
 
@@ -39,6 +39,7 @@ class CountdownViewController : UITableViewController {
                 self.startLabel.detailTextLabel?.text = formatter.string(for: data.start)
                 self.endLabel.detailTextLabel?.text = formatter.string(for: data.end)
             }
+            self.tableView.refreshControl?.endRefreshing()
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
         }
@@ -115,7 +116,11 @@ class CountdownViewController : UITableViewController {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        refreshData()
+    }
 
+    @objc func refreshData() {
         if ApplicationSettings.username != nil {
             getHistory(completionHandler: { favorites in
                 self.data = favorites.sorted(by: { $0.id > $1.id })[0]

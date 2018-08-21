@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class CountdownViewController: UITableViewController {
+class CountdownViewController: UITableViewController, UITextFieldDelegate {
     var data: Pomodoro?
     var timer = Timer()
     var active = false
@@ -24,6 +24,8 @@ class CountdownViewController: UITableViewController {
 
     @IBOutlet weak var titleInput: UITextField!
     @IBOutlet weak var categoryInput: UITextField!
+
+    // MARK: - custom
 
     func updateView() {
         DispatchQueue.main.async {
@@ -71,6 +73,18 @@ class CountdownViewController: UITableViewController {
         }
     }
 
+    @objc func refreshData() {
+        if ApplicationSettings.username != nil {
+            getHistory(completionHandler: { favorites in
+                self.data = favorites.sorted(by: { $0.id > $1.id })[0]
+                self.updateCounter()
+                self.updateView()
+            })
+        }
+    }
+
+    // MARK: - lifecycle
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         timer = Timer.scheduledTimer(
@@ -81,6 +95,27 @@ class CountdownViewController: UITableViewController {
             repeats: true
         )
     }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+
+        titleInput.delegate = self
+        categoryInput.delegate = self
+        refreshData()
+    }
+
+    // MARK: - textField
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
+    // MARK: - tableView
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if active {
@@ -112,23 +147,7 @@ class CountdownViewController: UITableViewController {
         }
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        refreshData()
-    }
-
-    @objc func refreshData() {
-        if ApplicationSettings.username != nil {
-            getHistory(completionHandler: { favorites in
-                self.data = favorites.sorted(by: { $0.id > $1.id })[0]
-                self.updateCounter()
-                self.updateView()
-            })
-        }
-    }
+    // MARK: - buttons
 
     @IBAction func extendButton(_ sender: UIButton) {
         print("Extend Pomodoro")
@@ -151,6 +170,9 @@ class CountdownViewController: UITableViewController {
     }
 
     @IBAction func submit25Button(_ sender: UIButton) {
+        titleInput.resignFirstResponder()
+        categoryInput.resignFirstResponder()
+
         submitPomodoro(title: titleInput!.text!, category: categoryInput!.text!, duration: 1500, completionHandler: {  pomodoro in
             self.data = pomodoro
             self.updateCounter()
@@ -159,6 +181,9 @@ class CountdownViewController: UITableViewController {
     }
 
     @IBAction func submitHourButton(_ sender: UIButton) {
+        titleInput.resignFirstResponder()
+        categoryInput.resignFirstResponder()
+
         submitPomodoro(title: titleInput!.text!, category: categoryInput!.text!, duration: 3600, completionHandler: { pomodoro in
             self.data = pomodoro
             self.updateCounter()

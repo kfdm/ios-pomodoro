@@ -106,7 +106,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate {
         titleInput.delegate = self
         categoryInput.delegate = self
         refreshData()
-        
+
     }
 
     // MARK: - textField

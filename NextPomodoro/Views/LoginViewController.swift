@@ -11,6 +11,8 @@ import UIKit
 import OnePasswordExtension
 
 class LoginViewController: UIViewController {
+    var spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+
     @IBOutlet weak var UsernameField: UITextField!
     @IBOutlet weak var PasswordField: UITextField!
     @IBOutlet weak var OnepasswordButton: UIButton!
@@ -21,16 +23,22 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func LoginClick(_ sender: UIButton) {
+        spinner.startAnimating()
         checkLogin(username: UsernameField.text!, password: PasswordField.text!, completionHandler: {response in
             if response.statusCode == 200 {
                 print("Successfully logged in")
-                ApplicationSettings.username = self.UsernameField.text!
-                ApplicationSettings.password = self.PasswordField.text!
                 DispatchQueue.main.async {
+                    ApplicationSettings.username = self.UsernameField.text!
+                    ApplicationSettings.password = self.PasswordField.text!
+
+                    self.spinner.stopAnimating()
                     self.navigationController?.popViewController(animated: true)
                 }
 
             } else {
+                DispatchQueue.main.async {
+                    self.spinner.stopAnimating()
+                }
                 print("Error logging in")
             }
         })

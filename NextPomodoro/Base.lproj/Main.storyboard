@@ -528,6 +528,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="G15-vg-mbH" firstAttribute="top" secondItem="VYy-Ze-Ksk" secondAttribute="top" id="1Lo-Ys-vIb"/>
+                                        <constraint firstItem="G15-vg-mbH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VYy-Ze-Ksk" secondAttribute="leading" constant="20" symbolic="YES" id="JQ8-lt-CxY"/>
                                         <constraint firstAttribute="trailing" secondItem="G15-vg-mbH" secondAttribute="trailing" constant="16" id="YaW-lO-LbJ"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -553,6 +554,57 @@
             </objects>
             <point key="canvasLocation" x="1664.8" y="880.20989505247383"/>
         </scene>
+        <!--Settings-->
+        <scene sceneID="r6a-x7-Nlv">
+            <objects>
+                <tableViewController id="lkQ-et-RFU" customClass="SettingsViewController" customModule="NextPomodoro" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="NZq-yd-K28">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <sections>
+                            <tableViewSection id="yCr-7C-Cd6">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="R2X-WJ-oU8">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="R2X-WJ-oU8" id="ySV-ce-Ubt">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aS4-fe-AFR">
+                                                    <rect key="frame" x="16" y="7" width="343" height="30"/>
+                                                    <color key="backgroundColor" name="Destructive"/>
+                                                    <state key="normal" title="Logout">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="logoutButton:" destination="lkQ-et-RFU" eventType="touchUpInside" id="Myd-TG-bX2"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="aS4-fe-AFR" firstAttribute="centerX" secondItem="ySV-ce-Ubt" secondAttribute="centerX" id="Jla-Yh-291"/>
+                                                <constraint firstAttribute="trailing" secondItem="aS4-fe-AFR" secondAttribute="trailing" constant="16" id="KmP-bI-QjN"/>
+                                                <constraint firstItem="aS4-fe-AFR" firstAttribute="leading" secondItem="ySV-ce-Ubt" secondAttribute="leading" constant="16" id="QN3-T3-GkU"/>
+                                                <constraint firstItem="aS4-fe-AFR" firstAttribute="centerY" secondItem="ySV-ce-Ubt" secondAttribute="centerY" id="jl5-cx-gBG"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="lkQ-et-RFU" id="NM7-Ga-PaP"/>
+                            <outlet property="delegate" destination="lkQ-et-RFU" id="bKj-CM-MHl"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Settings" id="eGQ-S9-kfh"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0EW-pt-bM3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2341" y="882"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
@@ -567,6 +619,7 @@
                         <segue destination="Mhl-wr-sS5" kind="relationship" relationship="viewControllers" id="eK1-cJ-752"/>
                         <segue destination="q73-If-i1R" kind="relationship" relationship="viewControllers" id="jXu-iv-JoV"/>
                         <segue destination="QJe-R6-GOo" kind="relationship" relationship="viewControllers" id="LKX-dj-oJQ"/>
+                        <segue destination="lkQ-et-RFU" kind="relationship" relationship="viewControllers" id="ISY-n8-Wqf"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>

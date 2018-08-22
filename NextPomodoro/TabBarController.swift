@@ -14,6 +14,7 @@ class TabBarController: UITabBarController {
         if ApplicationSettings.username == nil {
             self.navigationController?.performSegue(withIdentifier: "ShowLogin", sender: self)
         }
+        self.selectedIndex = 0
         super.viewWillAppear(animated)
     }
 }

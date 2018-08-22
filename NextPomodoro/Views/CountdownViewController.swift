@@ -58,10 +58,10 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate {
             active = elapsed < 0
 
             if elapsed > 0 {
-                setCountdown(color: elapsed > 300 ? UIColor.red : UIColor.yellow, text: formatter.string(from: TimeInterval(elapsed))!)
+                setCountdown(color: elapsed > 300 ? UIColor(named: "LateTimer")! : UIColor(named: "BreakTimer")!, text: formatter.string(from: TimeInterval(elapsed))!)
             } else {
                 elapsed *= -1
-                setCountdown(color: UIColor.green, text: formatter.string(from: TimeInterval(elapsed))!)
+                setCountdown(color: UIColor.init(named: "ActiveTimer")!, text: formatter.string(from: TimeInterval(elapsed))!)
             }
         }
     }
@@ -106,6 +106,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate {
         titleInput.delegate = self
         categoryInput.delegate = self
         refreshData()
+        
     }
 
     // MARK: - textField

@@ -73,7 +73,7 @@ class HistoryViewController: UITableViewController {
         })
 
         action.image = UIImage(named: "heart")
-        action.backgroundColor = .green
+        action.backgroundColor = UIColor.init(named: "Favorite")
         let configuration = UISwipeActionsConfiguration(actions: [action])
         return configuration
     }

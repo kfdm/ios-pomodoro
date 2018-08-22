@@ -63,6 +63,12 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         }
     }
 
+    // MARK: - tableView
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        extensionContext?.open(URL(string: "pomodoro.tsundere.co://")!, completionHandler: nil)
+    }
+
     // MARK: - lifecycle
 
     override func viewDidLoad() {

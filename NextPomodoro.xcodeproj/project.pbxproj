@@ -25,6 +25,7 @@
 		87B651A52128F45E006D88AF /* PomodoroAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B651A42128F45E006D88AF /* PomodoroAPI.swift */; };
 		87B651A62128F488006D88AF /* PomodoroAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B651A42128F45E006D88AF /* PomodoroAPI.swift */; };
 		C19EC6FD212CE12C005F5A2F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19EC6FC212CE12C005F5A2F /* SettingsViewController.swift */; };
+		C19EC700212CEC5D005F5A2F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87B6517F2128F0AE006D88AF /* Assets.xcassets */; };
 		D6797A91CEAB983113B50514 /* Pods_NextPomodoroToday.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B1FD18465026C5BEA2AEE8 /* Pods_NextPomodoroToday.framework */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,8 @@
 		95A5AC4DEE93F9F2F16BD43E /* Pods-NextPomodoroToday.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NextPomodoroToday.release.xcconfig"; path = "Pods/Target Support Files/Pods-NextPomodoroToday/Pods-NextPomodoroToday.release.xcconfig"; sourceTree = "<group>"; };
 		A9CB0A262F1FF88FF3345417 /* Pods-NextPomodoroToday.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NextPomodoroToday.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NextPomodoroToday/Pods-NextPomodoroToday.debug.xcconfig"; sourceTree = "<group>"; };
 		C19EC6FC212CE12C005F5A2F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		C19EC6FE212CEBDB005F5A2F /* NextPomodoroToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextPomodoroToday.entitlements; sourceTree = "<group>"; };
+		C19EC6FF212CEBE8005F5A2F /* NextPomodoro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextPomodoro.entitlements; sourceTree = "<group>"; };
 		CD83A8F4A3FBFDB9065C0F6E /* Pods-NextPomodoro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NextPomodoro.release.xcconfig"; path = "Pods/Target Support Files/Pods-NextPomodoro/Pods-NextPomodoro.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,6 +118,7 @@
 		8756548921293C2400D69D6D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				87B6517C2128F0AD006D88AF /* Main.storyboard */,
 				87B6518C2128F258006D88AF /* LoginViewController.swift */,
 				8756548A212947AA00D69D6D /* FavoritesViewController.swift */,
 				8756548C2129586000D69D6D /* HistoryViewController.swift */,
@@ -148,11 +152,11 @@
 		87B651752128F0AD006D88AF /* NextPomodoro */ = {
 			isa = PBXGroup;
 			children = (
+				C19EC6FF212CEBE8005F5A2F /* NextPomodoro.entitlements */,
 				87B651A42128F45E006D88AF /* PomodoroAPI.swift */,
 				87B6518A2128F184006D88AF /* TabBarController.swift */,
 				8756548921293C2400D69D6D /* Views */,
 				87B651762128F0AD006D88AF /* AppDelegate.swift */,
-				87B6517C2128F0AD006D88AF /* Main.storyboard */,
 				87B6517F2128F0AE006D88AF /* Assets.xcassets */,
 				87B651812128F0AE006D88AF /* LaunchScreen.storyboard */,
 				87B651842128F0AE006D88AF /* Info.plist */,
@@ -173,6 +177,7 @@
 		87B651962128F422006D88AF /* NextPomodoroToday */ = {
 			isa = PBXGroup;
 			children = (
+				C19EC6FE212CEBDB005F5A2F /* NextPomodoroToday.entitlements */,
 				87B651972128F422006D88AF /* TodayViewController.swift */,
 				87B651992128F422006D88AF /* MainInterface.storyboard */,
 				87B6519C2128F422006D88AF /* Info.plist */,
@@ -235,9 +240,19 @@
 				TargetAttributes = {
 					87B651722128F0AD006D88AF = {
 						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					87B651912128F422006D88AF = {
 						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -276,6 +291,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C19EC700212CEC5D005F5A2F /* Assets.xcassets in Resources */,
 				87B6519B2128F422006D88AF /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -535,6 +551,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = NextPomodoro/NextPomodoro.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
 				INFOPLIST_FILE = NextPomodoro/Info.plist;
@@ -555,6 +572,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = NextPomodoro/NextPomodoro.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
 				INFOPLIST_FILE = NextPomodoro/Info.plist;
@@ -573,6 +591,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A9CB0A262F1FF88FF3345417 /* Pods-NextPomodoroToday.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = NextPomodoroToday/NextPomodoroToday.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
 				INFOPLIST_FILE = NextPomodoroToday/Info.plist;
@@ -593,6 +612,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 95A5AC4DEE93F9F2F16BD43E /* Pods-NextPomodoroToday.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = NextPomodoroToday/NextPomodoroToday.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
 				INFOPLIST_FILE = NextPomodoroToday/Info.plist;

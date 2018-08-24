@@ -104,7 +104,7 @@ func authRequest(username: String, password: String, url: String, completionHand
 func postRequest(postBody: Data, method: String, url: String, completionHandler: @escaping (HTTPURLResponse, Data) -> Void) {
     let username = ApplicationSettings.username!
     let password = ApplicationSettings.password!
-    var request = URLRequest.init(url: URL.init(string: url)!)
+    var request = URLRequest(url: URL.init(string: url)!)
 
     let loginString = "\(username):\(password)"
 

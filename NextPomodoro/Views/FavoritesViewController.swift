@@ -8,12 +8,14 @@
 
 import Foundation
 import UIKit
+import SDWebImage
 
 class FavoritesCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var favoriteIcon: UIImageView!
 }
 
 class FavoritesViewController: UITableViewController {
@@ -47,6 +49,9 @@ class FavoritesViewController: UITableViewController {
         cell.categoryLabel.text = data[indexPath.row].category
         cell.durationLabel.text = "\(data[indexPath.row].duration) minutes"
         cell.countLabel.text = "\(data[indexPath.row].count) times"
+        if let icon = data[indexPath.row].icon {
+            cell.favoriteIcon.sd_setImage(with: URL(string: icon), placeholderImage: nil, options: SDWebImageOptions.scaleDownLargeImages, completed: nil)
+        }
 
         return cell
     }

@@ -71,11 +71,16 @@ class FavoritesViewController: UITableViewController {
         let title = NSLocalizedString("Favorite", comment: "Favorite")
 
         let action = UIContextualAction(style: .normal, title: title, handler: { (_, _, completionHandler) in
-//            PomodoroAPI.startFavorite(favorite: self.data[indexPath.row], completionHandler: {  pomodoro in
-//                print(pomodoro)
-//            })
-            print("Start Favorite")
-            completionHandler(true)
+            PomodoroAPI.startFavorite(favorite: self.data[indexPath.row], completionHandler: {  pomodoro in
+                print("Move to main view")
+                if let view = self.tabBarController?.viewControllers?[0] {
+                    DispatchQueue.main.async {
+                        self.tabBarController?.selectedViewController = view
+                        view.viewDidLoad()
+                    }
+                }
+                completionHandler(true)
+            })
         })
 
         action.image = UIImage(named: "heart")

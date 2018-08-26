@@ -29,9 +29,6 @@ struct ApplicationSettingsKeys {
 struct ApplicationSettings {
     static let defaults = UserDefaults(suiteName: ApplicationSettingsKeys.suiteName)!
     static let baseURL = "https://tsundere.co/"
-    static let pomodoroAPI = "https://tsundere.co/api/pomodoro"
-    static let favoriteAPI = "https://tsundere.co/api/favorite"
-    static let tokenApi = "https://tsundere.co/api/token/"
 
     static var username: String? {
         get { return defaults.string(forKey: ApplicationSettingsKeys.username) }
@@ -77,8 +74,8 @@ struct PomodoroResponse: Codable {
     let results: [Pomodoro]
 }
 
-func authRequest(username: String, password: String, url: String, completionHandler: @escaping (HTTPURLResponse, Data) -> Void) {
-    var request = URLRequest.init(url: URL.init(string: url)!)
+func authRequest(username: String, password: String, url: URL, completionHandler: @escaping (HTTPURLResponse, Data) -> Void) {
+    var request = URLRequest.init(url: url)
 
     let loginString = "\(username):\(password)"
 
@@ -101,10 +98,10 @@ func authRequest(username: String, password: String, url: String, completionHand
     task.resume()
 }
 
-func postRequest(postBody: Data, method: String, url: String, completionHandler: @escaping (HTTPURLResponse, Data) -> Void) {
+func postRequest(postBody: Data, method: String, url: URL, completionHandler: @escaping (HTTPURLResponse, Data) -> Void) {
     let username = ApplicationSettings.username!
     let password = ApplicationSettings.password!
-    var request = URLRequest(url: URL.init(string: url)!)
+    var request = URLRequest(url: url)
 
     let loginString = "\(username):\(password)"
 
@@ -130,13 +127,13 @@ func postRequest(postBody: Data, method: String, url: String, completionHandler:
 }
 
 func checkLogin(username: String, password: String, completionHandler: @escaping (HTTPURLResponse) -> Void) {
-    authRequest(username: username, password: password, url: ApplicationSettings.pomodoroAPI, completionHandler: {response, _ in
+    authRequest(username: username, password: password, url: PomodoroURL.favoriteList(), completionHandler: {response, _ in
         completionHandler(response)
     })
 }
 
 func getFavorites(completionHandler: @escaping ([Favorite]) -> Void) {
-    authRequest(username: ApplicationSettings.username!, password: ApplicationSettings.password!, url: ApplicationSettings.favoriteAPI, completionHandler: {_, data in
+    authRequest(username: ApplicationSettings.username!, password: ApplicationSettings.password!, url: PomodoroURL.favoriteList(), completionHandler: {_, data in
         do {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -174,7 +171,7 @@ func dateDecode(decoder: Decoder) throws -> Date {
 }
 
 func getHistory(completionHandler: @escaping ([Pomodoro]) -> Void) {
-    authRequest(username: ApplicationSettings.username!, password: ApplicationSettings.password!, url: ApplicationSettings.pomodoroAPI, completionHandler: {_, data in
+    authRequest(username: ApplicationSettings.username!, password: ApplicationSettings.password!, url: PomodoroURL.pomodoroList(), completionHandler: {_, data in
         do {
             let decoder = JSONDecoder()
             // https://stackoverflow.com/a/46538676
@@ -195,7 +192,7 @@ func updatePomodoro(pomodoro: Pomodoro, completionHandler: @escaping (Pomodoro) 
     do {
         let data = try encoder.encode(pomodoro)
 
-        postRequest(postBody: data, method: "PUT", url: ApplicationSettings.pomodoroAPI + "/\(pomodoro.id)", completionHandler: {_, data in
+        postRequest(postBody: data, method: "PUT", url: PomodoroURL.pomodoroUpdate(pomodoro: pomodoro), completionHandler: {_, data in
             do {
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .custom(dateDecode)
@@ -225,7 +222,7 @@ func submitPomodoro(title: String, category: String, duration: Int, completionHa
     do {
         let data = try encoder.encode(pomodoro)
 
-        postRequest(postBody: data, method: "POST", url: ApplicationSettings.pomodoroAPI, completionHandler: {_, data in
+        postRequest(postBody: data, method: "POST", url: PomodoroURL.pomodoroList(), completionHandler: {_, data in
             do {
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .custom(dateDecode)
@@ -242,9 +239,27 @@ func submitPomodoro(title: String, category: String, duration: Int, completionHa
     }
 }
 
+class PomodoroURL {
+    static func pomodoroList() -> URL {
+        return URL(string: "\(ApplicationSettings.baseURL)api/pomodoro")!
+    }
+
+    static func pomodoroUpdate(pomodoro: Pomodoro) -> URL {
+        return URL(string: "\(ApplicationSettings.baseURL)api/pomodoro/\(pomodoro.id)")!
+    }
+
+    static func favoriteList() -> URL {
+        return URL(string: "\(ApplicationSettings.baseURL)api/favorite")!
+    }
+
+    static func favoriteStart(favorite: Favorite) -> URL {
+        return URL(string: "\(ApplicationSettings.baseURL)api/favorite/\(favorite.id)/start")!
+    }
+}
+
 class PomodoroAPI {
     static func startFavorite(favorite: Favorite, completionHandler: @escaping (Pomodoro) -> Void) {
-        let url = "\(ApplicationSettings.baseURL)api/favorites/\(favorite.id)/start"
+        let url = PomodoroURL.favoriteStart(favorite: favorite)
         let encoder = JSONEncoder()
 
         do {

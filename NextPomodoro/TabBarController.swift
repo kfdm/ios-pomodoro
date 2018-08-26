@@ -17,4 +17,14 @@ class TabBarController: UITabBarController {
         self.selectedIndex = 0
         super.viewWillAppear(animated)
     }
+
+    func moveToTab(_ index: Int) {
+        if let view = self.viewControllers?[index] {
+            DispatchQueue.main.async {
+                self.selectedViewController = view
+            }
+        } else {
+            print("Unable to select tab \(index)")
+        }
+    }
 }

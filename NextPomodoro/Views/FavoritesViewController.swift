@@ -44,10 +44,14 @@ class FavoritesViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Favorite", for: indexPath) as! FavoritesCell
+        let favorite = data[indexPath.row]
+
+        let interval = TimeInterval(favorite.duration * 60)
+        let formatter = ApplicationSettings.shortTime
 
         cell.titleLabel.text = data[indexPath.row].title
         cell.categoryLabel.text = data[indexPath.row].category
-        cell.durationLabel.text = "\(data[indexPath.row].duration) minutes"
+        cell.durationLabel.text = formatter.string(from: interval)
         cell.countLabel.text = "\(data[indexPath.row].count) times"
         if let icon = data[indexPath.row].icon {
             cell.favoriteIcon.sd_setImage(with: URL(string: icon), placeholderImage: nil, options: SDWebImageOptions.scaleDownLargeImages, completed: nil)

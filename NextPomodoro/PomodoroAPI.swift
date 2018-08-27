@@ -44,6 +44,31 @@ struct ApplicationSettings {
         get { return defaults.string(forKey: ApplicationSettingsKeys.password) }
         set { defaults.set(newValue, forKey: ApplicationSettingsKeys.password) }
     }
+
+    static var shortDateTime: DateFormatter {
+        let dateFormat = DateFormatter()
+        dateFormat.locale = NSLocale.current
+        dateFormat.dateStyle = .short
+        dateFormat.timeStyle = .short
+        dateFormat.timeZone = TimeZone.current
+        return dateFormat
+    }
+
+    static var mediumDateTime: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .medium
+        formatter.timeZone = TimeZone.current
+        return formatter
+    }
+
+    static var shortTime: DateComponentsFormatter {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        return formatter
+    }
 }
 
 struct Favorite: Codable {

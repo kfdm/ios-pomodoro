@@ -33,10 +33,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate {
                 self.titleLabel.text = data.title
                 self.categoryLabel.text = data.category
 
-                let formatter = DateFormatter()
-                formatter.dateStyle = .medium
-                formatter.timeStyle = .medium
-                formatter.timeZone = TimeZone.current
+                let formatter = ApplicationSettings.mediumDateTime
 
                 self.startLabel.detailTextLabel?.text = formatter.string(for: data.start)
                 self.endLabel.detailTextLabel?.text = formatter.string(for: data.end)
@@ -49,10 +46,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate {
 
     @objc func updateCounter() {
         if let data = data {
-            let formatter = DateComponentsFormatter()
-            formatter.allowedUnits = [.hour, .minute, .second]
-            formatter.unitsStyle = .positional
-            formatter.zeroFormattingBehavior = .pad
+            let formatter = ApplicationSettings.shortTime
 
             var elapsed = Date().timeIntervalSince(data.end)
             active = elapsed < 0

@@ -47,18 +47,11 @@ class HistoryViewController: UITableViewController {
         cell.categoryLabel.text = data[indexPath.row].category
 
         let duration = data[indexPath.row].end.timeIntervalSince(data[indexPath.row].start)
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.hour, .minute, .second]
-        formatter.unitsStyle = .positional
-        formatter.zeroFormattingBehavior = .pad
 
+        let formatter = ApplicationSettings.shortTime
         cell.durationLabel.text = formatter.string(from: duration)
 
-        let dateFormat = DateFormatter()
-        dateFormat.locale = NSLocale.current
-        dateFormat.dateStyle = .short
-        dateFormat.timeStyle = .short
-        dateFormat.timeZone = TimeZone.current
+        let dateFormat = ApplicationSettings.shortDateTime
         cell.endLabel.text = dateFormat.string(from: data[indexPath.row].end)
 
         return cell

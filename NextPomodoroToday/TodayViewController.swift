@@ -31,10 +31,7 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
 
     @objc func updateCounter() {
         if let data = data {
-            let formatter = DateComponentsFormatter()
-            formatter.allowedUnits = [.hour, .minute, .second]
-            formatter.unitsStyle = .positional
-            formatter.zeroFormattingBehavior = .pad
+            let formatter = ApplicationSettings.shortTime
 
             var elapsed = Date().timeIntervalSince(data.end)
 

@@ -13,6 +13,7 @@ class HistoryCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var endLabel: UILabel!
 }
 
 class HistoryViewController: UITableViewController {
@@ -30,7 +31,7 @@ class HistoryViewController: UITableViewController {
         print("Refreshing History")
         getHistory(completionHandler: { pomodoros in
             print("Got New History")
-            self.data = pomodoros.sorted(by: { $0.id > $1.id })
+            self.data = pomodoros.sorted(by: { $0.end > $1.end })
 
             DispatchQueue.main.async {
                 self.tableView.refreshControl?.endRefreshing()
@@ -53,6 +54,13 @@ class HistoryViewController: UITableViewController {
 
         cell.durationLabel.text = formatter.string(from: duration)
 
+        let dateFormat = DateFormatter()
+        dateFormat.locale = NSLocale.current
+        dateFormat.dateStyle = .short
+        dateFormat.timeStyle = .short
+        dateFormat.timeZone = TimeZone.current
+        cell.endLabel.text = dateFormat.string(from: data[indexPath.row].end)
+
         return cell
     }
 
@@ -65,11 +73,17 @@ class HistoryViewController: UITableViewController {
         let title = NSLocalizedString("Repeat", comment: "Repeat")
 
         let action = UIContextualAction(style: .normal, title: title, handler: { (_, _, completionHandler) in
-//            PomodoroAPI.startFavorite(favorite: self.data[indexPath.row], completionHandler: {  pomodoro in
-//                print(pomodoro)
-//            })
             print("Re-launch Pomodoro")
-            completionHandler(true)
+            PomodoroAPI.repeatPomodoro(pomodoro: self.data[indexPath.row], completionHandler: {  pomodoro in
+                print("Move to main view")
+                if let view = self.tabBarController?.viewControllers?[0] {
+                    DispatchQueue.main.async {
+                        self.tabBarController?.selectedViewController = view
+                        view.viewDidLoad()
+                    }
+                }
+                completionHandler(true)
+            })
         })
 
         action.image = UIImage(named: "heart")

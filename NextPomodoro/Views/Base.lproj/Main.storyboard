@@ -505,36 +505,49 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijq-OI-NpH">
-                                            <rect key="frame" x="6.5" y="0.0" width="239" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijq-OI-NpH">
+                                            <rect key="frame" x="16" y="0.0" width="33.5" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFR-kJ-atf">
-                                            <rect key="frame" x="6.5" y="22" width="239" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFR-kJ-atf">
+                                            <rect key="frame" x="16" y="22" width="70.5" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Duration" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G15-vg-mbH">
-                                            <rect key="frame" x="239" y="0.0" width="120" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Duration" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G15-vg-mbH">
+                                            <rect key="frame" x="293.5" y="0.0" width="65.5" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DKY-X6-pMf">
+                                            <rect key="frame" x="293.5" y="22.5" width="65.5" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="G15-vg-mbH" firstAttribute="top" secondItem="VYy-Ze-Ksk" secondAttribute="top" id="1Lo-Ys-vIb"/>
-                                        <constraint firstItem="G15-vg-mbH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VYy-Ze-Ksk" secondAttribute="leading" constant="20" symbolic="YES" id="JQ8-lt-CxY"/>
-                                        <constraint firstAttribute="trailing" secondItem="G15-vg-mbH" secondAttribute="trailing" constant="16" id="YaW-lO-LbJ"/>
+                                        <constraint firstAttribute="bottom" secondItem="AFR-kJ-atf" secondAttribute="bottom" id="5e1-0g-dL7"/>
+                                        <constraint firstItem="G15-vg-mbH" firstAttribute="top" secondItem="VYy-Ze-Ksk" secondAttribute="top" constant="6" id="8nb-Vt-uEg"/>
+                                        <constraint firstAttribute="trailing" secondItem="DKY-X6-pMf" secondAttribute="trailing" constant="16" id="AVA-4O-xjA"/>
+                                        <constraint firstItem="Ijq-OI-NpH" firstAttribute="top" secondItem="VYy-Ze-Ksk" secondAttribute="top" id="E8o-F3-QYi"/>
+                                        <constraint firstAttribute="bottom" secondItem="DKY-X6-pMf" secondAttribute="bottom" id="Nq4-UO-I94"/>
+                                        <constraint firstAttribute="trailing" secondItem="G15-vg-mbH" secondAttribute="trailing" constant="16" id="V5m-zK-CEU"/>
+                                        <constraint firstItem="Ijq-OI-NpH" firstAttribute="leading" secondItem="VYy-Ze-Ksk" secondAttribute="leading" constant="16" id="ZYI-ig-Xx6"/>
+                                        <constraint firstItem="AFR-kJ-atf" firstAttribute="leading" secondItem="VYy-Ze-Ksk" secondAttribute="leading" constant="16" id="nNw-Wm-5EB"/>
+                                        <constraint firstItem="DKY-X6-pMf" firstAttribute="width" secondItem="G15-vg-mbH" secondAttribute="width" id="tha-1i-edh"/>
+                                        <constraint firstAttribute="bottom" secondItem="DKY-X6-pMf" secondAttribute="bottom" id="w4c-jZ-lBE"/>
+                                        <constraint firstItem="G15-vg-mbH" firstAttribute="top" secondItem="VYy-Ze-Ksk" secondAttribute="top" id="wAE-IU-Thq"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="categoryLabel" destination="AFR-kJ-atf" id="29Q-Nb-LCw"/>
                                     <outlet property="durationLabel" destination="G15-vg-mbH" id="9B3-xM-v9T"/>
+                                    <outlet property="endLabel" destination="DKY-X6-pMf" id="6EK-JM-Khz"/>
                                     <outlet property="titleLabel" destination="Ijq-OI-NpH" id="3mu-zM-7JK"/>
                                 </connections>
                             </tableViewCell>

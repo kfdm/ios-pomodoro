@@ -21,6 +21,7 @@ extension DateFormatter {
 
 struct ApplicationSettingsKeys {
     static let apiKey = "apiKey"
+    static let baseURL = "baseURL"
     static let suiteName = "group.net.kungfudiscomonkey.pomodoro"
     static let username = "username"
     static let password = "password"
@@ -28,7 +29,11 @@ struct ApplicationSettingsKeys {
 
 struct ApplicationSettings {
     static let defaults = UserDefaults(suiteName: ApplicationSettingsKeys.suiteName)!
-    static let baseURL = "https://tsundere.co/"
+
+    static var baseURL: String {
+        get { return defaults.string(forKey: ApplicationSettingsKeys.baseURL) ?? "https://tsundere.co/"}
+        set { defaults.set(newValue, forKey: ApplicationSettingsKeys.baseURL) }
+    }
 
     static var username: String? {
         get { return defaults.string(forKey: ApplicationSettingsKeys.username) }
@@ -268,6 +273,36 @@ class PomodoroAPI {
             postRequest(postBody: data, method: "POST", url: url, completionHandler: {_, data in
                 do {
                     print(data)
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .custom(dateDecode)
+                    do {
+                        let newPomodoro = try decoder.decode(Pomodoro.self, from: data)
+                        completionHandler(newPomodoro)
+                    } catch let error {
+                        print(error)
+                    }
+                }
+            })
+        } catch let error {
+            print(error)
+        }
+    }
+
+    static func repeatPomodoro(pomodoro: Pomodoro, completionHandler: @escaping (Pomodoro) -> Void) {
+        let start = Date.init()
+        let duration = pomodoro.end.timeIntervalSince(pomodoro.start)
+        let end = Date.init(timeInterval: duration, since: start)
+
+        let newPomodoro = Pomodoro.init(id: 0, title: pomodoro.title, start: start, end: end, category: pomodoro.category, owner: pomodoro.owner)
+        print(newPomodoro)
+
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        do {
+            let data = try encoder.encode(newPomodoro)
+
+            postRequest(postBody: data, method: "POST", url: PomodoroURL.pomodoroList(), completionHandler: {_, data in
+                do {
                     let decoder = JSONDecoder()
                     decoder.dateDecodingStrategy = .custom(dateDecode)
                     do {

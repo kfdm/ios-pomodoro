@@ -26,13 +26,11 @@ struct ApplicationSettingsKeys {
     static let username = "username"
     static let password = "password"
 }
-
 struct ApplicationSettings {
     static let defaults = UserDefaults(suiteName: ApplicationSettingsKeys.suiteName)!
 
     static var baseURL: String {
-        get { return defaults.string(forKey: ApplicationSettingsKeys.baseURL) ?? "https://tsundere.co/"}
-        set { defaults.set(newValue, forKey: ApplicationSettingsKeys.baseURL) }
+        return defaults.string(forKey: ApplicationSettingsKeys.baseURL) ?? "https://tsundere.co/"
     }
 
     static var username: String? {
@@ -271,7 +269,7 @@ func submitPomodoro(title: String, category: String, duration: Int, completionHa
 
 class PomodoroURL {
     static func pomodoroList() -> URL {
-        return URL(string: "\(ApplicationSettings.baseURL)api/pomodoro")!
+        return URL(string: "\(ApplicationSettings.baseURL)api/pomodoro?limit=100")!
     }
 
     static func pomodoroUpdate(pomodoro: Pomodoro) -> URL {

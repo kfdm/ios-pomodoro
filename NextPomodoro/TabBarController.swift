@@ -27,4 +27,26 @@ class TabBarController: UITabBarController {
             print("Unable to select tab \(index)")
         }
     }
+
+    func logoutAction() -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Logout", comment: "Logout"), style: .destructive, handler: { _ in
+            ApplicationSettings.username = nil
+            ApplicationSettings.password = nil
+            self.navigationController?.performSegue(withIdentifier: "ShowLogin", sender: self)
+        })
+    }
+
+    func settingsAction() -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Settings", comment: "Settings"), style: .default, handler: { _ in
+           UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
+        })
+    }
+
+    @IBAction func optionsButton(_ sender: Any) {
+        let alert = UIAlertController(title: "Options", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(settingsAction())
+        alert.addAction(logoutAction())
+        self.present(alert, animated: true, completion: nil)
+    }
 }

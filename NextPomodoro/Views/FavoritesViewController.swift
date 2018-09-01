@@ -60,12 +60,6 @@ class FavoritesViewController: UITableViewController {
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let favorite = self.data[indexPath.row]
-        print(favorite)
-
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
@@ -75,7 +69,7 @@ class FavoritesViewController: UITableViewController {
         let title = NSLocalizedString("Favorite", comment: "Favorite")
 
         let action = UIContextualAction(style: .normal, title: title, handler: { (_, _, completionHandler) in
-            PomodoroAPI.startFavorite(favorite: self.data[indexPath.row], completionHandler: {  pomodoro in
+            PomodoroAPI.startFavorite(favorite: self.data[indexPath.row], completionHandler: {  _ in
                 print("Move to main view")
                 if let view = self.tabBarController?.viewControllers?[0] {
                     DispatchQueue.main.async {

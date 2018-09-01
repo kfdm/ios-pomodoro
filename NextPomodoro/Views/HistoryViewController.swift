@@ -67,7 +67,7 @@ class HistoryViewController: UITableViewController {
 
         let action = UIContextualAction(style: .normal, title: title, handler: { (_, _, completionHandler) in
             print("Re-launch Pomodoro")
-            PomodoroAPI.repeatPomodoro(pomodoro: self.data[indexPath.row], completionHandler: {  pomodoro in
+            PomodoroAPI.repeatPomodoro(pomodoro: self.data[indexPath.row], completionHandler: {  _ in
                 print("Move to main view")
                 if let view = self.tabBarController?.viewControllers?[0] {
                     DispatchQueue.main.async {

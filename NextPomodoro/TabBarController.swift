@@ -42,8 +42,13 @@ class TabBarController: UITabBarController {
         })
     }
 
-    @IBAction func optionsButton(_ sender: Any) {
+    @IBAction func optionsButton(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: "Options", message: nil, preferredStyle: .actionSheet)
+
+        // Need to attach this to our tabBar for iPad support
+        alert.popoverPresentationController?.barButtonItem = sender
+        alert.popoverPresentationController?.sourceView = tabBar
+
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(settingsAction())
         alert.addAction(logoutAction())

@@ -19,16 +19,6 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
 
     // MARK: - custom
 
-    @objc func refreshData() {
-        if ApplicationSettings.username != nil {
-            getHistory(completionHandler: { favorites in
-                self.data = favorites.sorted(by: { $0.id > $1.id })[0]
-                self.updateCounter()
-                self.updateView()
-            })
-        }
-    }
-
     @objc func updateCounter() {
         if let data = data {
             let formatter = ApplicationSettings.shortTime
@@ -70,14 +60,14 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         tableView.dataSource = self
         tableView.delegate = self
-        refreshData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        // Restore our countdown timer
         timer = Timer.scheduledTimer(
             timeInterval: 1.0,
             target: self,
@@ -85,6 +75,11 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
             userInfo: nil,
             repeats: true
         )
+
+        // Restore Saved State
+        self.data = ApplicationSettings.cache
+        self.updateView()
+        self.updateCounter()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -94,11 +89,21 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
 
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
         // Perform any setup necessary in order to update the view.
+        DispatchQueue.global(qos: .background).async {
+            if ApplicationSettings.username != nil {
+                getHistory(completionHandler: { favorites in
+                    self.data = favorites.sorted(by: { $0.id > $1.id })[0]
+                    self.updateView()
+                    self.updateCounter()
 
-        // If an error is encountered, use NCUpdateResult.Failed
-        // If there's no update required, use NCUpdateResult.NoData
-        // If there's an update, use NCUpdateResult.NewData
-        refreshData()
-        completionHandler(NCUpdateResult.newData)
+                    // Save state
+                    ApplicationSettings.cache = self.data
+
+                    completionHandler(NCUpdateResult.newData)
+                })
+            } else {
+                completionHandler(NCUpdateResult.failed)
+            }
+        }
     }
 }

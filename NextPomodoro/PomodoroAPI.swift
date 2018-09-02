@@ -43,6 +43,16 @@ struct ApplicationSettings {
         set { defaults.set(newValue, forKey: ApplicationSettingsKeys.password) }
     }
 
+    static var cache: Pomodoro? {
+        get {
+            guard let data = defaults.value(forKey: "cache") as? Data else {return nil}
+            return try? PropertyListDecoder().decode(Pomodoro.self, from: data)
+        }
+        set {
+            defaults.set(try? PropertyListEncoder().encode(newValue), forKey: "cache")
+        }
+    }
+
     static var shortDateTime: DateFormatter {
         let dateFormat = DateFormatter()
         dateFormat.locale = NSLocale.current

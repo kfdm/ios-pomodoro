@@ -88,6 +88,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate {
             userInfo: nil,
             repeats: true
         )
+        data = ApplicationSettings.cache
     }
 
     override func viewDidLoad() {

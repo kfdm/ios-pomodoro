@@ -17,7 +17,8 @@ class HistoryCell: UITableViewCell {
 }
 
 class HistoryViewController: UITableViewController {
-    var data: [Pomodoro] = []
+    var groups = [String: [Pomodoro]]()
+    var sections = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,13 +26,29 @@ class HistoryViewController: UITableViewController {
         tableView.delegate = self
         tableView.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         self.refreshData()
+
     }
 
     @objc func refreshData() {
         print("Refreshing History")
         getHistory(completionHandler: { pomodoros in
             print("Got New History")
-            self.data = pomodoros.sorted(by: { $0.end > $1.end })
+            var newSections = [String]()
+            var newGroups = [String: [Pomodoro]]()
+
+            for item in pomodoros {
+                let df = DateFormatter()
+                df.dateFormat = "MM/dd/yyyy"
+                let dateString = df.string(from: item.end)
+                if newGroups.index(forKey: dateString) == nil {
+                    newGroups[dateString] = [Pomodoro]()
+                    newSections.append(dateString)
+                }
+                newGroups[dateString]?.append(item)
+            }
+
+            self.groups = newGroups
+            self.sections = newSections.sorted(by: {$0 > $1})
 
             DispatchQueue.main.async {
                 self.tableView.refreshControl?.endRefreshing()
@@ -40,34 +57,51 @@ class HistoryViewController: UITableViewController {
         })
     }
 
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.sections[section]
+    }
+
+    func getPomodoro(indexPath: IndexPath) -> Pomodoro {
+        let sec = sections[indexPath.section]
+        return groups[sec]![indexPath.row]
+    }
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let pomodoro = getPomodoro(indexPath: indexPath)
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "Pomodoro", for: indexPath) as! HistoryCell
 
-        cell.titleLabel.text = data[indexPath.row].title
-        cell.categoryLabel.text = data[indexPath.row].category
+        cell.titleLabel.text = pomodoro.title
+        cell.categoryLabel.text = pomodoro.category
 
-        let duration = data[indexPath.row].end.timeIntervalSince(data[indexPath.row].start)
+        let duration = pomodoro.end.timeIntervalSince(pomodoro.start)
 
         let formatter = ApplicationSettings.shortTime
         cell.durationLabel.text = formatter.string(from: duration)
 
         let dateFormat = ApplicationSettings.shortDateTime
-        cell.endLabel.text = dateFormat.string(from: data[indexPath.row].end)
+        cell.endLabel.text = dateFormat.string(from: pomodoro.end)
 
         return cell
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        let sec = sections[section]
+        return groups[sec]!.count
+    }
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return sections.count
     }
 
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
         let title = NSLocalizedString("Repeat", comment: "Repeat")
+        let pomodoro = getPomodoro(indexPath: indexPath)
 
         let action = UIContextualAction(style: .normal, title: title, handler: { (_, _, completionHandler) in
             print("Re-launch Pomodoro")
-            PomodoroAPI.repeatPomodoro(pomodoro: self.data[indexPath.row], completionHandler: {  _ in
+            PomodoroAPI.repeatPomodoro(pomodoro: pomodoro, completionHandler: {  _ in
                 print("Move to main view")
                 if let view = self.tabBarController?.viewControllers?[0] {
                     DispatchQueue.main.async {

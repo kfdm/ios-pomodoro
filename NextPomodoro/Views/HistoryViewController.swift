@@ -94,11 +94,22 @@ class HistoryViewController: UITableViewController {
         return sections.count
     }
 
-    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-
-        let title = NSLocalizedString("Repeat", comment: "Repeat")
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let pomodoro = getPomodoro(indexPath: indexPath)
+        let configuration = UISwipeActionsConfiguration(actions: [swipeActionDelete(for: pomodoro)])
+        return configuration
+    }
 
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let pomodoro = getPomodoro(indexPath: indexPath)
+        let configuration = UISwipeActionsConfiguration(actions: [swipeActionRepeat(for: pomodoro)])
+        return configuration
+    }
+
+    // MARK: - actions
+
+    func swipeActionRepeat(for pomodoro: Pomodoro) -> UIContextualAction {
+        let title = NSLocalizedString("Repeat", comment: "Repeat existing Pomodoro")
         let action = UIContextualAction(style: .normal, title: title, handler: { (_, _, completionHandler) in
             print("Re-launch Pomodoro")
             PomodoroAPI.repeatPomodoro(pomodoro: pomodoro, completionHandler: {  _ in
@@ -113,10 +124,18 @@ class HistoryViewController: UITableViewController {
             })
         })
 
-        action.image = UIImage(named: "heart")
         action.backgroundColor = UIColor.init(named: "Favorite")
-        let configuration = UISwipeActionsConfiguration(actions: [action])
-        return configuration
+
+        return action
+    }
+
+    func swipeActionDelete(for pomodoro: Pomodoro) -> UIContextualAction {
+        let title = NSLocalizedString("Delete", comment: "Delete History")
+        let action = UIContextualAction(style: .destructive, title: title, handler: { (_, _, completionHandler) in
+            print("Deleting History")
+            completionHandler(false)
+        })
+        return action
     }
 
 }

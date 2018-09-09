@@ -31,7 +31,7 @@ class FavoritesViewController: UITableViewController {
 
     @objc func refreshData() {
         print("Refreshing Favorites")
-        getFavorites(completionHandler: { favorites in
+        Favorite.list(completionHandler: { favorites in
             print("Got New Favorites")
             self.data = favorites.sorted(by: { $0.count > $1.count })
 
@@ -69,7 +69,8 @@ class FavoritesViewController: UITableViewController {
         let title = NSLocalizedString("Favorite", comment: "Favorite")
 
         let action = UIContextualAction(style: .normal, title: title, handler: { (_, _, completionHandler) in
-            PomodoroAPI.startFavorite(favorite: self.data[indexPath.row], completionHandler: {  _ in
+            let favorite = self.data[indexPath.row]
+            favorite.start(completionHandler: {  _ in
                 print("Move to main view")
                 if let view = self.tabBarController?.viewControllers?[0] {
                     DispatchQueue.main.async {

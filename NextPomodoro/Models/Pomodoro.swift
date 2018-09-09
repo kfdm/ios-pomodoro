@@ -65,6 +65,24 @@ extension Pomodoro {
         }
     }
 
+    func update(completionHandler: @escaping (Pomodoro) -> Void) {
+        let url = URL(string: "\(ApplicationSettings.baseURL)api/pomodoro/\(self.id)")!
+        let body = self.encode()
+        guard let username = ApplicationSettings.username else { return }
+        guard let password = ApplicationSettings.password else { return }
+
+        authedRequest(url: url, method: "PUT", body: body, username: username, password: password) { _, data in
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .custom(dateDecode)
+            do {
+                let newPomodoro = try decoder.decode(Pomodoro.self, from: data)
+                completionHandler(newPomodoro)
+            } catch let error {
+                print(error)
+            }
+        }
+    }
+
     func repeat_(completionHandler: @escaping (Pomodoro) -> Void) {
         let start = Date.init()
         let duration = self.end.timeIntervalSince(self.start)

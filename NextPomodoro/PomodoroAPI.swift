@@ -61,24 +61,9 @@ func postRequest(postBody: Data, method: String, url: URL, completionHandler: @e
 }
 
 func checkLogin(username: String, password: String, completionHandler: @escaping (HTTPURLResponse) -> Void) {
-
-    authRequest(username: username, password: password, url: PomodoroURL.favoriteList(), completionHandler: {response, _ in
+    let url = URL.init(string: "\(ApplicationSettings.baseURL)/api")!
+    authedRequest(url: url, method: "GET", body: nil, username: username, password: password, completionHandler: {response, _ in
         completionHandler(response)
-    })
-}
-
-func getFavorites(completionHandler: @escaping ([Favorite]) -> Void) {
-    authRequest(username: ApplicationSettings.username!, password: ApplicationSettings.password!, url: PomodoroURL.favoriteList(), completionHandler: {_, data in
-        do {
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            do {
-                let favorites = try decoder.decode(FavoriteResponse.self, from: data)
-                completionHandler(favorites.results)
-            } catch let error {
-                print(error)
-            }
-        }
     })
 }
 
@@ -103,74 +88,6 @@ func dateDecode(decoder: Decoder) throws -> Date {
         return date
     }
     throw DateError.invalidDate
-}
-
-func updatePomodoro(pomodoro: Pomodoro, completionHandler: @escaping (Pomodoro) -> Void) {
-    let encoder = JSONEncoder()
-    encoder.dateEncodingStrategy = .iso8601
-    do {
-        let data = try encoder.encode(pomodoro)
-
-        postRequest(postBody: data, method: "PUT", url: PomodoroURL.pomodoroUpdate(pomodoro: pomodoro), completionHandler: {_, data in
-            do {
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .custom(dateDecode)
-                do {
-                    let newPomodoro = try decoder.decode(Pomodoro.self, from: data)
-                    completionHandler(newPomodoro)
-                } catch let error {
-                    print(error)
-                }
-            }
-        })
-    } catch let error {
-        print(error)
-    }
-}
-
-class PomodoroURL {
-    static func pomodoroList() -> URL {
-        return URL(string: "\(ApplicationSettings.baseURL)api/pomodoro?limit=100")!
-    }
-
-    static func pomodoroUpdate(pomodoro: Pomodoro) -> URL {
-        return URL(string: "\(ApplicationSettings.baseURL)api/pomodoro/\(pomodoro.id)")!
-    }
-
-    static func favoriteList() -> URL {
-        return URL(string: "\(ApplicationSettings.baseURL)api/favorite")!
-    }
-
-    static func favoriteStart(favorite: Favorite) -> URL {
-        return URL(string: "\(ApplicationSettings.baseURL)api/favorite/\(favorite.id)/start")!
-    }
-}
-
-class PomodoroAPI {
-    static func startFavorite(favorite: Favorite, completionHandler: @escaping (Pomodoro) -> Void) {
-        let url = PomodoroURL.favoriteStart(favorite: favorite)
-        let encoder = JSONEncoder()
-
-        do {
-            let data = try encoder.encode(favorite)
-
-            postRequest(postBody: data, method: "POST", url: url, completionHandler: {_, data in
-                do {
-                    print(data)
-                    let decoder = JSONDecoder()
-                    decoder.dateDecodingStrategy = .custom(dateDecode)
-                    do {
-                        let newPomodoro = try decoder.decode(Pomodoro.self, from: data)
-                        completionHandler(newPomodoro)
-                    } catch let error {
-                        print(error)
-                    }
-                }
-            })
-        } catch let error {
-            print(error)
-        }
-    }
 }
 
 func authedRequest(url: URL, method: String, body: Data?, username: String, password: String, completionHandler: @escaping (HTTPURLResponse, Data) -> Void) {

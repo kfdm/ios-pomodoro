@@ -162,16 +162,30 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate {
     // MARK: - buttons
 
     @IBAction func extendButton(_ sender: UIButton) {
-        print("Extend Pomodoro")
+        if let currentPomodoro = self.data {
+            let end = currentPomodoro.end.addingTimeInterval(TimeInterval(300))
+            let editPomodoro = Pomodoro.init(id: currentPomodoro.id, title: currentPomodoro.title, start: currentPomodoro.start, end: end, category: currentPomodoro.category, owner: "")
+
+            print("Extend Pomodoro until \(editPomodoro.end)")
+            editPomodoro.update(completionHandler: {  pomodoro in
+                print("Extended pomodoro until \(pomodoro.end)")
+                self.data = pomodoro
+                self.updateCounter()
+                self.updateView()
+            })
+        } else {
+            print("Missing pomodoro?")
+        }
     }
 
     @IBAction func stopButton(_ sender: UIButton) {
         if let currentPomodoro = self.data {
             let end = Date.init()
             let editPomodoro = Pomodoro.init(id: currentPomodoro.id, title: currentPomodoro.title, start: currentPomodoro.start, end: end, category: currentPomodoro.category, owner: "")
+
             print("Stopping Pomodoro")
-            updatePomodoro(pomodoro: editPomodoro, completionHandler: {  pomodoro in
-                print("Stopped?")
+            editPomodoro.update(completionHandler: {  pomodoro in
+                print("Stopped Pomodoro at \(pomodoro.end)")
                 self.data = pomodoro
                 self.updateCounter()
                 self.updateView()

@@ -49,11 +49,11 @@ class FavoritesViewController: UITableViewController {
         let interval = TimeInterval(favorite.duration * 60)
         let formatter = ApplicationSettings.shortTime
 
-        cell.titleLabel.text = data[indexPath.row].title
-        cell.categoryLabel.text = data[indexPath.row].category
+        cell.titleLabel.text = favorite.title
+        cell.categoryLabel.text = favorite.category
         cell.durationLabel.text = formatter.string(from: interval)
-        cell.countLabel.text = "\(data[indexPath.row].count) times"
-        if let icon = data[indexPath.row].icon {
+        cell.countLabel.text = "\(favorite.count) times"
+        if let icon = favorite.icon {
             cell.favoriteIcon.sd_setImage(with: URL(string: icon), placeholderImage: nil, options: SDWebImageOptions.scaleDownLargeImages, completed: nil)
         }
 
@@ -65,26 +65,14 @@ class FavoritesViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let favorite = self.data[indexPath.row]
+        let configuration = UISwipeActionsConfiguration(actions: [swipeActionStart(for: favorite)])
+        return configuration
+    }
 
-        let title = NSLocalizedString("Favorite", comment: "Favorite")
-
-        let action = UIContextualAction(style: .normal, title: title, handler: { (_, _, completionHandler) in
-            let favorite = self.data[indexPath.row]
-            favorite.start(completionHandler: {  _ in
-                print("Move to main view")
-                if let view = self.tabBarController?.viewControllers?[0] {
-                    DispatchQueue.main.async {
-                        self.tabBarController?.selectedViewController = view
-                        view.viewDidLoad()
-                    }
-                }
-                completionHandler(true)
-            })
-        })
-
-        action.image = UIImage(named: "heart")
-        action.backgroundColor = UIColor.init(named: "Favorite")
-        let configuration = UISwipeActionsConfiguration(actions: [action])
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let favorite = self.data[indexPath.row]
+        let configuration = UISwipeActionsConfiguration(actions: [swipeActionDelete(for: favorite)])
         return configuration
     }
 
@@ -92,6 +80,43 @@ class FavoritesViewController: UITableViewController {
 
     @IBAction func newFavoriteButton(_ sender: UIBarButtonItem) {
         self.navigationController?.performSegue(withIdentifier: "showNewFavorite", sender: self)
+    }
+
+    // MARK: - Swipe Actions
+
+    func swipeActionStart(for favorite: Favorite) -> UIContextualAction {
+        let title = NSLocalizedString("Start", comment: "Start Favorite")
+        let action = UIContextualAction(style: .normal, title: title, handler: { (_, _, completionHandler) in
+            print("Starting Favorite \(favorite.title):\(favorite.category):\(favorite.duration)")
+            favorite.start(completionHandler: {  pomodoro in
+                print("Started Pomodoro \(pomodoro.title) \(pomodoro.category) \(pomodoro.end)")
+                if let view = self.tabBarController?.viewControllers?[0] {
+                    DispatchQueue.main.async {
+                        self.tabBarController?.selectedViewController = view
+                        view.viewDidLoad()
+                        // TODO: Fix refreshing new Pomodoro
+                    }
+                }
+                completionHandler(true)
+            })
+        })
+
+        action.backgroundColor = UIColor.init(named: "Favorite")
+
+        return action
+    }
+
+    func swipeActionDelete(for favorite: Favorite) -> UIContextualAction {
+        let title = NSLocalizedString("Delete", comment: "Delete Favorite")
+        let action = UIContextualAction(style: .destructive, title: title, handler: { (_, _, completionHandler) in
+            print("Deleting Favorite \(favorite.title):\(favorite.category):\(favorite.duration)")
+            favorite.delete(completionHandler: { _ in
+                // TODO: Actually check results
+                completionHandler(true)
+            })
+        })
+        action.backgroundColor = UIColor.init(named: "Destructive")
+        return action
     }
 
 }

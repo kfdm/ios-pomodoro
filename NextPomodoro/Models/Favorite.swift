@@ -93,4 +93,19 @@ extension Favorite {
             }
         })
     }
+
+    func delete(completionHandler: @escaping (Bool) -> Void) {
+        let url = URL(string: "\(ApplicationSettings.baseURL)api/favorite/\(self.id)")!
+        let body = self.encode()
+        guard let username = ApplicationSettings.username else { return }
+        guard let password = ApplicationSettings.password else { return }
+
+        authedRequest(url: url, method: "DELETE", body: body, username: username, password: password, completionHandler: {_, data  in
+            if data != nil {
+                completionHandler(true)
+            } else {
+                completionHandler(false)
+            }
+        })
+    }
 }

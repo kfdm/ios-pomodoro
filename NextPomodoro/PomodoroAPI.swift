@@ -291,35 +291,6 @@ class PomodoroAPI {
             print(error)
         }
     }
-
-    static func repeatPomodoro(pomodoro: Pomodoro, completionHandler: @escaping (Pomodoro) -> Void) {
-        let start = Date.init()
-        let duration = pomodoro.end.timeIntervalSince(pomodoro.start)
-        let end = Date.init(timeInterval: duration, since: start)
-
-        let newPomodoro = Pomodoro.init(id: 0, title: pomodoro.title, start: start, end: end, category: pomodoro.category, owner: pomodoro.owner)
-
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
-        do {
-            let data = try encoder.encode(newPomodoro)
-
-            postRequest(postBody: data, method: "POST", url: PomodoroURL.pomodoroList(), completionHandler: {_, data in
-                do {
-                    let decoder = JSONDecoder()
-                    decoder.dateDecodingStrategy = .custom(dateDecode)
-                    do {
-                        let newPomodoro = try decoder.decode(Pomodoro.self, from: data)
-                        completionHandler(newPomodoro)
-                    } catch let error {
-                        print(error)
-                    }
-                }
-            })
-        } catch let error {
-            print(error)
-        }
-    }
 }
 
 func authedRequest(url: URL, method: String, body: Data?, username: String, password: String, completionHandler: @escaping (HTTPURLResponse, Data) -> Void) {
@@ -386,8 +357,13 @@ extension Pomodoro {
         }
     }
 
-    func repeat_(completionHandler: @escaping (Bool) -> Void) {
+    func repeat_(completionHandler: @escaping (Pomodoro) -> Void) {
+        let start = Date.init()
+        let duration = self.end.timeIntervalSince(self.start)
+        let end = Date.init(timeInterval: duration, since: start)
 
+        let newPomodoro = Pomodoro(id: 0, title: self.title, start: start, end: end, category: self.category, owner: self.owner)
+        newPomodoro.submit(completionHandler: completionHandler)
     }
 
     func delete(completionHandler: @escaping (Bool) -> Void) {

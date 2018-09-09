@@ -35,10 +35,10 @@ class HistoryViewController: UITableViewController {
             print("Got New History")
             var newSections = [String]()
             var newGroups = [String: [Pomodoro]]()
+            let df = DateFormatter()
+            df.dateFormat = "MM/dd/yyyy"
 
             for item in pomodoros {
-                let df = DateFormatter()
-                df.dateFormat = "MM/dd/yyyy"
                 let dateString = df.string(from: item.end)
                 if newGroups.index(forKey: dateString) == nil {
                     newGroups[dateString] = [Pomodoro]()

@@ -32,6 +32,7 @@ class TabBarController: UITabBarController {
         return UIAlertAction(title: NSLocalizedString("Logout", comment: "Logout"), style: .destructive, handler: { _ in
             ApplicationSettings.username = nil
             ApplicationSettings.password = nil
+            ApplicationSettings.cache = nil
             self.navigationController?.performSegue(withIdentifier: "ShowLogin", sender: self)
         })
     }

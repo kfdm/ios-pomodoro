@@ -70,6 +70,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate {
     @objc func refreshData() {
         if ApplicationSettings.username != nil {
             getHistory(completionHandler: { favorites in
+                guard favorites.count > 0 else { return }
                 self.data = favorites.sorted(by: { $0.id > $1.id })[0]
                 self.updateCounter()
                 self.updateView()
@@ -114,16 +115,35 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate {
     // MARK: - tableView
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if active {
-            if indexPath.section == 2 { return 0 }
+        switch indexPath.section {
+        case 0: // Countdown Timer
+            if self.data == nil { return 0 }
             return super.tableView(tableView, heightForRowAt: indexPath)
-        } else {
-            if indexPath.section == 1 { return 0 }
+        case 1: // Stop Timer
+            if self.data == nil { return 0 }
+            return active ? super.tableView(tableView, heightForRowAt: indexPath) : 0
+        case 2: // New Timer
+            return active ? 0 : super.tableView(tableView, heightForRowAt: indexPath)
+        default:
             return super.tableView(tableView, heightForRowAt: indexPath)
         }
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 0: // Countdown Timer
+            if self.data == nil { return 0.1 }
+            return super.tableView(tableView, heightForHeaderInSection: section)
+        case 1: // Stop Timer
+            if self.data == nil { return 0.1 }
+            return active ? super.tableView(tableView, heightForHeaderInSection: section) : 0.1
+        case 2: // New Timer
+            return active ? 0.1 : super.tableView(tableView, heightForHeaderInSection: section)
+        default:
+            return super.tableView(tableView, heightForHeaderInSection: section)
+        }
+
+
         if active {
             if section == 2 { return 0.1 }
             return super.tableView(tableView, heightForHeaderInSection: section)

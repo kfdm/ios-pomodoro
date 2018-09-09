@@ -132,8 +132,9 @@ class HistoryViewController: UITableViewController {
     func swipeActionDelete(for pomodoro: Pomodoro) -> UIContextualAction {
         let title = NSLocalizedString("Delete", comment: "Delete History")
         let action = UIContextualAction(style: .destructive, title: title, handler: { (_, _, completionHandler) in
-            print("Deleting History")
-            completionHandler(false)
+            pomodoro.delete(completionHandler: {result in
+                completionHandler(result)
+            })
         })
         return action
     }

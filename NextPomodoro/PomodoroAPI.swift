@@ -165,6 +165,7 @@ func postRequest(postBody: Data, method: String, url: URL, completionHandler: @e
 }
 
 func checkLogin(username: String, password: String, completionHandler: @escaping (HTTPURLResponse) -> Void) {
+
     authRequest(username: username, password: password, url: PomodoroURL.favoriteList(), completionHandler: {response, _ in
         completionHandler(response)
     })
@@ -349,5 +350,59 @@ class PomodoroAPI {
         } catch let error {
             print(error)
         }
+    }
+}
+
+enum DataFetchResult {
+    case success(data: Data)
+    case failure
+}
+
+func authedRequest(url: URL, method: String, body: Data?, username: String, password: String, completionHandler: @escaping (DataFetchResult) -> Void) {
+    var request = URLRequest(url: url)
+
+    let loginString = "\(username):\(password)"
+    guard let loginData = loginString.data(using: String.Encoding.utf8) else {
+        return
+    }
+    let base64LoginString = loginData.base64EncodedString()
+    request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+    request.httpMethod = method
+
+    let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, _ -> Void in
+        if let httpResponse = response as? HTTPURLResponse {
+            completionHandler(DataFetchResult.success(data: data!))
+        } else {
+            completionHandler(DataFetchResult.failure)
+        }
+    })
+
+    task.resume()
+}
+
+extension Pomodoro {
+    func encode() -> Data? {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        return try? encoder.encode(self)
+    }
+
+    func delete(completionHandler: @escaping (Bool) -> Void) {
+        let url = URL(string: "\(ApplicationSettings.baseURL)api/pomodoro/\(self.id)")!
+        let body = self.encode()
+        guard let username = ApplicationSettings.username else { return }
+        guard let password = ApplicationSettings.password else { return }
+
+        authedRequest(url: url, method: "DELETE", body: body, username: username, password: password, completionHandler: {response  in
+            switch response {
+            case .success:
+                completionHandler(true)
+            default:
+                completionHandler(false)
+            }
+        })
     }
 }

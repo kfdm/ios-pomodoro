@@ -142,23 +142,19 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate {
         default:
             return super.tableView(tableView, heightForHeaderInSection: section)
         }
-
-
-        if active {
-            if section == 2 { return 0.1 }
-            return super.tableView(tableView, heightForHeaderInSection: section)
-        } else {
-            if section == 1 { return 0.1 }
-            return super.tableView(tableView, heightForHeaderInSection: section)
-        }
     }
 
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if active {
-            if section == 2 { return 0.1 }
+        switch section {
+        case 0: // Countdown Timer
+            if self.data == nil { return 0.1 }
             return super.tableView(tableView, heightForFooterInSection: section)
-        } else {
-            if section == 1 { return 0.1 }
+        case 1: // Stop Timer
+            if self.data == nil { return 0.1 }
+            return active ? super.tableView(tableView, heightForFooterInSection: section) : 0.1
+        case 2: // New Timer
+            return active ? 0.1 : super.tableView(tableView, heightForFooterInSection: section)
+        default:
             return super.tableView(tableView, heightForFooterInSection: section)
         }
     }

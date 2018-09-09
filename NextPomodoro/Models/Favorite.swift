@@ -38,6 +38,24 @@ extension Favorite {
         return nil
     }
 
+    func submit(completionHandler: @escaping (Favorite) -> Void) {
+        let url = URL(string: "\(ApplicationSettings.baseURL)api/favorite")!
+        let body = self.encode()
+        guard let username = ApplicationSettings.username else { return }
+        guard let password = ApplicationSettings.password else { return }
+
+        authedRequest(url: url, method: "POST", body: body, username: username, password: password) { _, data in
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .custom(dateDecode)
+            do {
+                let newFavorite = try decoder.decode(Favorite.self, from: data)
+                completionHandler(newFavorite)
+            } catch let error {
+                print(error)
+            }
+        }
+    }
+
     func start(completionHandler: @escaping (Pomodoro) -> Void) {
         let url = URL(string: "\(ApplicationSettings.baseURL)api/favorite/\(self.id)/start")!
         let body = self.encode()

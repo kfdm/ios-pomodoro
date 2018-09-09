@@ -87,4 +87,11 @@ class FavoritesViewController: UITableViewController {
         let configuration = UISwipeActionsConfiguration(actions: [action])
         return configuration
     }
+
+    // MARK: - Buttons
+
+    @IBAction func newFavoriteButton(_ sender: UIBarButtonItem) {
+        self.navigationController?.performSegue(withIdentifier: "showNewFavorite", sender: self)
+    }
+
 }

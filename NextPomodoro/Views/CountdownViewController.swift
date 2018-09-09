@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class CountdownViewController: UITableViewController, UITextFieldDelegate {
+class CountdownViewController: UITableViewController, UITextFieldDelegate, UITabBarDelegate {
     var data: Pomodoro?
     var timer = Timer()
     var active = false
@@ -227,5 +227,32 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate {
             self.updateCounter()
             self.updateView()
         }
+    }
+    @IBAction func submitOptionsButton(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Options", message: nil, preferredStyle: .actionSheet)
+
+        // Need to attach this to our tabBar for iPad support
+        alert.popoverPresentationController?.barButtonItem = sender
+        //alert.popoverPresentationController?.sourceView = tabBar
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(settingsAction())
+        alert.addAction(logoutAction())
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    // MARK: - Actions
+
+    func logoutAction() -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Logout", comment: "Logout"), style: .destructive, handler: { _ in
+            ApplicationSettings.deleteLogin()
+            Router.showLogin()
+        })
+    }
+
+    func settingsAction() -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Settings", comment: "Settings"), style: .default, handler: { _ in
+            UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
+        })
     }
 }

@@ -8,60 +8,8 @@
 
 import Foundation
 
-func authRequest(username: String, password: String, url: URL, completionHandler: @escaping (HTTPURLResponse, Data) -> Void) {
-    var request = URLRequest.init(url: url)
-
-    let loginString = "\(username):\(password)"
-
-    guard let loginData = loginString.data(using: String.Encoding.utf8) else {
-        return
-    }
-    let base64LoginString = loginData.base64EncodedString()
-
-    request.httpMethod = "GET"
-    request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
-    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-    request.addValue("application/json", forHTTPHeaderField: "Accept")
-
-    let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, _ -> Void in
-        if let httpResponse = response as? HTTPURLResponse {
-            completionHandler(httpResponse, data!)
-        }
-    })
-
-    task.resume()
-}
-
-func postRequest(postBody: Data, method: String, url: URL, completionHandler: @escaping (HTTPURLResponse, Data) -> Void) {
-    let username = ApplicationSettings.username!
-    let password = ApplicationSettings.password!
-    var request = URLRequest(url: url)
-
-    let loginString = "\(username):\(password)"
-
-    guard let loginData = loginString.data(using: String.Encoding.utf8) else {
-        return
-    }
-    let base64LoginString = loginData.base64EncodedString()
-
-    request.httpMethod = method
-    request.httpBody = postBody
-    request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
-    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-    request.addValue("application/json", forHTTPHeaderField: "Accept")
-
-    let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, _ -> Void in
-        if let httpResponse = response as? HTTPURLResponse {
-            print(httpResponse)
-            completionHandler(httpResponse, data!)
-        }
-    })
-
-    task.resume()
-}
-
 func checkLogin(username: String, password: String, completionHandler: @escaping (HTTPURLResponse) -> Void) {
-    let url = URL.init(string: "\(ApplicationSettings.baseURL)/api")!
+    let url = URL.init(string: "\(ApplicationSettings.baseURL)api/pomodoro")!
     authedRequest(url: url, method: "GET", body: nil, username: username, password: password, completionHandler: {response, _ in
         completionHandler(response)
     })

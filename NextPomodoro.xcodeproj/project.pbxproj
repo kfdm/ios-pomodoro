@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0EFC01A5E7C43C96F60FF147 /* Pods_NextPomodoro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7802FDCD750068EC1BE696DC /* Pods_NextPomodoro.framework */; };
+		87402CFE2144F8C900F0C43A /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87402CFD2144F8C900F0C43A /* Router.swift */; };
 		8756548821292E3800D69D6D /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8756548721292E3800D69D6D /* 1Password.xcassets */; };
 		8756548B212947AA00D69D6D /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548A212947AA00D69D6D /* FavoritesViewController.swift */; };
 		8756548D2129586000D69D6D /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548C2129586000D69D6D /* HistoryViewController.swift */; };
@@ -63,6 +64,7 @@
 /* Begin PBXFileReference section */
 		7802FDCD750068EC1BE696DC /* Pods_NextPomodoro.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NextPomodoro.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8490648A9A3C99382157AEA9 /* Pods-NextPomodoro.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NextPomodoro.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NextPomodoro/Pods-NextPomodoro.debug.xcconfig"; sourceTree = "<group>"; };
+		87402CFD2144F8C900F0C43A /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		8756548721292E3800D69D6D /* 1Password.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = 1Password.xcassets; path = Pods/1PasswordExtension/1Password.xcassets; sourceTree = "<group>"; };
 		8756548A212947AA00D69D6D /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		8756548C2129586000D69D6D /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 		87B651752128F0AD006D88AF /* NextPomodoro */ = {
 			isa = PBXGroup;
 			children = (
+				87402CFD2144F8C900F0C43A /* Router.swift */,
 				87C43BD62144E6F800E9C687 /* Extensions.swift */,
 				87C43BD92144EBBE00E9C687 /* Models */,
 				C19EC6FF212CEBE8005F5A2F /* NextPomodoro.entitlements */,
@@ -402,6 +405,7 @@
 				87C43BDB2144EBE700E9C687 /* Pomodoro.swift in Sources */,
 				87B651A52128F45E006D88AF /* PomodoroAPI.swift in Sources */,
 				8756548B212947AA00D69D6D /* FavoritesViewController.swift in Sources */,
+				87402CFE2144F8C900F0C43A /* Router.swift in Sources */,
 				87C43BD72144E6F800E9C687 /* Extensions.swift in Sources */,
 				8773DB122144EE5A00CF52CB /* Favorite.swift in Sources */,
 				87B6518B2128F184006D88AF /* TabBarController.swift in Sources */,

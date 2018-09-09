@@ -67,3 +67,15 @@ struct ApplicationSettings {
         return formatter
     }
 }
+
+extension ApplicationSettings {
+    func saveLogin(username: String, password: String) {
+
+    }
+
+    static func deleteLogin() {
+        ApplicationSettings.username = nil
+        ApplicationSettings.password = nil
+        ApplicationSettings.cache = nil
+    }
+}

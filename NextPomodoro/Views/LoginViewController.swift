@@ -24,18 +24,21 @@ class LoginViewController: UIViewController {
 
     @IBAction func LoginClick(_ sender: UIButton) {
         spinner.startAnimating()
-        checkLogin(username: UsernameField.text!, password: PasswordField.text!, completionHandler: {response in
+        guard let username = UsernameField.text else { return }
+        guard let password = PasswordField.text else { return }
+
+        checkLogin(username: username, password: password, completionHandler: {response in
             if response.statusCode == 200 {
                 print("Successfully logged in")
+                ApplicationSettings.username = username
+                ApplicationSettings.password = password
+
                 DispatchQueue.main.async {
-                    ApplicationSettings.username = self.UsernameField.text!
-                    ApplicationSettings.password = self.PasswordField.text!
-
                     self.spinner.stopAnimating()
-                    self.navigationController?.popViewController(animated: true)
+                    Router.showMain()
                 }
-
             } else {
+                print(response)
                 DispatchQueue.main.async {
                     self.spinner.stopAnimating()
                 }

@@ -31,7 +31,7 @@ class HistoryViewController: UITableViewController {
 
     @objc func refreshData() {
         print("Refreshing History")
-        getHistory(completionHandler: { pomodoros in
+        Pomodoro.list(completionHandler: { pomodoros in
             print("Got New History")
             var newSections = [String]()
             var newGroups = [String: [Pomodoro]]()

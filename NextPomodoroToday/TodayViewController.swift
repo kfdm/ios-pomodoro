@@ -91,7 +91,7 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         // Perform any setup necessary in order to update the view.
         DispatchQueue.global(qos: .background).async {
             if ApplicationSettings.username != nil {
-                getHistory(completionHandler: { favorites in
+                Pomodoro.list(completionHandler: { favorites in
                     self.data = favorites.sorted(by: { $0.id > $1.id })[0]
                     self.updateView()
                     self.updateCounter()

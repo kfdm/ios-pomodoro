@@ -154,6 +154,7 @@
 		87B651752128F0AD006D88AF /* NextPomodoro */ = {
 			isa = PBXGroup;
 			children = (
+				87C43BD92144EBBE00E9C687 /* Models */,
 				C19EC6FF212CEBE8005F5A2F /* NextPomodoro.entitlements */,
 				87B651A42128F45E006D88AF /* PomodoroAPI.swift */,
 				87B6518A2128F184006D88AF /* TabBarController.swift */,
@@ -185,6 +186,13 @@
 				87B6519C2128F422006D88AF /* Info.plist */,
 			);
 			path = NextPomodoroToday;
+			sourceTree = "<group>";
+		};
+		87C43BD92144EBBE00E9C687 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

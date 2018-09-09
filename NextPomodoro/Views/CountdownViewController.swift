@@ -69,7 +69,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate {
 
     @objc func refreshData() {
         if ApplicationSettings.username != nil {
-            getHistory(completionHandler: { favorites in
+            Pomodoro.list(completionHandler: { favorites in
                 guard favorites.count > 0 else { return }
                 self.data = favorites.sorted(by: { $0.id > $1.id })[0]
                 self.updateCounter()

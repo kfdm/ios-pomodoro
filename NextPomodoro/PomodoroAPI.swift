@@ -248,36 +248,6 @@ func updatePomodoro(pomodoro: Pomodoro, completionHandler: @escaping (Pomodoro) 
     }
 }
 
-func submitPomodoro(title: String, category: String, duration: Int, completionHandler: @escaping (Pomodoro) -> Void) {
-
-    let start = Date.init()
-    let end = Date.init(timeIntervalSinceNow: TimeInterval.init(duration))
-
-    let pomodoro = Pomodoro.init(id: 0, title: title, start: start, end: end, category: category, owner: "")
-    print(pomodoro)
-
-    let encoder = JSONEncoder()
-    encoder.dateEncodingStrategy = .iso8601
-    do {
-        let data = try encoder.encode(pomodoro)
-
-        postRequest(postBody: data, method: "POST", url: PomodoroURL.pomodoroList(), completionHandler: {_, data in
-            do {
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .custom(dateDecode)
-                do {
-                    let newPomodoro = try decoder.decode(Pomodoro.self, from: data)
-                    completionHandler(newPomodoro)
-                } catch let error {
-                    print(error)
-                }
-            }
-        })
-    } catch let error {
-        print(error)
-    }
-}
-
 class PomodoroURL {
     static func pomodoroList() -> URL {
         return URL(string: "\(ApplicationSettings.baseURL)api/pomodoro?limit=100")!
@@ -328,7 +298,6 @@ class PomodoroAPI {
         let end = Date.init(timeInterval: duration, since: start)
 
         let newPomodoro = Pomodoro.init(id: 0, title: pomodoro.title, start: start, end: end, category: pomodoro.category, owner: pomodoro.owner)
-        print(newPomodoro)
 
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
@@ -353,12 +322,7 @@ class PomodoroAPI {
     }
 }
 
-enum DataFetchResult {
-    case success(data: Data)
-    case failure
-}
-
-func authedRequest(url: URL, method: String, body: Data?, username: String, password: String, completionHandler: @escaping (DataFetchResult) -> Void) {
+func authedRequest(url: URL, method: String, body: Data?, username: String, password: String, completionHandler: @escaping (HTTPURLResponse, Data) -> Void) {
     var request = URLRequest(url: url)
 
     let loginString = "\(username):\(password)"
@@ -371,12 +335,11 @@ func authedRequest(url: URL, method: String, body: Data?, username: String, pass
     request.addValue("application/json", forHTTPHeaderField: "Accept")
 
     request.httpMethod = method
+    request.httpBody = body
 
     let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, _ -> Void in
         if let httpResponse = response as? HTTPURLResponse {
-            completionHandler(DataFetchResult.success(data: data!))
-        } else {
-            completionHandler(DataFetchResult.failure)
+            completionHandler(httpResponse, data!)
         }
     })
 
@@ -384,10 +347,47 @@ func authedRequest(url: URL, method: String, body: Data?, username: String, pass
 }
 
 extension Pomodoro {
+    init(title: String, category: String, duration: TimeInterval) {
+        self.id = 0
+        self.owner = ""
+        self.title = title
+        self.category = category
+        self.start = Date()
+        self.end = Date.init(timeIntervalSinceNow: duration)
+    }
+
     func encode() -> Data? {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
-        return try? encoder.encode(self)
+        do {
+            let data = try encoder.encode(self)
+            return data
+        } catch let error {
+            print(error)
+        }
+        return nil
+    }
+
+    func submit(completionHandler: @escaping (Pomodoro) -> Void) {
+        let url = URL(string: "\(ApplicationSettings.baseURL)api/pomodoro")!
+        let body = self.encode()
+        guard let username = ApplicationSettings.username else { return }
+        guard let password = ApplicationSettings.password else { return }
+
+        authedRequest(url: url, method: "POST", body: body, username: username, password: password) { _, data in
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .custom(dateDecode)
+            do {
+                let newPomodoro = try decoder.decode(Pomodoro.self, from: data)
+                completionHandler(newPomodoro)
+            } catch let error {
+                print(error)
+            }
+        }
+    }
+
+    func repeat_(completionHandler: @escaping (Bool) -> Void) {
+
     }
 
     func delete(completionHandler: @escaping (Bool) -> Void) {
@@ -396,11 +396,10 @@ extension Pomodoro {
         guard let username = ApplicationSettings.username else { return }
         guard let password = ApplicationSettings.password else { return }
 
-        authedRequest(url: url, method: "DELETE", body: body, username: username, password: password, completionHandler: {response  in
-            switch response {
-            case .success:
+        authedRequest(url: url, method: "DELETE", body: body, username: username, password: password, completionHandler: {_, data  in
+            if data != nil {
                 completionHandler(true)
-            default:
+            } else {
                 completionHandler(false)
             }
         })

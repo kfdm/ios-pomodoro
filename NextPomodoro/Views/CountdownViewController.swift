@@ -185,21 +185,33 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate {
         titleInput.resignFirstResponder()
         categoryInput.resignFirstResponder()
 
-        submitPomodoro(title: titleInput!.text!, category: categoryInput!.text!, duration: 1500, completionHandler: {  pomodoro in
+        guard let title = titleInput.text else { return }
+        guard let category = categoryInput.text else { return }
+        let duration = TimeInterval(1500)
+
+        let pomodoro = Pomodoro(title: title, category: category, duration: duration)
+
+        pomodoro.submit { pomodoro in
             self.data = pomodoro
             self.updateCounter()
             self.updateView()
-        })
+        }
     }
 
     @IBAction func submitHourButton(_ sender: UIButton) {
         titleInput.resignFirstResponder()
         categoryInput.resignFirstResponder()
 
-        submitPomodoro(title: titleInput!.text!, category: categoryInput!.text!, duration: 3600, completionHandler: { pomodoro in
+        guard let title = titleInput.text else { return }
+        guard let category = categoryInput.text else { return }
+        let duration = TimeInterval(3600)
+
+        let pomodoro = Pomodoro(title: title, category: category, duration: duration)
+
+        pomodoro.submit { pomodoro in
             self.data = pomodoro
             self.updateCounter()
             self.updateView()
-        })
+        }
     }
 }

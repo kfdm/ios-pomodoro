@@ -12,6 +12,11 @@
 		8756548B212947AA00D69D6D /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548A212947AA00D69D6D /* FavoritesViewController.swift */; };
 		8756548D2129586000D69D6D /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548C2129586000D69D6D /* HistoryViewController.swift */; };
 		8756548F2129679100D69D6D /* CountdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548E2129679100D69D6D /* CountdownViewController.swift */; };
+		8773DB122144EE5A00CF52CB /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8773DB112144EE5A00CF52CB /* Favorite.swift */; };
+		8773DB142144EE7E00CF52CB /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8773DB132144EE7E00CF52CB /* Settings.swift */; };
+		8773DB152144EF1D00CF52CB /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8773DB112144EE5A00CF52CB /* Favorite.swift */; };
+		8773DB162144EF1F00CF52CB /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8773DB132144EE7E00CF52CB /* Settings.swift */; };
+		8773DB172144EF3000CF52CB /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C43BD62144E6F800E9C687 /* Extensions.swift */; };
 		87B651772128F0AD006D88AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B651762128F0AD006D88AF /* AppDelegate.swift */; };
 		87B6517E2128F0AD006D88AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87B6517C2128F0AD006D88AF /* Main.storyboard */; };
 		87B651802128F0AE006D88AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87B6517F2128F0AE006D88AF /* Assets.xcassets */; };
@@ -63,6 +68,8 @@
 		8756548C2129586000D69D6D /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		8756548E2129679100D69D6D /* CountdownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownViewController.swift; sourceTree = "<group>"; };
 		875ADE09213A786800841740 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		8773DB112144EE5A00CF52CB /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
+		8773DB132144EE7E00CF52CB /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		87B651732128F0AD006D88AF /* NextPomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextPomodoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87B651762128F0AD006D88AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		87B6517D2128F0AD006D88AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -195,6 +202,8 @@
 			isa = PBXGroup;
 			children = (
 				87C43BDA2144EBE700E9C687 /* Pomodoro.swift */,
+				8773DB112144EE5A00CF52CB /* Favorite.swift */,
+				8773DB132144EE7E00CF52CB /* Settings.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -394,9 +403,11 @@
 				87B651A52128F45E006D88AF /* PomodoroAPI.swift in Sources */,
 				8756548B212947AA00D69D6D /* FavoritesViewController.swift in Sources */,
 				87C43BD72144E6F800E9C687 /* Extensions.swift in Sources */,
+				8773DB122144EE5A00CF52CB /* Favorite.swift in Sources */,
 				87B6518B2128F184006D88AF /* TabBarController.swift in Sources */,
 				87B651772128F0AD006D88AF /* AppDelegate.swift in Sources */,
 				87B6518D2128F258006D88AF /* LoginViewController.swift in Sources */,
+				8773DB142144EE7E00CF52CB /* Settings.swift in Sources */,
 				8756548D2129586000D69D6D /* HistoryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -406,8 +417,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				87B651982128F422006D88AF /* TodayViewController.swift in Sources */,
+				8773DB172144EF3000CF52CB /* Extensions.swift in Sources */,
+				8773DB152144EF1D00CF52CB /* Favorite.swift in Sources */,
 				87C43BDC2144EBE700E9C687 /* Pomodoro.swift in Sources */,
 				87B651A62128F488006D88AF /* PomodoroAPI.swift in Sources */,
+				8773DB162144EF1F00CF52CB /* Settings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

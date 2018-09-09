@@ -17,7 +17,7 @@ class NewFavoriteController: UIViewController {
 
     @IBAction func durationChanged(_ sender: UISlider) {
         let format = ApplicationSettings.shortTime
-        let duration = TimeInterval(sender.value)
+        let duration = TimeInterval(sender.value.rounded(.down) * 60)
         DispatchQueue.main.async {
             self.durationLabel.text = format.string(from: duration)
         }
@@ -29,6 +29,7 @@ class NewFavoriteController: UIViewController {
         let duration = Int(durationSlider.value)
 
         let favorite = Favorite.init(id: 0, title: title, duration: duration, category: category, owner: "", icon: nil, count: 0)
+
         favorite.submit(completionHandler: {favorite in
             print(favorite)
            self.navigationController?.popToRootViewController(animated: true)
@@ -36,24 +37,25 @@ class NewFavoriteController: UIViewController {
     }
 
     @IBAction func setFiveMin(_ sender: UIButton) {
-        self.durationSlider.value = 5 * 60
+        self.durationSlider.value = 5
         durationChanged(self.durationSlider)
     }
 
     @IBAction func setThirtyMinute(_ sender: UIButton) {
-        self.durationSlider.value = 30 * 60
+        self.durationSlider.value = 30
         durationChanged(self.durationSlider)
     }
 
     @IBAction func setHour(_ sender: UIButton) {
-        self.durationSlider.value = 60 * 60
+        self.durationSlider.value = 60
         durationChanged(self.durationSlider)
     }
 
     override func viewDidLoad() {
-        self.durationSlider.value = 5 * 60
-        self.durationSlider.minimumValue = 60
-        self.durationSlider.maximumValue = 60 * 60
+        self.durationSlider.value = 5
+        self.durationSlider.minimumValue = 1
+        self.durationSlider.maximumValue = 120
+
         durationChanged(self.durationSlider)
     }
 }

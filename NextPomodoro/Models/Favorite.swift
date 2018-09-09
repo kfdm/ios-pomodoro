@@ -11,6 +11,7 @@ import Foundation
 struct Favorite: Codable {
     let id: Int
     let title: String
+    /// Duration in minutes
     let duration: Int
     let category: String
     let owner: String

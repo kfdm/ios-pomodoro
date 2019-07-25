@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CocoaMQTT
 
 extension Data {
     func toString() -> String? {
@@ -32,4 +33,11 @@ extension DateFormatter {
         formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter
     }()
+}
+
+extension CocoaMQTTMessage {
+    func match(_ pattern: String) -> Bool {
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else { return false}
+        return regex.numberOfMatches(in: self.topic, options: .anchored, range: .init(self.topic.startIndex..., in: self.topic)) > 0
+    }
 }

@@ -9,8 +9,7 @@
 import Foundation
 
 func checkLogin(username: String, password: String, completionHandler: @escaping (HTTPURLResponse) -> Void) {
-    let url = URL.init(string: "\(ApplicationSettings.baseURL)api/pomodoro")!
-    authedRequest(url: url, method: "GET", body: nil, username: username, password: password, completionHandler: {response, _ in
+    authedRequest(path: "/api/pomodoro", method: "GET", body: nil, username: username, password: password, completionHandler: {response, _ in
         completionHandler(response)
     })
 }
@@ -38,7 +37,18 @@ func dateDecode(decoder: Decoder) throws -> Date {
     throw DateError.invalidDate
 }
 
-func authedRequest(url: URL, method: String, body: Data?, username: String, password: String, completionHandler: @escaping (HTTPURLResponse, Data) -> Void) {
+typealias AuthedRequestResponse = ((HTTPURLResponse, Data) -> Void)
+
+func authedRequest(path: String, method: String, body: Data?, username: String, password: String, completionHandler: @escaping AuthedRequestResponse) {
+    var components = URLComponents()
+    components.scheme = "https"
+    components.host = "tsundere.co"
+    components.path = path
+    
+    authedRequest(url: components.url!, method: method, body: body, username: username, password: password, completionHandler: completionHandler)
+}
+
+func authedRequest(url: URL, method: String, body: Data?, username: String, password: String, completionHandler: @escaping AuthedRequestResponse) {
     var request = URLRequest(url: url)
 
     let loginString = "\(username):\(password)"

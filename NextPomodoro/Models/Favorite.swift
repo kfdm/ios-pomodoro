@@ -40,12 +40,10 @@ extension Favorite {
     }
 
     func submit(completionHandler: @escaping (Favorite) -> Void) {
-        let url = URL(string: "\(ApplicationSettings.baseURL)api/favorite")!
-        let body = self.encode()
         guard let username = ApplicationSettings.username else { return }
         guard let password = ApplicationSettings.password else { return }
 
-        authedRequest(url: url, method: "POST", body: body, username: username, password: password) { _, data in
+        authedRequest(path: "/api/favorite", method: "POST", body: self.encode(), username: username, password: password) { _, data in
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .custom(dateDecode)
             do {
@@ -58,12 +56,10 @@ extension Favorite {
     }
 
     func start(completionHandler: @escaping (Pomodoro) -> Void) {
-        let url = URL(string: "\(ApplicationSettings.baseURL)api/favorite/\(self.id)/start")!
-        let body = self.encode()
         guard let username = ApplicationSettings.username else { return }
         guard let password = ApplicationSettings.password else { return }
 
-        authedRequest(url: url, method: "POST", body: body, username: username, password: password) { _, data in
+        authedRequest(path: "/api/favorite/\(self.id)/start", method: "POST", body: self.encode(), username: username, password: password) { _, data in
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .custom(dateDecode)
             do {
@@ -76,11 +72,10 @@ extension Favorite {
     }
 
     static func list(completionHandler: @escaping ([Favorite]) -> Void) {
-        let url = URL(string: "\(ApplicationSettings.baseURL)api/favorite")!
         guard let username = ApplicationSettings.username else { return }
         guard let password = ApplicationSettings.password else { return }
 
-        authedRequest(url: url, method: "GET", body: nil, username: username, password: password, completionHandler: {_, data in
+        authedRequest(path: "/api/favorite", method: "GET", body: nil, username: username, password: password, completionHandler: {_, data in
             do {
                 let decoder = JSONDecoder()
                 // https://stackoverflow.com/a/46538676
@@ -96,17 +91,11 @@ extension Favorite {
     }
 
     func delete(completionHandler: @escaping (Bool) -> Void) {
-        let url = URL(string: "\(ApplicationSettings.baseURL)api/favorite/\(self.id)")!
-        let body = self.encode()
         guard let username = ApplicationSettings.username else { return }
         guard let password = ApplicationSettings.password else { return }
 
-        authedRequest(url: url, method: "DELETE", body: body, username: username, password: password, completionHandler: {_, data  in
-            if data != nil {
+        authedRequest(path:"/api/favorite/\(self.id)", method: "DELETE", body: self.encode(), username: username, password: password, completionHandler: {_, data  in
                 completionHandler(true)
-            } else {
-                completionHandler(false)
-            }
         })
     }
 }

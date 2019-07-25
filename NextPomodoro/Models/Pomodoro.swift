@@ -48,12 +48,10 @@ extension Pomodoro {
     }
 
     func submit(completionHandler: @escaping (Pomodoro) -> Void) {
-        let url = URL(string: "\(ApplicationSettings.baseURL)api/pomodoro")!
-        let body = self.encode()
         guard let username = ApplicationSettings.username else { return }
         guard let password = ApplicationSettings.password else { return }
 
-        authedRequest(url: url, method: "POST", body: body, username: username, password: password) { _, data in
+        authedRequest(path: "/api/pomodoro", method: "POST", body: self.encode(), username: username, password: password) { _, data in
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .custom(dateDecode)
             do {
@@ -66,12 +64,10 @@ extension Pomodoro {
     }
 
     func update(completionHandler: @escaping (Pomodoro) -> Void) {
-        let url = URL(string: "\(ApplicationSettings.baseURL)api/pomodoro/\(self.id)")!
-        let body = self.encode()
         guard let username = ApplicationSettings.username else { return }
         guard let password = ApplicationSettings.password else { return }
 
-        authedRequest(url: url, method: "PUT", body: body, username: username, password: password) { _, data in
+        authedRequest(path: "/api/pomodoro/\(self.id)", method: "PUT", body: self.encode(), username: username, password: password) { _, data in
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .custom(dateDecode)
             do {
@@ -93,12 +89,10 @@ extension Pomodoro {
     }
 
     func delete(completionHandler: @escaping (Bool) -> Void) {
-        let url = URL(string: "\(ApplicationSettings.baseURL)api/pomodoro/\(self.id)")!
-        let body = self.encode()
         guard let username = ApplicationSettings.username else { return }
         guard let password = ApplicationSettings.password else { return }
 
-        authedRequest(url: url, method: "DELETE", body: body, username: username, password: password, completionHandler: {_, data  in
+        authedRequest(path: "/api/pomodoro/\(self.id)", method: "DELETE", body: self.encode(), username: username, password: password, completionHandler: {_, data  in
             if data != nil {
                 completionHandler(true)
             } else {
@@ -108,11 +102,10 @@ extension Pomodoro {
     }
 
     static func list(completionHandler: @escaping ([Pomodoro]) -> Void) {
-        let url = URL(string: "\(ApplicationSettings.baseURL)api/pomodoro")!
         guard let username = ApplicationSettings.username else { return }
         guard let password = ApplicationSettings.password else { return }
 
-        authedRequest(url: url, method: "GET", body: nil, username: username, password: password, completionHandler: {_, data in
+        authedRequest(path: "/api/pomodoro", method: "GET", body: nil, username: username, password: password, completionHandler: {_, data in
             do {
                 let decoder = JSONDecoder()
                 // https://stackoverflow.com/a/46538676

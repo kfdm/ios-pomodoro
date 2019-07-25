@@ -8,11 +8,13 @@
 
 import Foundation
 import UIKit
+import CocoaMQTT
 
 class CountdownViewController: UITableViewController, UITextFieldDelegate, UITabBarDelegate {
     var data: Pomodoro?
     var timer = Timer()
     var active = false
+    var mqtt: CocoaMQTT?
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
@@ -91,6 +93,19 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         )
         data = ApplicationSettings.cache
     }
+    
+    func connect() -> CocoaMQTT {
+        let clientID = "iosPomodoro-" + String(ProcessInfo().processIdentifier)
+        let mqtt = CocoaMQTT(clientID: clientID, host: "chiharu.kungfudiscomonkey.net", port: 8883)
+        mqtt.enableSSL = true
+        mqtt.username = ApplicationSettings.username
+        mqtt.password = ApplicationSettings.password
+        mqtt.keepAlive = 60
+        mqtt.delegate = self
+        mqtt.autoReconnect = true
+        mqtt.connect()
+        return mqtt
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,6 +113,9 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         tableView.dataSource = self
         tableView.delegate = self
         tableView.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        
+        mqtt = connect()
+        
 
         titleInput.delegate = self
         categoryInput.delegate = self
@@ -255,4 +273,54 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
             UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
         })
     }
+}
+
+
+extension CountdownViewController: CocoaMQTTDelegate {
+    func mqttDidPing(_ mqtt: CocoaMQTT) {
+        print("didPing")
+    }
+    
+    func mqttDidReceivePong(_ mqtt: CocoaMQTT) {
+        print("didPong")
+    }
+    
+    func mqttDidDisconnect(_ mqtt: CocoaMQTT, withError err: Error?) {
+        print("didDisconnect")
+        print(err)
+    }
+    
+    func mqtt(_ mqtt: CocoaMQTT, didConnectAck ack: CocoaMQTTConnAck) {
+        guard let username = mqtt.username else { return }
+        mqtt.subscribe("pomodoro/\(username)/recent")
+    }
+    
+    func mqtt(_ mqtt: CocoaMQTT, didPublishMessage message: CocoaMQTTMessage, id: UInt16) {
+        print("didPublishMessage")
+    }
+    
+    func mqtt(_ mqtt: CocoaMQTT, didPublishAck id: UInt16) {
+        print("didPublishAck")
+    }
+    
+    func mqtt(_ mqtt: CocoaMQTT, didReceiveMessage message: CocoaMQTTMessage, id: UInt16) {
+        switch message.topic {
+        case _ where message.match("^pomodoro/.*/recent$"):
+            guard let msg = message.string else { return }
+//            guard let pomodoro = Pomodoro.decode(from: msg) else { return }
+            print(msg)
+        default:
+            print("Unknown topic \(message.topic)")
+        }
+    }
+    
+    func mqtt(_ mqtt: CocoaMQTT, didSubscribeTopic topics: [String]) {
+        print("didSubscribeTopic \(topics)")
+    }
+    
+    func mqtt(_ mqtt: CocoaMQTT, didUnsubscribeTopic topic: String) {
+        print("didUnsubscribeTopic")
+    }
+    
+    
 }

@@ -10,6 +10,7 @@ target 'NextPomodoro' do
   pod '1PasswordExtension', '~> 1.8.5' 
   pod 'SwiftLint'
   pod 'SDWebImage', '~> 4.0'
+  pod 'CocoaMQTT'
 end
 
 target 'NextPomodoroToday' do
@@ -18,5 +19,5 @@ target 'NextPomodoroToday' do
   platform :ios, '11.4'
 
   # Pods for NextPomodoroToday
-
+  pod 'CocoaMQTT'
 end

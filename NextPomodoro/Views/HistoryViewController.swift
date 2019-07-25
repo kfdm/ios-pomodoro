@@ -16,9 +16,13 @@ class HistoryCell: UITableViewCell {
     @IBOutlet weak var endLabel: UILabel!
 }
 
+struct HistoryGroup {
+    var title: String
+    var items: [Pomodoro]
+}
+
 class HistoryViewController: UITableViewController {
-    var groups = [String: [Pomodoro]]()
-    var sections = [String]()
+    var groups = [HistoryGroup]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,22 +37,15 @@ class HistoryViewController: UITableViewController {
         print("Refreshing History")
         Pomodoro.list(completionHandler: { pomodoros in
             print("Got New History")
-            var newSections = [String]()
-            var newGroups = [String: [Pomodoro]]()
             let df = DateFormatter()
             df.dateFormat = "MM/dd/yyyy"
+            
+            let groupedPomodoro = Dictionary.init(grouping: pomodoros) { Calendar.current.startOfDay(for: $0.end) }
+            let mappedPomodoro = groupedPomodoro.map({ (date, list) -> HistoryGroup in
+                return HistoryGroup(title: df.string(from: date), items: list)
+            })
 
-            for item in pomodoros {
-                let dateString = df.string(from: item.end)
-                if newGroups.index(forKey: dateString) == nil {
-                    newGroups[dateString] = [Pomodoro]()
-                    newSections.append(dateString)
-                }
-                newGroups[dateString]?.append(item)
-            }
-
-            self.groups = newGroups
-            self.sections = newSections.sorted(by: {$0 > $1})
+            self.groups = mappedPomodoro
 
             DispatchQueue.main.async {
                 self.tableView.refreshControl?.endRefreshing()
@@ -58,16 +55,15 @@ class HistoryViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.sections[section]
+        return groups[section].title
     }
 
     func getPomodoro(indexPath: IndexPath) -> Pomodoro {
-        let sec = sections[indexPath.section]
-        return groups[sec]![indexPath.row]
+        return groups[indexPath.section].items[indexPath.row]
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let pomodoro = getPomodoro(indexPath: indexPath)
+        let pomodoro = groups[indexPath.section].items[indexPath.row]
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "Pomodoro", for: indexPath) as! HistoryCell
 
@@ -86,22 +82,21 @@ class HistoryViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sec = sections[section]
-        return groups[sec]!.count
+        return groups[section].items.count
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return groups.count
     }
 
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let pomodoro = getPomodoro(indexPath: indexPath)
+        let pomodoro = groups[indexPath.section].items[indexPath.row]
         let configuration = UISwipeActionsConfiguration(actions: [swipeActionDelete(for: pomodoro)])
         return configuration
     }
 
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let pomodoro = getPomodoro(indexPath: indexPath)
+        let pomodoro = groups[indexPath.section].items[indexPath.row]
         let configuration = UISwipeActionsConfiguration(actions: [swipeActionRepeat(for: pomodoro)])
         return configuration
     }

@@ -47,6 +47,12 @@ extension Pomodoro {
         return nil
     }
 
+    static func decode(from data: Data) -> Pomodoro? {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .custom(dateDecode)
+        return try? decoder.decode(self, from: data)
+    }
+
     func submit(completionHandler: @escaping (Pomodoro) -> Void) {
         guard let username = ApplicationSettings.username else { return }
         guard let password = ApplicationSettings.password else { return }
@@ -93,11 +99,8 @@ extension Pomodoro {
         guard let password = ApplicationSettings.password else { return }
 
         authedRequest(path: "/api/pomodoro/\(self.id)", method: "DELETE", body: self.encode(), username: username, password: password, completionHandler: {_, data  in
-            if data != nil {
-                completionHandler(true)
-            } else {
-                completionHandler(false)
-            }
+            // TODO: Handle error
+            completionHandler(true)
         })
     }
 

@@ -39,7 +39,7 @@ class HistoryViewController: UITableViewController {
             print("Got New History")
             let df = DateFormatter()
             df.dateFormat = "MM/dd/yyyy"
-            
+
             let groupedPomodoro = Dictionary.init(grouping: pomodoros) { Calendar.current.startOfDay(for: $0.end) }
             let mappedPomodoro = groupedPomodoro.map({ (date, list) -> HistoryGroup in
                 return HistoryGroup(title: df.string(from: date), items: list)
@@ -56,10 +56,6 @@ class HistoryViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return groups[section].title
-    }
-
-    func getPomodoro(indexPath: IndexPath) -> Pomodoro {
-        return groups[indexPath.section].items[indexPath.row]
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

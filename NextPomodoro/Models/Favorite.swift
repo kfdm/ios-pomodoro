@@ -94,7 +94,7 @@ extension Favorite {
         guard let username = ApplicationSettings.username else { return }
         guard let password = ApplicationSettings.password else { return }
 
-        authedRequest(path:"/api/favorite/\(self.id)", method: "DELETE", body: self.encode(), username: username, password: password, completionHandler: {_, data  in
+        authedRequest(path: "/api/favorite/\(self.id)", method: "DELETE", body: self.encode(), username: username, password: password, completionHandler: {_, _  in
                 completionHandler(true)
         })
     }

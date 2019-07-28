@@ -34,8 +34,6 @@ extension UserDefaults {
 
 struct ApplicationSettings {
     static let defaults = UserDefaults(suiteName: ApplicationSettingsKeys.suiteName.rawValue)!
-    
-    
 
     static var baseURL: String {
         return defaults.string(forKey: .baseURL) ?? "https://tsundere.co/"
@@ -84,6 +82,12 @@ struct ApplicationSettings {
         formatter.unitsStyle = .positional
         formatter.zeroFormattingBehavior = .pad
         return formatter
+    }
+
+    static func decode<T>(_ type: T.Type, from data: Data) throws -> T? where T: Decodable {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .custom(dateDecode)
+        return try? decoder.decode(T.self, from: data)
     }
 }
 

@@ -44,7 +44,7 @@ func authedRequest(path: String, method: String, body: Data?, username: String, 
     components.scheme = "https"
     components.host = "tsundere.co"
     components.path = path
-    
+
     authedRequest(url: components.url!, method: method, body: body, username: username, password: password, completionHandler: completionHandler)
 }
 

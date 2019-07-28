@@ -11,7 +11,7 @@ import UIKit
 import OnePasswordExtension
 
 class LoginViewController: UIViewController {
-    var spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+    var spinner = UIActivityIndicatorView(style: .whiteLarge)
 
     @IBOutlet weak var UsernameField: UITextField!
     @IBOutlet weak var PasswordField: UITextField!

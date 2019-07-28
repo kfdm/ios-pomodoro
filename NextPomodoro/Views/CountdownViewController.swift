@@ -269,7 +269,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
 
     func settingsAction() -> UIAlertAction {
         return UIAlertAction(title: NSLocalizedString("Settings", comment: "Settings"), style: .default, handler: { _ in
-            UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
         })
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class Router {
-    static func switchRootViewController(_ viewController: UIViewController, animated: Bool = true, duration: TimeInterval = 0.5, options: UIViewAnimationOptions = .transitionFlipFromRight, completion: (() -> Void)? = nil) {
+    static func switchRootViewController(_ viewController: UIViewController, animated: Bool = true, duration: TimeInterval = 0.5, options: UIView.AnimationOptions = .transitionFlipFromRight, completion: (() -> Void)? = nil) {
         print("switchRootViewController \(viewController)")
         print(UIApplication.shared.keyWindow as Any)
         guard let window = UIApplication.shared.keyWindow else { return }
@@ -36,7 +36,7 @@ class Router {
         return ApplicationSettings.username != nil
     }
 
-    static func showLogin(animated: Bool = false, duration: TimeInterval = 0.5, options: UIViewAnimationOptions = .transitionFlipFromRight, completion: (() -> Void)? = nil) {
+    static func showLogin(animated: Bool = false, duration: TimeInterval = 0.5, options: UIView.AnimationOptions = .transitionFlipFromRight, completion: (() -> Void)? = nil) {
         print("showLogin")
         guard let window = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController else {
             return
@@ -44,7 +44,7 @@ class Router {
         switchRootViewController(window)
     }
 
-    static func showMain(animated: Bool = true, duration: TimeInterval = 0.5, options: UIViewAnimationOptions = .transitionFlipFromRight, completion: (() -> Void)? = nil) {
+    static func showMain(animated: Bool = true, duration: TimeInterval = 0.5, options: UIView.AnimationOptions = .transitionFlipFromRight, completion: (() -> Void)? = nil) {
         print("MainTabBarController")
         guard let window = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as? TabBarController else {
             return

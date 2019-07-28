@@ -11,7 +11,7 @@ import UIKit
 import CocoaMQTT
 
 class CountdownViewController: UITableViewController, UITextFieldDelegate, UITabBarDelegate {
-    var data: Pomodoro?
+    var currentPomodoro: Pomodoro?
     var timer = Timer()
     var active = false
     var mqtt: CocoaMQTT?
@@ -30,16 +30,16 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     // MARK: - custom
 
     func updateView() {
+        guard let pomodoro = currentPomodoro else { return }
+        let formatter = ApplicationSettings.mediumDateTime
+
         DispatchQueue.main.async {
-            if let data = self.data {
-                self.titleLabel.text = data.title
-                self.categoryLabel.text = data.category
+            self.titleLabel.text = pomodoro.title
+            self.categoryLabel.text = pomodoro.category
 
-                let formatter = ApplicationSettings.mediumDateTime
+            self.startLabel.detailTextLabel?.text = formatter.string(for: pomodoro.start)
+            self.endLabel.detailTextLabel?.text = formatter.string(for: pomodoro.end)
 
-                self.startLabel.detailTextLabel?.text = formatter.string(for: data.start)
-                self.endLabel.detailTextLabel?.text = formatter.string(for: data.end)
-            }
             self.tableView.refreshControl?.endRefreshing()
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
@@ -47,18 +47,17 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     }
 
     @objc func updateCounter() {
-        if let data = data {
-            let formatter = ApplicationSettings.shortTime
+        guard let data = currentPomodoro else { return }
+        let formatter = ApplicationSettings.shortTime
 
-            var elapsed = Date().timeIntervalSince(data.end)
-            active = elapsed < 0
+        var elapsed = Date().timeIntervalSince(data.end)
+        active = elapsed < 0
 
-            if elapsed > 0 {
-                setCountdown(color: elapsed > 300 ? UIColor(named: "LateTimer")! : UIColor(named: "BreakTimer")!, text: formatter.string(from: TimeInterval(elapsed))!)
-            } else {
-                elapsed *= -1
-                setCountdown(color: UIColor.init(named: "ActiveTimer")!, text: formatter.string(from: TimeInterval(elapsed))!)
-            }
+        if elapsed > 0 {
+            setCountdown(color: elapsed > 300 ? UIColor(named: "LateTimer")! : UIColor(named: "BreakTimer")!, text: formatter.string(from: TimeInterval(elapsed))!)
+        } else {
+            elapsed *= -1
+            setCountdown(color: UIColor.init(named: "ActiveTimer")!, text: formatter.string(from: TimeInterval(elapsed))!)
         }
     }
 
@@ -73,7 +72,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         if ApplicationSettings.username != nil {
             Pomodoro.list(completionHandler: { favorites in
                 guard favorites.count > 0 else { return }
-                self.data = favorites.sorted(by: { $0.id > $1.id })[0]
+                self.currentPomodoro = favorites.sorted(by: { $0.id > $1.id })[0]
                 self.updateCounter()
                 self.updateView()
             })
@@ -91,7 +90,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
             userInfo: nil,
             repeats: true
         )
-        data = ApplicationSettings.cache
+        currentPomodoro = ApplicationSettings.cache
     }
 
     func connect() -> CocoaMQTT {
@@ -134,10 +133,10 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0: // Countdown Timer
-            if self.data == nil { return 0 }
+            if self.currentPomodoro == nil { return 0 }
             return super.tableView(tableView, heightForRowAt: indexPath)
         case 1: // Stop Timer
-            if self.data == nil { return 0 }
+            if self.currentPomodoro == nil { return 0 }
             return active ? super.tableView(tableView, heightForRowAt: indexPath) : 0
         case 2: // New Timer
             return active ? 0 : super.tableView(tableView, heightForRowAt: indexPath)
@@ -149,10 +148,10 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case 0: // Countdown Timer
-            if self.data == nil { return 0.1 }
+            if self.currentPomodoro == nil { return 0.1 }
             return super.tableView(tableView, heightForHeaderInSection: section)
         case 1: // Stop Timer
-            if self.data == nil { return 0.1 }
+            if self.currentPomodoro == nil { return 0.1 }
             return active ? super.tableView(tableView, heightForHeaderInSection: section) : 0.1
         case 2: // New Timer
             return active ? 0.1 : super.tableView(tableView, heightForHeaderInSection: section)
@@ -164,10 +163,10 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         switch section {
         case 0: // Countdown Timer
-            if self.data == nil { return 0.1 }
+            if self.currentPomodoro == nil { return 0.1 }
             return super.tableView(tableView, heightForFooterInSection: section)
         case 1: // Stop Timer
-            if self.data == nil { return 0.1 }
+            if self.currentPomodoro == nil { return 0.1 }
             return active ? super.tableView(tableView, heightForFooterInSection: section) : 0.1
         case 2: // New Timer
             return active ? 0.1 : super.tableView(tableView, heightForFooterInSection: section)
@@ -179,14 +178,14 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     // MARK: - buttons
 
     @IBAction func extendButton(_ sender: UIButton) {
-        if let currentPomodoro = self.data {
+        if let currentPomodoro = self.currentPomodoro {
             let end = currentPomodoro.end.addingTimeInterval(TimeInterval(300))
             let editPomodoro = Pomodoro.init(id: currentPomodoro.id, title: currentPomodoro.title, start: currentPomodoro.start, end: end, category: currentPomodoro.category, owner: "")
 
             print("Extend Pomodoro until \(editPomodoro.end)")
             editPomodoro.update(completionHandler: {  pomodoro in
                 print("Extended pomodoro until \(pomodoro.end)")
-                self.data = pomodoro
+                self.currentPomodoro = pomodoro
                 self.updateCounter()
                 self.updateView()
             })
@@ -196,14 +195,14 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     }
 
     @IBAction func stopButton(_ sender: UIButton) {
-        if let currentPomodoro = self.data {
+        if let currentPomodoro = self.currentPomodoro {
             let end = Date.init()
             let editPomodoro = Pomodoro.init(id: currentPomodoro.id, title: currentPomodoro.title, start: currentPomodoro.start, end: end, category: currentPomodoro.category, owner: "")
 
             print("Stopping Pomodoro")
             editPomodoro.update(completionHandler: {  pomodoro in
                 print("Stopped Pomodoro at \(pomodoro.end)")
-                self.data = pomodoro
+                self.currentPomodoro = pomodoro
                 self.updateCounter()
                 self.updateView()
             })
@@ -223,7 +222,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         let pomodoro = Pomodoro(title: title, category: category, duration: duration)
 
         pomodoro.submit { pomodoro in
-            self.data = pomodoro
+            self.currentPomodoro = pomodoro
             self.updateCounter()
             self.updateView()
         }
@@ -240,7 +239,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         let pomodoro = Pomodoro(title: title, category: category, duration: duration)
 
         pomodoro.submit { pomodoro in
-            self.data = pomodoro
+            self.currentPomodoro = pomodoro
             self.updateCounter()
             self.updateView()
         }
@@ -305,7 +304,7 @@ extension CountdownViewController: CocoaMQTTDelegate {
         switch message.topic {
         case _ where message.match("^pomodoro/.*/recent$"):
             guard let pomodoro = Pomodoro.decode(from: message.data) else { return }
-            self.data = pomodoro
+            self.currentPomodoro = pomodoro
             self.updateView()
         default:
             print("Unknown topic \(message.topic)")

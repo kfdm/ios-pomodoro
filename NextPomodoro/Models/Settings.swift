@@ -36,6 +36,12 @@ extension UserDefaults {
     }
 }
 
+extension Keychain {
+    func string(forKey key: ApplicationSettingsKeys) -> String? {
+        return try? get(key.rawValue)
+    }
+}
+
 struct ApplicationSettings {
     static let defaults = UserDefaults(suiteName: ApplicationSettingsKeys.suiteName.rawValue)!
     static let keychain = Keychain(accessGroup: ApplicationSettingsKeys.suiteName.rawValue)

@@ -41,7 +41,7 @@ extension Favorite {
 
     func submit(completionHandler: @escaping (Favorite) -> Void) {
         guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
-        guard let password = try? ApplicationSettings.keychain.get("server") else { return }
+        guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
         authedRequest(path: "/api/favorite", method: "POST", body: self.encode(), username: username, password: password) { _, data in
             let decoder = JSONDecoder()
@@ -57,7 +57,7 @@ extension Favorite {
 
     func start(completionHandler: @escaping (Pomodoro) -> Void) {
         guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
-        guard let password = try? ApplicationSettings.keychain.get("server") else { return }
+        guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
         authedRequest(path: "/api/favorite/\(self.id)/start", method: "POST", body: self.encode(), username: username, password: password) { _, data in
             let decoder = JSONDecoder()
@@ -73,7 +73,7 @@ extension Favorite {
 
     static func list(completionHandler: @escaping ([Favorite]) -> Void) {
         guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
-        guard let password = try? ApplicationSettings.keychain.get("server") else { return }
+        guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
         authedRequest(path: "/api/favorite", method: "GET", body: nil, username: username, password: password, completionHandler: {_, data in
             do {
@@ -92,7 +92,7 @@ extension Favorite {
 
     func delete(completionHandler: @escaping (Bool) -> Void) {
         guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
-        guard let password = try? ApplicationSettings.keychain.get("server") else { return }
+        guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
         authedRequest(path: "/api/favorite/\(self.id)", method: "DELETE", body: self.encode(), username: username, password: password, completionHandler: {_, _  in
                 completionHandler(true)

@@ -88,7 +88,7 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
     }
 
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
-        guard let _ = ApplicationSettings.defaults.string(forKey: .username) else {
+        if ApplicationSettings.defaults.string(forKey: .username) == nil {
             completionHandler(NCUpdateResult.failed)
             return
         }

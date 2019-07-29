@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import OnePasswordExtension
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, Storyboarded {
     var spinner = UIActivityIndicatorView(style: .whiteLarge)
 
     @IBOutlet weak var UsernameField: UITextField!
@@ -36,7 +36,7 @@ class LoginViewController: UIViewController {
 
                 DispatchQueue.main.async {
                     self.spinner.stopAnimating()
-                    Router.showMain()
+                    self.dismiss(animated: true, completion: nil)
                 }
             } else {
                 print(response)

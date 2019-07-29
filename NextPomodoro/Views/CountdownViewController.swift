@@ -69,7 +69,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     }
 
     @objc func refreshData() {
-        guard Router.isLoggedIn() else { return }
+        guard ApplicationSettings.defaults.string(forKey: .username) != nil else { return }
         Pomodoro.list(completionHandler: { favorites in
             guard favorites.count > 0 else { return }
             self.currentPomodoro = favorites.sorted(by: { $0.id > $1.id })[0]
@@ -111,15 +111,18 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         tableView.dataSource = self
         tableView.delegate = self
         tableView.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-
-        if Router.isLoggedIn() {
-            mqtt = connect()
-        }
-
         titleInput.delegate = self
         categoryInput.delegate = self
-        refreshData()
 
+        if ApplicationSettings.defaults.string(forKey: .username) != nil {
+            mqtt = connect()
+            refreshData()
+        } else {
+            let login = LoginViewController.instantiate()
+            let nav = UINavigationController(rootViewController: login)
+            nav.modalPresentationStyle = .formSheet
+            present(nav, animated: true, completion: nil)
+        }
     }
 
     // MARK: - textField
@@ -263,7 +266,6 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     func logoutAction() -> UIAlertAction {
         return UIAlertAction(title: NSLocalizedString("Logout", comment: "Logout"), style: .destructive, handler: { _ in
             ApplicationSettings.deleteLogin()
-            Router.showLogin()
         })
     }
 
@@ -285,7 +287,7 @@ extension CountdownViewController: CocoaMQTTDelegate {
 
     func mqttDidDisconnect(_ mqtt: CocoaMQTT, withError err: Error?) {
         print("didDisconnect")
-        print(err)
+        print(err.debugDescription)
     }
 
     func mqtt(_ mqtt: CocoaMQTT, didConnectAck ack: CocoaMQTTConnAck) {

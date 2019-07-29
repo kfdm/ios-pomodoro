@@ -105,6 +105,13 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         return mqtt
     }
 
+    fileprivate func showLogin() {
+        let login = LoginViewController.instantiate()
+        let nav = UINavigationController(rootViewController: login)
+        nav.modalPresentationStyle = .formSheet
+        present(nav, animated: true, completion: nil)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -118,10 +125,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
             mqtt = connect()
             refreshData()
         } else {
-            let login = LoginViewController.instantiate()
-            let nav = UINavigationController(rootViewController: login)
-            nav.modalPresentationStyle = .formSheet
-            present(nav, animated: true, completion: nil)
+            showLogin()
         }
     }
 
@@ -266,6 +270,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     func logoutAction() -> UIAlertAction {
         return UIAlertAction(title: NSLocalizedString("Logout", comment: "Logout"), style: .destructive, handler: { _ in
             ApplicationSettings.deleteLogin()
+            self.showLogin()
         })
     }
 

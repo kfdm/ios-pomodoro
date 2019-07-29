@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import OnePasswordExtension
 
-class LoginViewController: UIViewController, Storyboarded {
+class LoginViewController: UITableViewController, Storyboarded {
     var spinner = UIActivityIndicatorView(style: .whiteLarge)
 
     @IBOutlet weak var UsernameField: UITextField!

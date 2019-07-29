@@ -11,11 +11,12 @@ import UIKit
 
 class TabBarController: UITabBarController {
     override func viewWillAppear(_ animated: Bool) {
-        if ApplicationSettings.username == nil {
+        super.viewWillAppear(animated)
+        if ApplicationSettings.defaults.string(forKey: .username) == nil {
             self.navigationController?.performSegue(withIdentifier: "ShowLogin", sender: self)
         }
         self.selectedIndex = 0
-        super.viewWillAppear(animated)
+
     }
 
     func moveToTab(_ index: Int) {

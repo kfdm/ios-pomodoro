@@ -7,14 +7,18 @@
 //
 
 import Foundation
+import KeychainAccess
 
 enum ApplicationSettingsKeys: String {
-    case apiKey = "apiKey"
-    case baseURL = "baseURL"
     case suiteName = "group.net.kungfudiscomonkey.pomodoro"
-    case username = "username"
-    case password = "password"
-    case cache = "cache"
+
+    case server
+    case username
+    case broker
+    case brokerSSL
+    case brokerPort
+
+    case cache
 }
 
 extension UserDefaults {
@@ -34,20 +38,7 @@ extension UserDefaults {
 
 struct ApplicationSettings {
     static let defaults = UserDefaults(suiteName: ApplicationSettingsKeys.suiteName.rawValue)!
-
-    static var baseURL: String {
-        return defaults.string(forKey: .baseURL) ?? "https://tsundere.co/"
-    }
-
-    static var username: String? {
-        get { return defaults.string(forKey: .username) }
-        set { defaults.set(newValue, forKey: .username) }
-    }
-
-    static var password: String? {
-        get { return defaults.string(forKey: .password) }
-        set { defaults.set(newValue, forKey: .password) }
-    }
+    static let keychain = Keychain(accessGroup: ApplicationSettingsKeys.suiteName.rawValue)
 
     static var cache: Pomodoro? {
         get {
@@ -97,8 +88,6 @@ extension ApplicationSettings {
     }
 
     static func deleteLogin() {
-        ApplicationSettings.username = nil
-        ApplicationSettings.password = nil
-        ApplicationSettings.cache = nil
+        defaults.removeSuite(named: ApplicationSettingsKeys.suiteName.rawValue)
     }
 }

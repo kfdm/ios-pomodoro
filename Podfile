@@ -11,6 +11,7 @@ target 'NextPomodoro' do
   pod 'SwiftLint'
   pod 'SDWebImage', '~> 4.0'
   pod 'CocoaMQTT'
+  pod 'KeychainAccess'
 end
 
 target 'NextPomodoroToday' do
@@ -20,4 +21,5 @@ target 'NextPomodoroToday' do
 
   # Pods for NextPomodoroToday
   pod 'CocoaMQTT'
+  pod 'KeychainAccess'
 end

@@ -69,14 +69,13 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     }
 
     @objc func refreshData() {
-        if ApplicationSettings.username != nil {
-            Pomodoro.list(completionHandler: { favorites in
-                guard favorites.count > 0 else { return }
-                self.currentPomodoro = favorites.sorted(by: { $0.id > $1.id })[0]
-                self.updateCounter()
-                self.updateView()
-            })
-        }
+        guard Router.isLoggedIn() else { return }
+        Pomodoro.list(completionHandler: { favorites in
+            guard favorites.count > 0 else { return }
+            self.currentPomodoro = favorites.sorted(by: { $0.id > $1.id })[0]
+            self.updateCounter()
+            self.updateView()
+        })
     }
 
     // MARK: - lifecycle
@@ -97,8 +96,8 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         let clientID = "iosPomodoro-" + String(ProcessInfo().processIdentifier)
         let mqtt = CocoaMQTT(clientID: clientID, host: "chiharu.kungfudiscomonkey.net", port: 8883)
         mqtt.enableSSL = true
-        mqtt.username = ApplicationSettings.username
-        mqtt.password = ApplicationSettings.password
+        mqtt.username = ApplicationSettings.defaults.string(forKey: .username)
+        mqtt.password = ApplicationSettings.keychain["broker"]
         mqtt.keepAlive = 60
         mqtt.delegate = self
         mqtt.autoReconnect = true
@@ -113,7 +112,9 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         tableView.delegate = self
         tableView.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
 
-        mqtt = connect()
+        if Router.isLoggedIn() {
+            mqtt = connect()
+        }
 
         titleInput.delegate = self
         categoryInput.delegate = self

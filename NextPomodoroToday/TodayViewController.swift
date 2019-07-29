@@ -88,22 +88,22 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
     }
 
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
+        guard let _ = ApplicationSettings.defaults.string(forKey: .username) else {
+            completionHandler(NCUpdateResult.failed)
+            return
+        }
         // Perform any setup necessary in order to update the view.
         DispatchQueue.global(qos: .background).async {
-            if ApplicationSettings.username != nil {
-                Pomodoro.list(completionHandler: { favorites in
-                    self.data = favorites.sorted(by: { $0.id > $1.id })[0]
-                    self.updateView()
-                    self.updateCounter()
+            Pomodoro.list(completionHandler: { favorites in
+                self.data = favorites.sorted(by: { $0.id > $1.id })[0]
+                self.updateView()
+                self.updateCounter()
 
-                    // Save state
-                    ApplicationSettings.cache = self.data
+                // Save state
+                ApplicationSettings.cache = self.data
 
-                    completionHandler(NCUpdateResult.newData)
-                })
-            } else {
-                completionHandler(NCUpdateResult.failed)
-            }
+                completionHandler(NCUpdateResult.newData)
+            })
         }
     }
 }

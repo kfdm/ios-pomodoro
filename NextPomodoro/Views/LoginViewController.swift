@@ -30,8 +30,9 @@ class LoginViewController: UIViewController {
         checkLogin(username: username, password: password, completionHandler: {response in
             if response.statusCode == 200 {
                 print("Successfully logged in")
-                ApplicationSettings.username = username
-                ApplicationSettings.password = password
+                ApplicationSettings.defaults.set(username, forKey: .username)
+                ApplicationSettings.keychain["server"] = password
+                ApplicationSettings.keychain["broker"] = password
 
                 DispatchQueue.main.async {
                     self.spinner.stopAnimating()
@@ -48,17 +49,6 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func OnePasswordClick(_ sender: UIButton) {
-        OnePasswordExtension.shared().findLogin(forURLString: ApplicationSettings.baseURL, for: self, sender: sender, completion: { (loginDictionary, error) in
-            guard let loginDictionary = loginDictionary else {
-                if let error = error as NSError?, error.code != AppExtensionErrorCodeCancelledByUser {
-                    print("Error invoking 1Password App Extension for find login: \(String(describing: error))")
-                }
-                return
-            }
 
-            self.UsernameField.text = loginDictionary[AppExtensionUsernameKey] as? String
-            self.PasswordField.text = loginDictionary[AppExtensionPasswordKey] as? String
-            self.LoginClick(sender)
-        })
     }
 }

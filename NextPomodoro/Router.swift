@@ -33,7 +33,7 @@ class Router {
 
     static func isLoggedIn() -> Bool {
         print("isLoggedIn Check")
-        return ApplicationSettings.username != nil
+        return ApplicationSettings.defaults.string(forKey: .username) != nil
     }
 
     static func showLogin(animated: Bool = false, duration: TimeInterval = 0.5, options: UIView.AnimationOptions = .transitionFlipFromRight, completion: (() -> Void)? = nil) {

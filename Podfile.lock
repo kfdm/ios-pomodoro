@@ -1,5 +1,4 @@
 PODS:
-  - 1PasswordExtension (1.8.5)
   - CocoaAsyncSocket (7.6.3)
   - CocoaMQTT (1.2.4):
     - CocoaAsyncSocket (~> 7.6.3)
@@ -7,32 +6,25 @@ PODS:
   - SDWebImage (4.4.2):
     - SDWebImage/Core (= 4.4.2)
   - SDWebImage/Core (4.4.2)
-  - SwiftLint (0.27.0)
 
 DEPENDENCIES:
-  - 1PasswordExtension (~> 1.8.5)
   - CocoaMQTT
   - KeychainAccess
   - SDWebImage (~> 4.0)
-  - SwiftLint
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - 1PasswordExtension
     - CocoaAsyncSocket
     - CocoaMQTT
     - KeychainAccess
     - SDWebImage
-    - SwiftLint
 
 SPEC CHECKSUMS:
-  1PasswordExtension: 0e95bdea64ec8ff2f4f693be5467a09fac42a83d
   CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
   CocoaMQTT: 56f7a757a65c65bbb4df17c6f06aeea79fb2969c
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
   SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
-  SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
 
-PODFILE CHECKSUM: dd180099d9b28b8f11bd61f6191dad99156babca
+PODFILE CHECKSUM: e9fa2f80db90094181e6ecc520476189d78b6d91
 
 COCOAPODS: 1.7.5

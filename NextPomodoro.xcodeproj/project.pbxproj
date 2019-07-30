@@ -10,7 +10,6 @@
 		0EFC01A5E7C43C96F60FF147 /* Pods_NextPomodoro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7802FDCD750068EC1BE696DC /* Pods_NextPomodoro.framework */; };
 		8720384722EF2E47001577EF /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720384622EF2E47001577EF /* Storyboarded.swift */; };
 		87402D002144FDEC00F0C43A /* NewFavoriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87402CFF2144FDEC00F0C43A /* NewFavoriteController.swift */; };
-		8756548821292E3800D69D6D /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8756548721292E3800D69D6D /* 1Password.xcassets */; };
 		8756548B212947AA00D69D6D /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548A212947AA00D69D6D /* FavoritesViewController.swift */; };
 		8756548D2129586000D69D6D /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548C2129586000D69D6D /* HistoryViewController.swift */; };
 		8756548F2129679100D69D6D /* CountdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548E2129679100D69D6D /* CountdownViewController.swift */; };
@@ -35,6 +34,7 @@
 		87C43BDB2144EBE700E9C687 /* Pomodoro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C43BDA2144EBE700E9C687 /* Pomodoro.swift */; };
 		87C43BDC2144EBE700E9C687 /* Pomodoro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C43BDA2144EBE700E9C687 /* Pomodoro.swift */; };
 		C19EC700212CEC5D005F5A2F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87B6517F2128F0AE006D88AF /* Assets.xcassets */; };
+		C19EFB9422EFD37A00DA4666 /* Notification+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19EFB9322EFD37A00DA4666 /* Notification+Constants.swift */; };
 		D6797A91CEAB983113B50514 /* Pods_NextPomodoroToday.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B1FD18465026C5BEA2AEE8 /* Pods_NextPomodoroToday.framework */; };
 /* End PBXBuildFile section */
 
@@ -95,6 +95,7 @@
 		A9CB0A262F1FF88FF3345417 /* Pods-NextPomodoroToday.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NextPomodoroToday.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NextPomodoroToday/Pods-NextPomodoroToday.debug.xcconfig"; sourceTree = "<group>"; };
 		C19EC6FE212CEBDB005F5A2F /* NextPomodoroToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextPomodoroToday.entitlements; sourceTree = "<group>"; };
 		C19EC6FF212CEBE8005F5A2F /* NextPomodoro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextPomodoro.entitlements; sourceTree = "<group>"; };
+		C19EFB9322EFD37A00DA4666 /* Notification+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Constants.swift"; sourceTree = "<group>"; };
 		CD83A8F4A3FBFDB9065C0F6E /* Pods-NextPomodoro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NextPomodoro.release.xcconfig"; path = "Pods/Target Support Files/Pods-NextPomodoro/Pods-NextPomodoro.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -168,6 +169,7 @@
 		87B651752128F0AD006D88AF /* NextPomodoro */ = {
 			isa = PBXGroup;
 			children = (
+				C19EFB9222EFD36900DA4666 /* Extensions */,
 				87C43BD62144E6F800E9C687 /* Extensions.swift */,
 				87C43BD92144EBBE00E9C687 /* Models */,
 				C19EC6FF212CEBE8005F5A2F /* NextPomodoro.entitlements */,
@@ -214,6 +216,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		C19EFB9222EFD36900DA4666 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C19EFB9322EFD37A00DA4666 /* Notification+Constants.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -227,7 +237,6 @@
 				87B651712128F0AD006D88AF /* Resources */,
 				87B651A32128F422006D88AF /* Embed App Extensions */,
 				E1F5264AFF69F67A5760632F /* [CP] Embed Pods Frameworks */,
-				872EB737212C3DBB0040DBFE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -311,7 +320,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8756548821292E3800D69D6D /* 1Password.xcassets in Resources */,
 				87B651832128F0AE006D88AF /* LaunchScreen.storyboard in Resources */,
 				87B651802128F0AE006D88AF /* Assets.xcassets in Resources */,
 				87B6517E2128F0AD006D88AF /* Main.storyboard in Resources */,
@@ -366,19 +374,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		872EB737212C3DBB0040DBFE /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  \"${PODS_ROOT}/SwiftLint/swiftlint\"\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
-		};
 		E1F5264AFF69F67A5760632F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -403,6 +398,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C19EFB9422EFD37A00DA4666 /* Notification+Constants.swift in Sources */,
 				8756548F2129679100D69D6D /* CountdownViewController.swift in Sources */,
 				87C43BDB2144EBE700E9C687 /* Pomodoro.swift in Sources */,
 				87B651A52128F45E006D88AF /* PomodoroAPI.swift in Sources */,

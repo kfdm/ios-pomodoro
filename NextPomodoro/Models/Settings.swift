@@ -9,7 +9,7 @@
 import Foundation
 import KeychainAccess
 
-enum ApplicationSettingsKeys: String {
+enum ApplicationDomainKeys: String {
     case suiteName = "group.net.kungfudiscomonkey.pomodoro"
 
     case server
@@ -21,30 +21,51 @@ enum ApplicationSettingsKeys: String {
     case cache
 }
 
+enum ApplicationPasswords: String {
+    case server
+    case broker
+}
+
 extension UserDefaults {
-    func string(forKey: ApplicationSettingsKeys) -> String? {
+    func string(forKey: ApplicationDomainKeys) -> String? {
         return string(forKey: forKey.rawValue)
     }
-    func set(_ value: String?, forKey: ApplicationSettingsKeys) {
-        set(value, forKey: forKey.rawValue)
-    }
-    func value(forKey: ApplicationSettingsKeys) -> Any? {
+    func value(forKey: ApplicationDomainKeys) -> Any? {
         return value(forKey: forKey.rawValue)
     }
-    func set(_ value: Data?, forKey: ApplicationSettingsKeys) {
+    func bool(forKey key: ApplicationDomainKeys) -> Bool {
+        return bool(forKey: key.rawValue)
+    }
+    func integer(forKey key: ApplicationDomainKeys) -> Int {
+        return integer(forKey: key.rawValue)
+    }
+
+    func set(_ value: String?, forKey: ApplicationDomainKeys) {
+        set(value, forKey: forKey.rawValue)
+    }
+    func set(_ value: Int?, forKey key: ApplicationDomainKeys) {
+        set(value, forKey: key.rawValue)
+    }
+    func set(_ value: Bool, forKey key: ApplicationDomainKeys) {
+        set(value, forKey: key.rawValue)
+    }
+    func set(_ value: Data?, forKey: ApplicationDomainKeys) {
         set(value, forKey: forKey.rawValue)
     }
 }
 
 extension Keychain {
-    func string(forKey key: ApplicationSettingsKeys) -> String? {
+    func string(forKey key: ApplicationPasswords) -> String? {
         return try? get(key.rawValue)
+    }
+    func set(_ value: String, forKey key: ApplicationPasswords) {
+        try? set(value, key: key.rawValue)
     }
 }
 
 struct ApplicationSettings {
-    static let defaults = UserDefaults(suiteName: ApplicationSettingsKeys.suiteName.rawValue)!
-    static let keychain = Keychain(accessGroup: ApplicationSettingsKeys.suiteName.rawValue)
+    static let defaults = UserDefaults(suiteName: ApplicationDomainKeys.suiteName.rawValue)!
+    static let keychain = Keychain(accessGroup: ApplicationDomainKeys.suiteName.rawValue)
 
     static var cache: Pomodoro? {
         get {
@@ -94,6 +115,6 @@ extension ApplicationSettings {
     }
 
     static func deleteLogin() {
-        defaults.removeSuite(named: ApplicationSettingsKeys.suiteName.rawValue)
+        defaults.removeSuite(named: ApplicationDomainKeys.suiteName.rawValue)
     }
 }

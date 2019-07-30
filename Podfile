@@ -7,8 +7,6 @@ target 'NextPomodoro' do
   platform :ios, '11.4'
 
   # Pods for NextPomodoro
-  pod '1PasswordExtension', '~> 1.8.5' 
-  pod 'SwiftLint'
   pod 'SDWebImage', '~> 4.0'
   pod 'CocoaMQTT'
   pod 'KeychainAccess'

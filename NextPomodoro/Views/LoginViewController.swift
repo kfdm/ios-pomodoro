@@ -8,47 +8,52 @@
 
 import Foundation
 import UIKit
-import OnePasswordExtension
 
 class LoginViewController: UITableViewController, Storyboarded {
     var spinner = UIActivityIndicatorView(style: .whiteLarge)
 
-    @IBOutlet weak var UsernameField: UITextField!
-    @IBOutlet weak var PasswordField: UITextField!
-    @IBOutlet weak var OnepasswordButton: UIButton!
+    @IBOutlet weak var usernameField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var serverField: UITextField!
+    @IBOutlet weak var brokerField: UITextField!
+    @IBOutlet weak var brokerPort: UITextField!
+    @IBOutlet weak var brokerSSL: UISwitch!
+
+    @IBOutlet weak var loginButton: UIButton!
 
     override func viewDidLoad() {
-        //self.OnepasswordButton.isHidden = (false == OnePasswordExtension.shared().isAppExtensionAvailable())
         super.viewDidLoad()
     }
 
-    @IBAction func LoginClick(_ sender: UIButton) {
-        spinner.startAnimating()
-        guard let username = UsernameField.text else { return }
-        guard let password = PasswordField.text else { return }
-
-        checkLogin(username: username, password: password, completionHandler: {response in
-            if response.statusCode == 200 {
-                print("Successfully logged in")
-                ApplicationSettings.defaults.set(username, forKey: .username)
-                ApplicationSettings.keychain["server"] = password
-                ApplicationSettings.keychain["broker"] = password
-
-                DispatchQueue.main.async {
-                    self.spinner.stopAnimating()
-                    self.dismiss(animated: true, completion: nil)
-                }
-            } else {
-                print(response)
-                DispatchQueue.main.async {
-                    self.spinner.stopAnimating()
-                }
-                print("Error logging in")
-            }
-        })
+    @IBAction func editingEnded(_ sender: UITextField) {
+        loginButton.isEnabled = [
+            usernameField.text,
+            passwordField.text,
+            serverField.text,
+            brokerField.text,
+            brokerPort.text
+            ].allSatisfy { $0 != "" }
     }
 
-    @IBAction func OnePasswordClick(_ sender: UIButton) {
+    @IBAction func toggleSSL(_ sender: UISwitch) {
+        brokerPort.text = sender.isOn ? "8883" : "1883"
+    }
 
+    @IBAction func loginClick(_ sender: UIButton) {
+        spinner.startAnimating()
+        checkLogin(username: usernameField.text!, password: passwordField.text!) { (_) in
+            DispatchQueue.main.async {
+                self.spinner.stopAnimating()
+                ApplicationSettings.defaults.set(self.usernameField.text!, forKey: .username)
+                ApplicationSettings.defaults.set(self.serverField.text!, forKey: .server)
+                ApplicationSettings.defaults.set(self.brokerField.text!, forKey: .broker)
+                ApplicationSettings.defaults.set(Int(self.brokerPort.text!), forKey: .brokerPort)
+                ApplicationSettings.defaults.set(self.brokerSSL.isOn, forKey: .brokerSSL)
+
+                ApplicationSettings.keychain.set(self.passwordField.text!, forKey: .server)
+                self.dismiss(animated: true, completion: nil)
+                NotificationCenter.default.post(name: .authenticationGranted, object: nil)
+            }
+        }
     }
 }

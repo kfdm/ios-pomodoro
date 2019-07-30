@@ -59,7 +59,7 @@
                                         <rect key="frame" x="0.0" y="123" width="375" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rEQ-3T-nzc" id="Fic-m9-bA5">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="127.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hcu-9n-IS1">
@@ -640,7 +640,10 @@
                                                     <rect key="frame" x="8" y="8" width="359" height="27.5"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                                    <connections>
+                                                        <action selector="editingEnded:" destination="LmY-qI-oyV" eventType="editingDidEnd" id="Ggm-KT-wdd"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -662,7 +665,10 @@
                                                     <rect key="frame" x="8" y="8" width="359" height="27.5"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES" textContentType="password"/>
+                                                    <connections>
+                                                        <action selector="editingEnded:" destination="LmY-qI-oyV" eventType="editingDidEnd" id="Cfx-pD-Bbv"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -684,7 +690,10 @@
                                                     <rect key="frame" x="8" y="8" width="359" height="27.5"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                                    <connections>
+                                                        <action selector="editingEnded:" destination="LmY-qI-oyV" eventType="editingDidEnd" id="Fel-vC-tTl"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -710,7 +719,10 @@
                                                     <rect key="frame" x="8" y="8" width="359" height="27.5"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                                    <connections>
+                                                        <action selector="editingEnded:" destination="LmY-qI-oyV" eventType="editingDidEnd" id="G8D-j9-0yD"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -728,11 +740,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Port" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lZE-sZ-EKD">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1883" borderStyle="roundedRect" placeholder="Port" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lZE-sZ-EKD">
                                                     <rect key="frame" x="8" y="8" width="359" height="27.5"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad"/>
+                                                    <connections>
+                                                        <action selector="editingEnded:" destination="LmY-qI-oyV" eventType="editingDidEnd" id="exN-2G-LKp"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -750,9 +765,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TJk-Pa-SU2">
-                                                    <rect key="frame" x="310" y="6" width="49" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="TJk-Pa-SU2">
+                                                    <rect key="frame" x="318" y="8" width="51" height="27.5"/>
+                                                    <connections>
+                                                        <action selector="toggleSSL:" destination="LmY-qI-oyV" eventType="valueChanged" id="7v6-lE-dw1"/>
+                                                    </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Use SSL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VB6-py-G6Y">
                                                     <rect key="frame" x="16" y="11" width="65" height="21"/>
@@ -762,6 +779,11 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="TJk-Pa-SU2" secondAttribute="bottom" constant="8" id="D0e-Rw-yF3"/>
+                                                <constraint firstAttribute="trailing" secondItem="TJk-Pa-SU2" secondAttribute="trailing" constant="8" id="Ved-u5-oNZ"/>
+                                                <constraint firstItem="TJk-Pa-SU2" firstAttribute="top" secondItem="j91-DP-EWB" secondAttribute="top" constant="8" id="cM5-bc-uTn"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -775,9 +797,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bnZ-tO-nPl">
+                                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bnZ-tO-nPl">
                                                     <rect key="frame" x="8" y="8" width="359" height="27.5"/>
                                                     <state key="normal" title="Login"/>
+                                                    <connections>
+                                                        <action selector="loginClick:" destination="LmY-qI-oyV" eventType="touchUpInside" id="yns-cu-n0L"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -796,6 +821,15 @@
                             <outlet property="delegate" destination="LmY-qI-oyV" id="YPL-YQ-vdu"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="brokerField" destination="pi9-VD-ojd" id="wl9-4V-ROq"/>
+                        <outlet property="brokerPort" destination="lZE-sZ-EKD" id="O5X-qU-owU"/>
+                        <outlet property="brokerSSL" destination="TJk-Pa-SU2" id="Cub-Gs-fbK"/>
+                        <outlet property="loginButton" destination="bnZ-tO-nPl" id="ANr-Tz-cKr"/>
+                        <outlet property="passwordField" destination="vJ3-Oi-9FF" id="jdd-RP-GmY"/>
+                        <outlet property="serverField" destination="9Kc-tg-bO3" id="uAI-rj-0P8"/>
+                        <outlet property="usernameField" destination="HXW-CC-RDk" id="FC4-q6-RAm"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kiR-tr-Iyq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

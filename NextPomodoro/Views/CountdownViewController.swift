@@ -94,10 +94,12 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
 
     func connect() -> CocoaMQTT {
         let clientID = "iosPomodoro-" + String(ProcessInfo().processIdentifier)
-        let mqtt = CocoaMQTT(clientID: clientID, host: "chiharu.kungfudiscomonkey.net", port: 8883)
-        mqtt.enableSSL = true
+        let host = ApplicationSettings.defaults.string(forKey: .broker)!
+        let port = ApplicationSettings.defaults.integer(forKey: .brokerPort)
+        let mqtt = CocoaMQTT(clientID: clientID, host: host, port: UInt16(port))
+        mqtt.enableSSL = ApplicationSettings.defaults.bool(forKey: .brokerSSL)
         mqtt.username = ApplicationSettings.defaults.string(forKey: .username)
-        mqtt.password = ApplicationSettings.keychain["broker"]
+        mqtt.password = ApplicationSettings.keychain.string(forKey: .server)
         mqtt.keepAlive = 60
         mqtt.delegate = self
         mqtt.autoReconnect = true
@@ -108,8 +110,10 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     fileprivate func showLogin() {
         let login = LoginViewController.instantiate()
         let nav = UINavigationController(rootViewController: login)
-        nav.modalPresentationStyle = .formSheet
-        present(nav, animated: true, completion: nil)
+        nav.modalPresentationStyle = .fullScreen
+        DispatchQueue.main.async {
+            self.present(nav, animated: true, completion: nil)
+        }
     }
 
     override func viewDidLoad() {
@@ -121,12 +125,18 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         titleInput.delegate = self
         categoryInput.delegate = self
 
-        if ApplicationSettings.defaults.string(forKey: .username) != nil {
-            mqtt = connect()
-            refreshData()
+        NotificationCenter.default.addObserver(self, selector: #selector(completeLogin), name: .authenticationGranted, object: nil)
+
+        if ApplicationSettings.keychain.string(forKey: .server) != nil {
+            completeLogin()
         } else {
             showLogin()
         }
+    }
+
+    @objc func completeLogin() {
+        mqtt = connect()
+        refreshData()
     }
 
     // MARK: - textField

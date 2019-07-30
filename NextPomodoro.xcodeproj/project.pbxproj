@@ -17,7 +17,6 @@
 		8773DB142144EE7E00CF52CB /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8773DB132144EE7E00CF52CB /* Settings.swift */; };
 		8773DB152144EF1D00CF52CB /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8773DB112144EE5A00CF52CB /* Favorite.swift */; };
 		8773DB162144EF1F00CF52CB /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8773DB132144EE7E00CF52CB /* Settings.swift */; };
-		8773DB172144EF3000CF52CB /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C43BD62144E6F800E9C687 /* Extensions.swift */; };
 		87B651772128F0AD006D88AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B651762128F0AD006D88AF /* AppDelegate.swift */; };
 		87B6517E2128F0AD006D88AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87B6517C2128F0AD006D88AF /* Main.storyboard */; };
 		87B651802128F0AE006D88AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87B6517F2128F0AE006D88AF /* Assets.xcassets */; };
@@ -134,12 +133,13 @@
 		8756548921293C2400D69D6D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				87B6517C2128F0AD006D88AF /* Main.storyboard */,
-				87B6518C2128F258006D88AF /* LoginViewController.swift */,
+				8756548E2129679100D69D6D /* CountdownViewController.swift */,
 				8756548A212947AA00D69D6D /* FavoritesViewController.swift */,
 				8756548C2129586000D69D6D /* HistoryViewController.swift */,
-				8756548E2129679100D69D6D /* CountdownViewController.swift */,
+				87B6518C2128F258006D88AF /* LoginViewController.swift */,
+				87B6517C2128F0AD006D88AF /* Main.storyboard */,
 				87402CFF2144FDEC00F0C43A /* NewFavoriteController.swift */,
+				87B6518A2128F184006D88AF /* TabBarController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -147,13 +147,13 @@
 		87B6516A2128F0AD006D88AF = {
 			isa = PBXGroup;
 			children = (
-				875ADE09213A786800841740 /* README.md */,
-				8756548721292E3800D69D6D /* 1Password.xcassets */,
+				87B651932128F422006D88AF /* Frameworks */,
 				87B651752128F0AD006D88AF /* NextPomodoro */,
 				87B651962128F422006D88AF /* NextPomodoroToday */,
-				87B651932128F422006D88AF /* Frameworks */,
-				87B651742128F0AD006D88AF /* Products */,
 				0AEBC47428D8201EA7D1D6DF /* Pods */,
+				87B651742128F0AD006D88AF /* Products */,
+				8756548721292E3800D69D6D /* 1Password.xcassets */,
+				875ADE09213A786800841740 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -170,17 +170,13 @@
 			isa = PBXGroup;
 			children = (
 				C19EFB9222EFD36900DA4666 /* Extensions */,
-				87C43BD62144E6F800E9C687 /* Extensions.swift */,
 				87C43BD92144EBBE00E9C687 /* Models */,
-				C19EC6FF212CEBE8005F5A2F /* NextPomodoro.entitlements */,
-				87B651A42128F45E006D88AF /* PomodoroAPI.swift */,
-				87B6518A2128F184006D88AF /* TabBarController.swift */,
 				8756548921293C2400D69D6D /* Views */,
 				87B651762128F0AD006D88AF /* AppDelegate.swift */,
 				87B6517F2128F0AE006D88AF /* Assets.xcassets */,
-				87B651812128F0AE006D88AF /* LaunchScreen.storyboard */,
 				87B651842128F0AE006D88AF /* Info.plist */,
-				8720384622EF2E47001577EF /* Storyboarded.swift */,
+				87B651812128F0AE006D88AF /* LaunchScreen.storyboard */,
+				C19EC6FF212CEBE8005F5A2F /* NextPomodoro.entitlements */,
 			);
 			path = NextPomodoro;
 			sourceTree = "<group>";
@@ -198,10 +194,10 @@
 		87B651962128F422006D88AF /* NextPomodoroToday */ = {
 			isa = PBXGroup;
 			children = (
+				87B6519C2128F422006D88AF /* Info.plist */,
+				87B651992128F422006D88AF /* MainInterface.storyboard */,
 				C19EC6FE212CEBDB005F5A2F /* NextPomodoroToday.entitlements */,
 				87B651972128F422006D88AF /* TodayViewController.swift */,
-				87B651992128F422006D88AF /* MainInterface.storyboard */,
-				87B6519C2128F422006D88AF /* Info.plist */,
 			);
 			path = NextPomodoroToday;
 			sourceTree = "<group>";
@@ -209,8 +205,9 @@
 		87C43BD92144EBBE00E9C687 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				87C43BDA2144EBE700E9C687 /* Pomodoro.swift */,
 				8773DB112144EE5A00CF52CB /* Favorite.swift */,
+				87C43BDA2144EBE700E9C687 /* Pomodoro.swift */,
+				87B651A42128F45E006D88AF /* PomodoroAPI.swift */,
 				8773DB132144EE7E00CF52CB /* Settings.swift */,
 			);
 			path = Models;
@@ -219,7 +216,9 @@
 		C19EFB9222EFD36900DA4666 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				87C43BD62144E6F800E9C687 /* Extensions.swift */,
 				C19EFB9322EFD37A00DA4666 /* Notification+Constants.swift */,
+				8720384622EF2E47001577EF /* Storyboarded.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -420,7 +419,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				87B651982128F422006D88AF /* TodayViewController.swift in Sources */,
-				8773DB172144EF3000CF52CB /* Extensions.swift in Sources */,
 				8773DB152144EF1D00CF52CB /* Favorite.swift in Sources */,
 				87C43BDC2144EBE700E9C687 /* Pomodoro.swift in Sources */,
 				87B651A62128F488006D88AF /* PomodoroAPI.swift in Sources */,
@@ -445,6 +443,7 @@
 				87B6517D2128F0AD006D88AF /* Base */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		87B651812128F0AE006D88AF /* LaunchScreen.storyboard */ = {
@@ -453,6 +452,7 @@
 				87B651822128F0AE006D88AF /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		87B651992128F422006D88AF /* MainInterface.storyboard */ = {
@@ -461,6 +461,7 @@
 				87B6519A2128F422006D88AF /* Base */,
 			);
 			name = MainInterface.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

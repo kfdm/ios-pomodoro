@@ -24,6 +24,18 @@ struct FavoriteResponse: Codable {
     let next: String?
     let previous: String?
     let results: [Favorite]
+
+    static func decode(from data: Data) -> FavoriteResponse? {
+        let decoder = JSONDecoder()
+        // https://stackoverflow.com/a/46538676
+        decoder.dateDecodingStrategy = .custom(dateDecode)
+        do {
+            return try decoder.decode(FavoriteResponse.self, from: data)
+        } catch let error {
+            print(error)
+        }
+        return nil
+    }
 }
 
 extension Favorite {
@@ -39,19 +51,19 @@ extension Favorite {
         return nil
     }
 
+    static func decode(from data: Data) -> Favorite? {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .custom(dateDecode)
+        return try? decoder.decode(self, from: data)
+    }
+
     func submit(completionHandler: @escaping (Favorite) -> Void) {
         guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
         authedRequest(path: "/api/favorite", method: "POST", body: self.encode(), username: username, password: password) { _, data in
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .custom(dateDecode)
-            do {
-                let newFavorite = try decoder.decode(Favorite.self, from: data)
-                completionHandler(newFavorite)
-            } catch let error {
-                print(error)
-            }
+            guard let newFavorite = Favorite.decode(from: data) else { return }
+            completionHandler(newFavorite)
         }
     }
 
@@ -60,14 +72,8 @@ extension Favorite {
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
         authedRequest(path: "/api/favorite/\(self.id)/start", method: "POST", body: self.encode(), username: username, password: password) { _, data in
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .custom(dateDecode)
-            do {
-                let newPomodoro = try decoder.decode(Pomodoro.self, from: data)
-                completionHandler(newPomodoro)
-            } catch let error {
-                print(error)
-            }
+            guard let newPomodoro = Pomodoro.decode(from: data) else { return }
+            completionHandler(newPomodoro)
         }
     }
 
@@ -76,17 +82,8 @@ extension Favorite {
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
         authedRequest(path: "/api/favorite", method: "GET", body: nil, username: username, password: password, completionHandler: {_, data in
-            do {
-                let decoder = JSONDecoder()
-                // https://stackoverflow.com/a/46538676
-                decoder.dateDecodingStrategy = .custom(dateDecode)
-                do {
-                    let pomodoros = try decoder.decode(FavoriteResponse.self, from: data)
-                    completionHandler(pomodoros.results)
-                } catch let error {
-                    print(error)
-                }
-            }
+            guard let response = FavoriteResponse.decode(from: data) else { return }
+            completionHandler(response.results)
         })
     }
 

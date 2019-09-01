@@ -39,11 +39,12 @@ func dateDecode(decoder: Decoder) throws -> Date {
 
 typealias AuthedRequestResponse = ((HTTPURLResponse, Data) -> Void)
 
-func authedRequest(path: String, method: String, body: Data?, username: String, password: String, completionHandler: @escaping AuthedRequestResponse) {
+func authedRequest(path: String, method: String, body: Data? = nil, queryItems: [URLQueryItem]? = [], username: String, password: String, completionHandler: @escaping AuthedRequestResponse) {
     var components = URLComponents()
     components.scheme = "https"
     components.host = "tsundere.co"
     components.path = path
+    components.queryItems = queryItems
 
     authedRequest(url: components.url!, method: method, body: body, username: username, password: password, completionHandler: completionHandler)
 }

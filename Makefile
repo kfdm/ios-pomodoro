@@ -1,6 +1,3 @@
-.PHONY:	open
-open:
-	open NextPomodoro.xcworkspace
 
 .PHONY: format
 format:

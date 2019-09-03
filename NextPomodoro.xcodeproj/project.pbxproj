@@ -77,7 +77,6 @@
 		870A0499231EA45200A83842 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8720384622EF2E47001577EF /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
 		87402CFF2144FDEC00F0C43A /* NewFavoriteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFavoriteController.swift; sourceTree = "<group>"; };
-		8756548721292E3800D69D6D /* 1Password.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = 1Password.xcassets; path = Pods/1PasswordExtension/1Password.xcassets; sourceTree = "<group>"; };
 		8756548A212947AA00D69D6D /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		8756548C2129586000D69D6D /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		8756548E2129679100D69D6D /* CountdownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownViewController.swift; sourceTree = "<group>"; };
@@ -165,7 +164,6 @@
 				87B651962128F422006D88AF /* NextPomodoroToday */,
 				0AEBC47428D8201EA7D1D6DF /* Pods */,
 				87B651742128F0AD006D88AF /* Products */,
-				8756548721292E3800D69D6D /* 1Password.xcassets */,
 				875ADE09213A786800841740 /* README.md */,
 			);
 			sourceTree = "<group>";

@@ -83,7 +83,7 @@ class FavoritesViewController: UITableViewController {
             })
         })
 
-        action.backgroundColor = UIColor.init(named: "Favorite")
+        action.backgroundColor = Colors.backgroundFavorite
 
         return action
     }
@@ -97,7 +97,7 @@ class FavoritesViewController: UITableViewController {
                 completionHandler(true)
             })
         })
-        action.backgroundColor = UIColor.init(named: "Destructive")
+        action.backgroundColor = Colors.backgroundDestructive
         return action
     }
 

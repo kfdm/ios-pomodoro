@@ -53,12 +53,12 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         active = elapsed < 0
 
         if elapsed > 0 {
-            let color = elapsed > 300 ? UIColor(named: "LateTimer")! : UIColor(named: "BreakTimer")!
+            let color = elapsed > 300 ? Colors.latetimer : Colors.breakTimer
             let text = ApplicationSettings.shortTime(elapsed)!
             setCountdown(color: color, text: text)
         } else {
             elapsed *= -1
-            let color = UIColor.init(named: "ActiveTimer")!
+            let color = Colors.activeTimer
             let text = ApplicationSettings.shortTime(elapsed)!
             setCountdown(color: color, text: text)
         }

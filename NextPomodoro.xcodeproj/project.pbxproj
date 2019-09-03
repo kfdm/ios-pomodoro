@@ -11,6 +11,8 @@
 		870A0491231E946E00A83842 /* UITableViewController+ReuseableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A0490231E946E00A83842 /* UITableViewController+ReuseableCell.swift */; };
 		870A0497231E9DAE00A83842 /* FavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A0495231E9DAE00A83842 /* FavoriteTableViewCell.swift */; };
 		870A0498231E9DAE00A83842 /* FavoriteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 870A0496231E9DAE00A83842 /* FavoriteTableViewCell.xib */; };
+		870A049A231EA45200A83842 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A0499231EA45200A83842 /* Constants.swift */; };
+		870A049B231EA50500A83842 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A0499231EA45200A83842 /* Constants.swift */; };
 		8720384722EF2E47001577EF /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720384622EF2E47001577EF /* Storyboarded.swift */; };
 		87402D002144FDEC00F0C43A /* NewFavoriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87402CFF2144FDEC00F0C43A /* NewFavoriteController.swift */; };
 		8756548B212947AA00D69D6D /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548A212947AA00D69D6D /* FavoritesViewController.swift */; };
@@ -72,6 +74,7 @@
 		870A0490231E946E00A83842 /* UITableViewController+ReuseableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewController+ReuseableCell.swift"; sourceTree = "<group>"; };
 		870A0495231E9DAE00A83842 /* FavoriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewCell.swift; sourceTree = "<group>"; };
 		870A0496231E9DAE00A83842 /* FavoriteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteTableViewCell.xib; sourceTree = "<group>"; };
+		870A0499231EA45200A83842 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8720384622EF2E47001577EF /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
 		87402CFF2144FDEC00F0C43A /* NewFavoriteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFavoriteController.swift; sourceTree = "<group>"; };
 		8756548721292E3800D69D6D /* 1Password.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = 1Password.xcassets; path = Pods/1PasswordExtension/1Password.xcassets; sourceTree = "<group>"; };
@@ -216,6 +219,7 @@
 		87C43BD92144EBBE00E9C687 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				870A0499231EA45200A83842 /* Constants.swift */,
 				8773DB112144EE5A00CF52CB /* Favorite.swift */,
 				87C43BDA2144EBE700E9C687 /* Pomodoro.swift */,
 				87B651A42128F45E006D88AF /* PomodoroAPI.swift */,
@@ -439,6 +443,7 @@
 				8773DB142144EE7E00CF52CB /* Settings.swift in Sources */,
 				87402D002144FDEC00F0C43A /* NewFavoriteController.swift in Sources */,
 				8756548D2129586000D69D6D /* HistoryViewController.swift in Sources */,
+				870A049A231EA45200A83842 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +456,7 @@
 				87C43BDC2144EBE700E9C687 /* Pomodoro.swift in Sources */,
 				87B651A62128F488006D88AF /* PomodoroAPI.swift in Sources */,
 				8773DB162144EF1F00CF52CB /* Settings.swift in Sources */,
+				870A049B231EA50500A83842 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

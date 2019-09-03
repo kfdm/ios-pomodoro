@@ -90,7 +90,7 @@ class HistoryViewController: UITableViewController {
             })
         })
 
-        repeatAction.backgroundColor = UIColor.init(named: "Favorite")
+        repeatAction.backgroundColor = Colors.backgroundFavorite
 
         return UISwipeActionsConfiguration(actions: [repeatAction])
     }

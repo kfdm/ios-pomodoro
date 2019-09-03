@@ -9,16 +9,17 @@
 import Foundation
 import UIKit
 
-class HistoryCell: UITableViewCell {
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var categoryLabel: UILabel!
-    @IBOutlet weak var durationLabel: UILabel!
-    @IBOutlet weak var endLabel: UILabel!
+struct HistoryGroup {
+    var date: Date
+    var items: [Pomodoro]
 }
 
-struct HistoryGroup {
-    var title: String
-    var items: [Pomodoro]
+extension HistoryGroup {
+    var title: String {
+        let df = DateFormatter()
+        df.dateFormat = "MM/dd/yyyy"
+        return df.string(from: date)
+    }
 }
 
 class HistoryViewController: UITableViewController {
@@ -31,21 +32,19 @@ class HistoryViewController: UITableViewController {
         tableView.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         self.refreshData()
 
+        tableView.register(HistoryTableViewCell.self)
     }
 
     @objc func refreshData() {
         print("Refreshing History")
         Pomodoro.list(completionHandler: { pomodoros in
             print("Got New History")
-            let df = DateFormatter()
-            df.dateFormat = "MM/dd/yyyy"
-
             let groupedPomodoro = Dictionary.init(grouping: pomodoros) { Calendar.current.startOfDay(for: $0.end) }
             let mappedPomodoro = groupedPomodoro.map({ (date, list) -> HistoryGroup in
-                return HistoryGroup(title: df.string(from: date), items: list)
+                return HistoryGroup(date: date, items: list)
             })
 
-            self.groups = mappedPomodoro
+            self.groups = mappedPomodoro.sorted { $0.date > $1.date }
 
             DispatchQueue.main.async {
                 self.tableView.refreshControl?.endRefreshing()
@@ -60,20 +59,9 @@ class HistoryViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let pomodoro = groups[indexPath.section].items[indexPath.row]
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Pomodoro", for: indexPath) as! HistoryCell
-
-        cell.titleLabel.text = pomodoro.title
-        cell.categoryLabel.text = pomodoro.category
-
-        let duration = pomodoro.end.timeIntervalSince(pomodoro.start)
-
-        let formatter = ApplicationSettings.shortTime
-        cell.durationLabel.text = formatter.string(from: duration)
-
-        let dateFormat = ApplicationSettings.shortDateTime
-        cell.endLabel.text = dateFormat.string(from: pomodoro.end)
-
+        let cell: HistoryTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+        cell.item = pomodoro
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
 
@@ -85,23 +73,11 @@ class HistoryViewController: UITableViewController {
         return groups.count
     }
 
-    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let pomodoro = groups[indexPath.section].items[indexPath.row]
-        let configuration = UISwipeActionsConfiguration(actions: [swipeActionDelete(for: pomodoro)])
-        return configuration
-    }
-
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let pomodoro = groups[indexPath.section].items[indexPath.row]
-        let configuration = UISwipeActionsConfiguration(actions: [swipeActionRepeat(for: pomodoro)])
-        return configuration
-    }
 
-    // MARK: - actions
-
-    func swipeActionRepeat(for pomodoro: Pomodoro) -> UIContextualAction {
         let title = NSLocalizedString("Repeat", comment: "Repeat existing Pomodoro")
-        let action = UIContextualAction(style: .normal, title: title, handler: { (_, _, completionHandler) in
+        let repeatAction = UIContextualAction(style: .normal, title: title, handler: { (_, _, completionHandler) in
             pomodoro.repeat_(completionHandler: {  _ in
                 print("Move to main view")
                 if let view = self.tabBarController?.viewControllers?[0] {
@@ -114,19 +90,8 @@ class HistoryViewController: UITableViewController {
             })
         })
 
-        action.backgroundColor = UIColor.init(named: "Favorite")
+        repeatAction.backgroundColor = UIColor.init(named: "Favorite")
 
-        return action
+        return UISwipeActionsConfiguration(actions: [repeatAction])
     }
-
-    func swipeActionDelete(for pomodoro: Pomodoro) -> UIContextualAction {
-        let title = NSLocalizedString("Delete", comment: "Delete History")
-        let action = UIContextualAction(style: .destructive, title: title, handler: { (_, _, completionHandler) in
-            pomodoro.delete(completionHandler: {result in
-                completionHandler(result)
-            })
-        })
-        return action
-    }
-
 }

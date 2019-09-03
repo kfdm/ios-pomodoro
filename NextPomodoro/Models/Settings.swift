@@ -107,6 +107,24 @@ struct ApplicationSettings {
         decoder.dateDecodingStrategy = .custom(dateDecode)
         return try? decoder.decode(T.self, from: data)
     }
+
+    static func shortTime(_ start: Date, _ end: Date) -> String? {
+        let duration = end.timeIntervalSince(start)
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        return formatter.string(from: duration)
+    }
+
+    static func mediumDate(_ date: Date) -> String? {
+        let dateFormat = DateFormatter()
+        dateFormat.locale = NSLocale.current
+        dateFormat.dateStyle = .short
+        dateFormat.timeStyle = .short
+        dateFormat.timeZone = TimeZone.current
+        return dateFormat.string(from: date)
+    }
 }
 
 extension ApplicationSettings {

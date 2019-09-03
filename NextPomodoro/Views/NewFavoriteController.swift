@@ -16,10 +16,9 @@ class NewFavoriteController: UIViewController {
     @IBOutlet weak var durationLabel: UILabel!
 
     @IBAction func durationChanged(_ sender: UISlider) {
-        let format = ApplicationSettings.shortTime
         let duration = TimeInterval(sender.value.rounded(.down) * 60)
         DispatchQueue.main.async {
-            self.durationLabel.text = format.string(from: duration)
+            self.durationLabel.text = ApplicationSettings.shortTime(duration)
         }
     }
 

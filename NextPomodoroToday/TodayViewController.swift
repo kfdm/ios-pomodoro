@@ -21,15 +21,18 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
 
     @objc func updateCounter() {
         if let data = data {
-            let formatter = ApplicationSettings.shortTime
 
             var elapsed = Date().timeIntervalSince(data.end)
 
             if elapsed > 0 {
-                setCountdown(color: elapsed > 300 ? UIColor(named: "LateTimer")! : UIColor(named: "BreakTimer")!, text: formatter.string(from: TimeInterval(elapsed))!)
+                let color = elapsed > 300 ? UIColor(named: "LateTimer")! : UIColor(named: "BreakTimer")!
+                let text = ApplicationSettings.shortTime(elapsed)!
+                setCountdown(color: color, text: text)
             } else {
                 elapsed *= -1
-                setCountdown(color: UIColor.init(named: "ActiveTimer")!, text: formatter.string(from: TimeInterval(elapsed))!)
+                let color = UIColor.init(named: "ActiveTimer")!
+                let text = ApplicationSettings.shortTime(elapsed)!
+                setCountdown(color: color, text: text)
             }
         }
     }

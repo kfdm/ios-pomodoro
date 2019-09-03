@@ -94,27 +94,27 @@ struct ApplicationSettings {
         return formatter
     }
 
-    static var shortTime: DateComponentsFormatter {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.hour, .minute, .second]
-        formatter.unitsStyle = .positional
-        formatter.zeroFormattingBehavior = .pad
-        return formatter
-    }
-
     static func decode<T>(_ type: T.Type, from data: Data) throws -> T? where T: Decodable {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .custom(dateDecode)
         return try? decoder.decode(T.self, from: data)
     }
 
-    static func shortTime(_ start: Date, _ end: Date) -> String? {
-        let duration = end.timeIntervalSince(start)
+    static func shortTime(_ duration: Int) -> String? {
+        return shortTime(TimeInterval(duration))
+    }
+
+    static func shortTime(_ duration: TimeInterval) -> String? {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.hour, .minute, .second]
         formatter.unitsStyle = .positional
         formatter.zeroFormattingBehavior = .pad
         return formatter.string(from: duration)
+    }
+
+    static func shortTime(_ start: Date, _ end: Date) -> String? {
+        let duration = end.timeIntervalSince(start)
+        return shortTime(duration)
     }
 
     static func mediumDate(_ date: Date) -> String? {

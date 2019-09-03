@@ -8,15 +8,6 @@
 
 import Foundation
 import UIKit
-import SDWebImage
-
-class FavoritesCell: UITableViewCell {
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var categoryLabel: UILabel!
-    @IBOutlet weak var countLabel: UILabel!
-    @IBOutlet weak var durationLabel: UILabel!
-    @IBOutlet weak var favoriteIcon: UIImageView!
-}
 
 class FavoritesViewController: UITableViewController {
     var data: [Favorite] = []
@@ -27,6 +18,8 @@ class FavoritesViewController: UITableViewController {
         tableView.delegate = self
         tableView.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         self.refreshData()
+
+        tableView.register(FavoriteTableViewCell.self)
     }
 
     @objc func refreshData() {
@@ -43,20 +36,9 @@ class FavoritesViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Favorite", for: indexPath) as! FavoritesCell
-        let favorite = data[indexPath.row]
-
-        let interval = TimeInterval(favorite.duration * 60)
-        let formatter = ApplicationSettings.shortTime
-
-        cell.titleLabel.text = favorite.title
-        cell.categoryLabel.text = favorite.category
-        cell.durationLabel.text = formatter.string(from: interval)
-        cell.countLabel.text = "\(favorite.count) times"
-        if let icon = favorite.icon {
-            cell.favoriteIcon.sd_setImage(with: URL(string: icon), placeholderImage: nil, options: SDWebImageOptions.scaleDownLargeImages, completed: nil)
-        }
-
+        let cell: FavoriteTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+        cell.favorite = data[indexPath.row]
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
 

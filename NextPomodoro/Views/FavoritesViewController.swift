@@ -8,9 +8,12 @@
 
 import Foundation
 import UIKit
+import os.log
 
 class FavoritesViewController: UITableViewController {
     var data: [Favorite] = []
+    private var logger = OSLog(subsystem: "Favorites", category: "ViewController")
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,8 +51,9 @@ class FavoritesViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let favorite = self.data[indexPath.row]
-        let configuration = UISwipeActionsConfiguration(actions: [swipeActionStart(for: favorite)])
-        return configuration
+        return UISwipeActionsConfiguration(actions: [
+            swipeActionStart(title: NSLocalizedString("Start", comment: "Start Favorite"), color: Colors.backgroundFavorite, for: favorite)
+        ])
     }
 
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -66,12 +70,12 @@ class FavoritesViewController: UITableViewController {
 
     // MARK: - Swipe Actions
 
-    func swipeActionStart(for favorite: Favorite) -> UIContextualAction {
-        let title = NSLocalizedString("Start", comment: "Start Favorite")
-        let action = UIContextualAction(style: .normal, title: title, handler: { (_, _, completionHandler) in
-            print("Starting Favorite \(favorite.title):\(favorite.category):\(favorite.duration)")
-            favorite.start(completionHandler: {  pomodoro in
-                print("Started Pomodoro \(pomodoro.title) \(pomodoro.category) \(pomodoro.end)")
+    func swipeActionStart(title: String, color: UIColor, for favorite: Favorite) -> UIContextualAction {
+        // TODO: Fix case with already running pomodoro
+        let action = UIContextualAction(style: .normal, title: title) { (_, view, completionHandler) in
+            os_log("Starting Favorite: %s %s %d", log: Log.favorites, type: .debug, favorite.title, favorite.category, favorite.duration)
+            favorite.start { (pomodoro) in
+                os_log("Starting Pomodoro: %s %s until %s", log: Log.favorites, type: .debug, pomodoro.title, pomodoro.category, "\(pomodoro.end)")
                 if let view = self.tabBarController?.viewControllers?[0] {
                     DispatchQueue.main.async {
                         self.tabBarController?.selectedViewController = view
@@ -80,10 +84,9 @@ class FavoritesViewController: UITableViewController {
                     }
                 }
                 completionHandler(true)
-            })
-        })
-
-        action.backgroundColor = Colors.backgroundFavorite
+            }
+        }
+        action.backgroundColor = color
 
         return action
     }

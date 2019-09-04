@@ -13,6 +13,6 @@ class Colors {
     static var breakTimer = UIColor(named: "BreakTimer")!
     static var activeTimer = UIColor(named: "ActiveTimer")!
 
-    static var backgroundFavorite = UIColor(named: "Favorite")
-    static var backgroundDestructive = UIColor(named: "Destructive")
+    static var backgroundFavorite = UIColor(named: "Favorite")!
+    static var backgroundDestructive = UIColor(named: "Destructive")!
 }

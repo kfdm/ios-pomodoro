@@ -39,6 +39,7 @@
 		87C43BDC2144EBE700E9C687 /* Pomodoro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C43BDA2144EBE700E9C687 /* Pomodoro.swift */; };
 		87F397F4231E9169000AA82A /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F397F2231E9169000AA82A /* HistoryTableViewCell.swift */; };
 		87F397F5231E9169000AA82A /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87F397F3231E9169000AA82A /* HistoryTableViewCell.xib */; };
+		C1711A6F231F443100BF4B93 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1711A6E231F443100BF4B93 /* Log.swift */; };
 		C19EC700212CEC5D005F5A2F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87B6517F2128F0AE006D88AF /* Assets.xcassets */; };
 		C19EFB9422EFD37A00DA4666 /* Notification+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19EFB9322EFD37A00DA4666 /* Notification+Constants.swift */; };
 		D6797A91CEAB983113B50514 /* Pods_NextPomodoroToday.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B1FD18465026C5BEA2AEE8 /* Pods_NextPomodoroToday.framework */; };
@@ -104,6 +105,7 @@
 		88B1FD18465026C5BEA2AEE8 /* Pods_NextPomodoroToday.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NextPomodoroToday.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95A5AC4DEE93F9F2F16BD43E /* Pods-NextPomodoroToday.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NextPomodoroToday.release.xcconfig"; path = "Pods/Target Support Files/Pods-NextPomodoroToday/Pods-NextPomodoroToday.release.xcconfig"; sourceTree = "<group>"; };
 		A9CB0A262F1FF88FF3345417 /* Pods-NextPomodoroToday.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NextPomodoroToday.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NextPomodoroToday/Pods-NextPomodoroToday.debug.xcconfig"; sourceTree = "<group>"; };
+		C1711A6E231F443100BF4B93 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		C19EC6FE212CEBDB005F5A2F /* NextPomodoroToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextPomodoroToday.entitlements; sourceTree = "<group>"; };
 		C19EC6FF212CEBE8005F5A2F /* NextPomodoro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextPomodoro.entitlements; sourceTree = "<group>"; };
 		C19EFB9322EFD37A00DA4666 /* Notification+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Constants.swift"; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 				C19EFB9322EFD37A00DA4666 /* Notification+Constants.swift */,
 				8720384622EF2E47001577EF /* Storyboarded.swift */,
 				870A0490231E946E00A83842 /* UITableViewController+ReuseableCell.swift */,
+				C1711A6E231F443100BF4B93 /* Log.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 				87B651772128F0AD006D88AF /* AppDelegate.swift in Sources */,
 				87B6518D2128F258006D88AF /* LoginViewController.swift in Sources */,
 				870A0491231E946E00A83842 /* UITableViewController+ReuseableCell.swift in Sources */,
+				C1711A6F231F443100BF4B93 /* Log.swift in Sources */,
 				8773DB142144EE7E00CF52CB /* Settings.swift in Sources */,
 				87402D002144FDEC00F0C43A /* NewFavoriteController.swift in Sources */,
 				8756548D2129586000D69D6D /* HistoryViewController.swift in Sources */,

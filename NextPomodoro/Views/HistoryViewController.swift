@@ -73,6 +73,11 @@ class HistoryViewController: UITableViewController {
         return groups.count
     }
 
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        // Disable default delete button
+        return .none
+    }
+
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let pomodoro = groups[indexPath.section].items[indexPath.row]
 

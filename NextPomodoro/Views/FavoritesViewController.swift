@@ -11,9 +11,14 @@ import UIKit
 import os.log
 
 class FavoritesViewController: UITableViewController {
-    var data: [Favorite] = []
-    private var logger = OSLog(subsystem: "Favorites", category: "ViewController")
-    
+    var data: [Favorite] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.refreshControl?.endRefreshing()
+                self.tableView.reloadData()
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,15 +31,8 @@ class FavoritesViewController: UITableViewController {
     }
 
     @objc func refreshData() {
-        print("Refreshing Favorites")
         Favorite.list(completionHandler: { favorites in
-            print("Got New Favorites")
             self.data = favorites.sorted(by: { $0.count > $1.count })
-
-            DispatchQueue.main.async {
-                self.tableView.refreshControl?.endRefreshing()
-                self.tableView.reloadData()
-            }
         })
     }
 
@@ -56,12 +54,6 @@ class FavoritesViewController: UITableViewController {
         ])
     }
 
-    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let favorite = self.data[indexPath.row]
-        let configuration = UISwipeActionsConfiguration(actions: [swipeActionDelete(for: favorite)])
-        return configuration
-    }
-
     // MARK: - Buttons
 
     @IBAction func newFavoriteButton(_ sender: UIBarButtonItem) {
@@ -69,6 +61,11 @@ class FavoritesViewController: UITableViewController {
     }
 
     // MARK: - Swipe Actions
+
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        // Disable default delete button
+        return .none
+    }
 
     func swipeActionStart(title: String, color: UIColor, for favorite: Favorite) -> UIContextualAction {
         // TODO: Fix case with already running pomodoro
@@ -90,18 +87,4 @@ class FavoritesViewController: UITableViewController {
 
         return action
     }
-
-    func swipeActionDelete(for favorite: Favorite) -> UIContextualAction {
-        let title = NSLocalizedString("Delete", comment: "Delete Favorite")
-        let action = UIContextualAction(style: .destructive, title: title, handler: { (_, _, completionHandler) in
-            print("Deleting Favorite \(favorite.title):\(favorite.category):\(favorite.duration)")
-            favorite.delete(completionHandler: { _ in
-                // TODO: Actually check results
-                completionHandler(true)
-            })
-        })
-        action.backgroundColor = Colors.backgroundDestructive
-        return action
-    }
-
 }

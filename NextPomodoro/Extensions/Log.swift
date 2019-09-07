@@ -7,7 +7,9 @@
 //
 
 import os
+import Foundation
 
 struct Log {
-    static let favorites = OSLog.init(subsystem: "API", category: "Favorites")
+    static let favorites = OSLog.init(subsystem: Bundle.main.bundleIdentifier!, category: "Favorites")
+    static let networking = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "Networking")
 }

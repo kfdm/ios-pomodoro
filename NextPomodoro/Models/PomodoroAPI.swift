@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os
 
 func checkLogin(username: String, password: String, completionHandler: @escaping (HTTPURLResponse) -> Void) {
     authedRequest(path: "/api/pomodoro", method: "GET", body: nil, username: username, password: password, completionHandler: {response, _ in
@@ -64,8 +65,10 @@ func authedRequest(url: URL, method: String, body: Data?, username: String, pass
     request.httpMethod = method
     request.httpBody = body
 
-    let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, _ -> Void in
+    let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, error -> Void in
         if let httpResponse = response as? HTTPURLResponse {
+            print(error)
+            os_log("Request: %s %s %d", log: Log.networking, type: .debug, method, url.absoluteString, httpResponse.statusCode)
             completionHandler(httpResponse, data!)
         }
     })

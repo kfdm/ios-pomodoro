@@ -40,6 +40,7 @@
 		87F397F4231E9169000AA82A /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F397F2231E9169000AA82A /* HistoryTableViewCell.swift */; };
 		87F397F5231E9169000AA82A /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87F397F3231E9169000AA82A /* HistoryTableViewCell.xib */; };
 		C1711A6F231F443100BF4B93 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1711A6E231F443100BF4B93 /* Log.swift */; };
+		C1711A70231F47CD00BF4B93 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1711A6E231F443100BF4B93 /* Log.swift */; };
 		C19EC700212CEC5D005F5A2F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87B6517F2128F0AE006D88AF /* Assets.xcassets */; };
 		C19EFB9422EFD37A00DA4666 /* Notification+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19EFB9322EFD37A00DA4666 /* Notification+Constants.swift */; };
 		D6797A91CEAB983113B50514 /* Pods_NextPomodoroToday.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B1FD18465026C5BEA2AEE8 /* Pods_NextPomodoroToday.framework */; };
@@ -454,6 +455,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87B651982128F422006D88AF /* TodayViewController.swift in Sources */,
+				C1711A70231F47CD00BF4B93 /* Log.swift in Sources */,
 				8773DB152144EF1D00CF52CB /* Favorite.swift in Sources */,
 				87C43BDC2144EBE700E9C687 /* Pomodoro.swift in Sources */,
 				87B651A62128F488006D88AF /* PomodoroAPI.swift in Sources */,

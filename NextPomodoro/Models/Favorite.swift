@@ -71,7 +71,7 @@ extension Favorite {
         guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
-        authedRequest(path: "/api/favorite/\(self.id)/start", method: "POST", body: self.encode(), username: username, password: password) { _, data in
+        authedRequest(path: "/api/favorite/\(self.id)/start", method: "POST", body: self.encode(), username: username, password: password) { response, data in
             guard let newPomodoro = Pomodoro.decode(from: data) else { return }
             completionHandler(newPomodoro)
         }

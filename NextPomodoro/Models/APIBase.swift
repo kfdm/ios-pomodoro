@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os
 
 protocol EncodableJson: Codable {
     func encode() -> Data?
@@ -24,7 +25,7 @@ extension EncodableJson {
             let data = try encoder.encode(self)
             return data
         } catch let error {
-            print(error)
+            os_log("Error encoding: %s", log: Log.networking, type: .error, error.localizedDescription)
         }
         return nil
     }
@@ -38,7 +39,7 @@ extension DecodableJson {
         do {
             return try decoder.decode(T.self, from: data)
         } catch let error {
-            print(error)
+            os_log("Error decoding: %s", log: Log.networking, type: .error, error.localizedDescription)
         }
         return nil
     }

@@ -29,8 +29,7 @@ class NewFavoriteController: UIViewController {
 
         let favorite = Favorite.init(id: 0, title: title, duration: duration, category: category, owner: "", icon: nil, count: 0)
 
-        favorite.submit(completionHandler: {favorite in
-            print(favorite)
+        favorite.submit(completionHandler: {_ in
            self.navigationController?.popToRootViewController(animated: true)
         })
     }

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import os
 
 class TabBarController: UITabBarController {
     override func viewWillAppear(_ animated: Bool) {
@@ -25,7 +26,7 @@ class TabBarController: UITabBarController {
                 self.selectedViewController = view
             }
         } else {
-            print("Unable to select tab \(index)")
+            os_log("Unable to select tab %d", log: Log.view, type: .error, index)
         }
     }
 }

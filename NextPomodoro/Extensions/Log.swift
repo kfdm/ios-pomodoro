@@ -11,5 +11,8 @@ import Foundation
 
 struct Log {
     static let favorites = OSLog.init(subsystem: Bundle.main.bundleIdentifier!, category: "Favorites")
+    static let pomodoro = OSLog.init(subsystem: Bundle.main.bundleIdentifier!, category: "Pomodoro")
     static let networking = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "Networking")
+    static let mqtt = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "MQTT")
+    static let view = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "ViewController")
 }

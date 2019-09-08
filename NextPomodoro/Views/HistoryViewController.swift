@@ -36,9 +36,7 @@ class HistoryViewController: UITableViewController {
     }
 
     @objc func refreshData() {
-        print("Refreshing History")
         Pomodoro.list(completionHandler: { pomodoros in
-            print("Got New History")
             let groupedPomodoro = Dictionary.init(grouping: pomodoros) { Calendar.current.startOfDay(for: $0.end) }
             let mappedPomodoro = groupedPomodoro.map({ (date, list) -> HistoryGroup in
                 return HistoryGroup(date: date, items: list)

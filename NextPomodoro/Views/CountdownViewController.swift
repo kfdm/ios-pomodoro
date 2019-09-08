@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import CocoaMQTT
+import os
 
 class CountdownViewController: UITableViewController, UITextFieldDelegate, UITabBarDelegate {
     var currentPomodoro: Pomodoro? {
@@ -119,25 +120,38 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         case 2: // Detail Section
             return isActivePomodoro ? 4: 0
         default:
-            fatalError("Unknown section \(section)")
+            fatalError("numberOfRowsInSection \(section)")
         }
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0:
+        case 1:
+            return isActivePomodoro
+                ? ""
+                : NSLocalizedString("New Pomodoro", comment: "New Pomodoro header label")
+        case 2:
             return isActivePomodoro
                 ? NSLocalizedString("Current Pomodoro", comment: "Current Pomodoro header label")
-                : NSLocalizedString("Recent Pomodoro", comment: "Recent Pomodoro header label")
-        case 1:
-            return NSLocalizedString("New Pomodoro", comment: "New Pomodoro header label")
+                : ""
         default:
             return ""
         }
     }
 
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 1:
+            return isActivePomodoro ? 0.1 : 44
+        case 2:
+            return isActivePomodoro ? 44 : 0.1
+        default:
+            return 0.1
+        }
+    }
+
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0
+        return 0.1
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -222,7 +236,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
             cell.accessoryType = .none
             return cell
         default:
-            fatalError("Unknown index \(indexPath)")
+            fatalError("cellForRowAt \(indexPath)")
         }
     }
 
@@ -244,7 +258,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
             }
             navigationController?.pushViewController(vc, animated: true)
         default:
-            print("Unknown index")
+            os_log("accessoryButtonTappedForRowWith: %@", log: Log.view, type: .info, indexPath.debugDescription)
         }
     }
 
@@ -256,7 +270,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         let updateRequest = PomodoroExtendRequest(id: pomodoro.id, end: end)
 
         updateRequest.update(completionHandler: {  pomodoro in
-            print("Extended pomodoro until \(pomodoro.end)")
+            os_log("Extended pomodoro until", log: Log.pomodoro, type: .debug, pomodoro.end.debugDescription)
             self.currentPomodoro = pomodoro
         })
 
@@ -268,7 +282,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         let updateRequest = PomodoroExtendRequest(id: pomodoro.id, end: end)
 
         updateRequest.update(completionHandler: {  pomodoro in
-            print("Stopped pomodoro at \(pomodoro.end)")
+            os_log("Stopped pomodoro at", log: Log.pomodoro, type: .debug, pomodoro.end.debugDescription)
             self.currentPomodoro = pomodoro
         })
     }
@@ -304,16 +318,15 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
 
 extension CountdownViewController: CocoaMQTTDelegate {
     func mqttDidPing(_ mqtt: CocoaMQTT) {
-        print("didPing")
+        os_log("mqttDidPing", log: Log.mqtt, type: .debug)
     }
 
     func mqttDidReceivePong(_ mqtt: CocoaMQTT) {
-        print("didPong")
+        os_log("mqttDidReceivePong", log: Log.mqtt, type: .debug)
     }
 
     func mqttDidDisconnect(_ mqtt: CocoaMQTT, withError err: Error?) {
-        print("didDisconnect")
-        print(err.debugDescription)
+        os_log("mqttDidDisconnect: %@", log: Log.mqtt, type: .error, err.debugDescription)
     }
 
     func mqtt(_ mqtt: CocoaMQTT, didConnectAck ack: CocoaMQTTConnAck) {
@@ -322,11 +335,11 @@ extension CountdownViewController: CocoaMQTTDelegate {
     }
 
     func mqtt(_ mqtt: CocoaMQTT, didPublishMessage message: CocoaMQTTMessage, id: UInt16) {
-        print("didPublishMessage")
+        os_log("didPublishMessage", log: Log.mqtt, type: .debug)
     }
 
     func mqtt(_ mqtt: CocoaMQTT, didPublishAck id: UInt16) {
-        print("didPublishAck")
+        os_log("didPublishAck", log: Log.mqtt, type: .debug)
     }
 
     func mqtt(_ mqtt: CocoaMQTT, didReceiveMessage message: CocoaMQTTMessage, id: UInt16) {
@@ -335,16 +348,16 @@ extension CountdownViewController: CocoaMQTTDelegate {
             guard let pomodoro: Pomodoro = Pomodoro.decode(from: message.data) else { return }
             self.currentPomodoro = pomodoro
         default:
-            print("Unknown topic \(message.topic)")
+            os_log("unknown topic: %@", log: Log.mqtt, type: .debug, message.topic)
         }
     }
 
     func mqtt(_ mqtt: CocoaMQTT, didSubscribeTopic topics: [String]) {
-        print("didSubscribeTopic \(topics)")
+        os_log("didSubscribeTopic: %@", log: Log.mqtt, type: .debug, topics)
     }
 
     func mqtt(_ mqtt: CocoaMQTT, didUnsubscribeTopic topic: String) {
-        print("didUnsubscribeTopic")
+        os_log("didUnsubscribeTopic: %@", log: Log.mqtt, type: .debug, topic)
     }
 
 }

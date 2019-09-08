@@ -19,23 +19,11 @@ struct Favorite: Codable {
     let count: Int
 }
 
-struct FavoriteResponse: Codable {
+struct FavoriteResponse: DecodableJson {
     let count: Int
     let next: String?
     let previous: String?
     let results: [Favorite]
-
-    static func decode(from data: Data) -> FavoriteResponse? {
-        let decoder = JSONDecoder()
-        // https://stackoverflow.com/a/46538676
-        decoder.dateDecodingStrategy = .custom(dateDecode)
-        do {
-            return try decoder.decode(FavoriteResponse.self, from: data)
-        } catch let error {
-            print(error)
-        }
-        return nil
-    }
 }
 
 extension Favorite: EncodableJson, DecodableJson {
@@ -64,7 +52,7 @@ extension Favorite: EncodableJson, DecodableJson {
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
         authedRequest(path: "/api/favorite", method: "GET", body: nil, username: username, password: password, completionHandler: {_, data in
-            guard let response = FavoriteResponse.decode(from: data) else { return }
+            guard let response: FavoriteResponse = FavoriteResponse.decode(from: data) else { return }
             completionHandler(response.results)
         })
     }

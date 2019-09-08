@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import os
 
 class HistoryEditViewController: UITableViewController {
     var pomodoro: Pomodoro!
@@ -33,7 +34,7 @@ class HistoryEditViewController: UITableViewController {
         case 1:
             return 2
         default:
-            fatalError("Unknown section \(section)")
+            fatalError("numberOfRowsInSection \(section)")
         }
     }
 
@@ -81,16 +82,16 @@ class HistoryEditViewController: UITableViewController {
             }
             return cell
         default:
-            fatalError("Unknown index \(indexPath)")
+            fatalError("cellForRowAt \(indexPath)")
         }
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath {
         case [0, 2]:
-            print("Click start")
+            os_log("Not yet implemented: %s", log: Log.view, type: .default, indexPath.debugDescription)
         case [0, 3]:
-            print("Click start")
+            os_log("Not yet implemented: %s", log: Log.view, type: .default, indexPath.debugDescription)
         default:
             let cell = tableView.cellForRow(at: indexPath)
             cell?.setSelected(true, animated: true)
@@ -108,7 +109,7 @@ class HistoryEditViewController: UITableViewController {
             }
             navigationController?.pushViewController(vc, animated: true)
         default:
-            print("pass")
+            os_log("accessoryButtonTappedForRowWith: %s", log: Log.view, type: .debug, indexPath.debugDescription)
         }
     }
 }

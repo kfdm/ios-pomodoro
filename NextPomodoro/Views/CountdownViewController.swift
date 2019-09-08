@@ -14,7 +14,7 @@ import os
 class CountdownViewController: UITableViewController, UITextFieldDelegate, UITabBarDelegate {
     var currentPomodoro: Pomodoro? {
         didSet {
-            ApplicationSettings.cache = currentPomodoro
+            ApplicationSettings.defaults.cache(currentPomodoro, forKey: .cache)
             DispatchQueue.main.async {
                 self.tableView.refreshControl?.endRefreshing()
                 self.tableView.reloadData()
@@ -43,11 +43,6 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     }
 
     // MARK: - lifecycle
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        currentPomodoro = ApplicationSettings.cache
-    }
 
     func connect() -> CocoaMQTT {
         let clientID = "iosPomodoro-" + String(ProcessInfo().processIdentifier)
@@ -81,6 +76,8 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         tableView.register(DateTableViewCell.self)
         tableView.register(TextTableViewCell.self)
         tableView.register(ButtonTableViewCell.self)
+
+        currentPomodoro = ApplicationSettings.defaults.object(forKey: .cache)
 
         tableView.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
 
@@ -289,29 +286,6 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
             os_log("Stopped pomodoro at", log: Log.pomodoro, type: .debug, pomodoro.end.debugDescription)
             self.currentPomodoro = pomodoro
         })
-    }
-
-    func actionLogout(action: UIAlertAction) {
-        ApplicationSettings.deleteLogin()
-        self.showLogin()
-    }
-
-    func actionShowSettings(action: UIAlertAction) {
-        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-    }
-
-    @IBAction func submitOptionsButton(_ sender: UIBarButtonItem) {
-        let alertTitle = NSLocalizedString("Options", comment: "Settings Menu")
-        let alert = UIAlertController(title: alertTitle, message: nil, preferredStyle: .actionSheet)
-
-        // Need to attach this to our tabBar for iPad support
-        alert.popoverPresentationController?.barButtonItem = sender
-        //alert.popoverPresentationController?.sourceView = tabBar
-
-        alert.addAction(UIAlertAction(localizedTitle: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(localizedTitle: "Settings", style: .default, handler: self.actionShowSettings))
-        alert.addAction(UIAlertAction(localizedTitle: "Logout", style: .destructive, handler: self.actionLogout))
-        self.present(alert, animated: true, completion: nil)
     }
 }
 

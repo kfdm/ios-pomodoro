@@ -1,18 +1,12 @@
 
-/* Class = "UILabel"; text = "Title"; ObjectID = "1FP-LM-QtR"; */
-"1FP-LM-QtR.text" = "Title";
-
 /* Class = "UIButton"; normalTitle = "30:00"; ObjectID = "1H5-Dg-C0k"; */
 "1H5-Dg-C0k.normalTitle" = "30:00";
 
+/* Class = "UITabBarItem"; title = "Settings"; ObjectID = "3fF-Xf-fGO"; */
+"3fF-Xf-fGO.title" = "Settings";
+
 /* Class = "UITabBarController"; title = "MainTabBarController"; ObjectID = "49e-Tb-3d3"; */
 "49e-Tb-3d3.title" = "MainTabBarController";
-
-/* Class = "UILabel"; text = "Count"; ObjectID = "4zr-dJ-t6I"; */
-"4zr-dJ-t6I.text" = "Count";
-
-/* Class = "UILabel"; text = "Title"; ObjectID = "5IV-Lq-sXm"; */
-"5IV-Lq-sXm.text" = "Title";
 
 /* Class = "UIButton"; normalTitle = "05:00"; ObjectID = "7ep-vF-Cf6"; */
 "7ep-vF-Cf6.normalTitle" = "05:00";
@@ -20,26 +14,11 @@
 /* Class = "UITextField"; placeholder = "Server"; ObjectID = "9Kc-tg-bO3"; */
 "9Kc-tg-bO3.placeholder" = "Server";
 
-/* Class = "UILabel"; text = "Category"; ObjectID = "AFR-kJ-atf"; */
-"AFR-kJ-atf.text" = "Category";
-
-/* Class = "UILabel"; text = "End"; ObjectID = "DKY-X6-pMf"; */
-"DKY-X6-pMf.text" = "End";
-
 /* Class = "UIViewController"; title = "New Favorite"; ObjectID = "Fyb-fk-2Ca"; */
 "Fyb-fk-2Ca.title" = "New Favorite";
 
-/* Class = "UILabel"; text = "Duration"; ObjectID = "G15-vg-mbH"; */
-"G15-vg-mbH.text" = "Duration";
-
 /* Class = "UITextField"; placeholder = "Username"; ObjectID = "HXW-CC-RDk"; */
 "HXW-CC-RDk.placeholder" = "Username";
-
-/* Class = "UILabel"; text = "Title"; ObjectID = "Ijq-OI-NpH"; */
-"Ijq-OI-NpH.text" = "Title";
-
-/* Class = "UILabel"; text = "Category"; ObjectID = "J3y-uV-YoO"; */
-"J3y-uV-YoO.text" = "Category";
 
 /* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "KIR-xL-alb"; */
 "KIR-xL-alb.normalTitle" = "Submit";
@@ -59,11 +38,8 @@
 /* Class = "UILabel"; text = "Use SSL"; ObjectID = "VB6-py-G6Y"; */
 "VB6-py-G6Y.text" = "Use SSL";
 
-/* Class = "UILabel"; text = "Category"; ObjectID = "Woi-2k-3z0"; */
-"Woi-2k-3z0.text" = "Category";
-
-/* Class = "UILabel"; text = "Duration"; ObjectID = "ag7-lh-Y4Q"; */
-"ag7-lh-Y4Q.text" = "Duration";
+/* Class = "UINavigationItem"; title = "Root View Controller"; ObjectID = "aC2-Xb-AnT"; */
+"aC2-Xb-AnT.title" = "Root View Controller";
 
 /* Class = "UIButton"; normalTitle = "Login"; ObjectID = "bnZ-tO-nPl"; */
 "bnZ-tO-nPl.normalTitle" = "Login";

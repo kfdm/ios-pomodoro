@@ -20,6 +20,7 @@ class CountdownTableViewCell: UITableViewCell, ReusableCell {
                 userInfo: nil,
                 repeats: true
             )
+            updateCounter()
         }
     }
 

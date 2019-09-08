@@ -80,7 +80,7 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         )
 
         // Restore Saved State
-        self.data = ApplicationSettings.cache
+        self.data = ApplicationSettings.defaults.object(forKey: .cache)
         self.updateView()
         self.updateCounter()
     }
@@ -103,7 +103,7 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
                 self.updateCounter()
 
                 // Save state
-                ApplicationSettings.cache = self.data
+                ApplicationSettings.defaults.cache(self.data, forKey: .cache)
 
                 completionHandler(NCUpdateResult.newData)
             })

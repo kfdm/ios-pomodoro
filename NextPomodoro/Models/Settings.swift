@@ -39,6 +39,14 @@ extension UserDefaults {
     func integer(forKey key: ApplicationDomainKeys) -> Int {
         return integer(forKey: key.rawValue)
     }
+    func url(forKey: ApplicationDomainKeys) -> URL? {
+        return url(forKey: forKey.rawValue)
+    }
+
+    func object<T>(forKey: ApplicationDomainKeys) -> T? where T: Decodable {
+        guard let data = data(forKey: forKey.rawValue) else {return nil}
+        return try? PropertyListDecoder().decode(T.self, from: data) as T
+    }
 
     func set(_ value: String?, forKey: ApplicationDomainKeys) {
         set(value, forKey: forKey.rawValue)
@@ -51,6 +59,10 @@ extension UserDefaults {
     }
     func set(_ value: Data?, forKey: ApplicationDomainKeys) {
         set(value, forKey: forKey.rawValue)
+    }
+
+    func cache<T>(_ value: T, forKey: ApplicationDomainKeys) where T: Encodable {
+        set(try? PropertyListEncoder().encode(value), forKey: forKey.rawValue)
     }
 }
 
@@ -66,39 +78,7 @@ extension Keychain {
 struct ApplicationSettings {
     static let defaults = UserDefaults(suiteName: ApplicationDomainKeys.suiteName.rawValue)!
     static let keychain = Keychain(accessGroup: ApplicationDomainKeys.suiteName.rawValue)
-
-    static var cache: Pomodoro? {
-        get {
-            guard let data = defaults.value(forKey: .cache) as? Data else {return nil}
-            return try? PropertyListDecoder().decode(Pomodoro.self, from: data)
-        }
-        set {
-            defaults.set(try? PropertyListEncoder().encode(newValue), forKey: .cache)
-        }
-    }
-
-    static var shortDateTime: DateFormatter {
-        let dateFormat = DateFormatter()
-        dateFormat.locale = NSLocale.current
-        dateFormat.dateStyle = .short
-        dateFormat.timeStyle = .short
-        dateFormat.timeZone = TimeZone.current
-        return dateFormat
-    }
-
-    static var mediumDateTime: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .medium
-        formatter.timeZone = TimeZone.current
-        return formatter
-    }
-
-    static func decode<T>(_ type: T.Type, from data: Data) throws -> T? where T: Decodable {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .custom(dateDecode)
-        return try? decoder.decode(T.self, from: data)
-    }
+    static let repository = URL(string: "https://github.com/kfdm/ios-pomodoro")!
 
     static func shortTime(_ duration: Int) -> String? {
         return shortTime(TimeInterval(duration))

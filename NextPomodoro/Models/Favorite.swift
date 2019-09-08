@@ -38,31 +38,13 @@ struct FavoriteResponse: Codable {
     }
 }
 
-extension Favorite {
-    func encode() -> Data? {
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
-        do {
-            let data = try encoder.encode(self)
-            return data
-        } catch let error {
-            print(error)
-        }
-        return nil
-    }
-
-    static func decode(from data: Data) -> Favorite? {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .custom(dateDecode)
-        return try? decoder.decode(self, from: data)
-    }
-
+extension Favorite: EncodableJson, DecodableJson {
     func submit(completionHandler: @escaping (Favorite) -> Void) {
         guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
         authedRequest(path: "/api/favorite", method: "POST", body: self.encode(), username: username, password: password) { _, data in
-            guard let newFavorite = Favorite.decode(from: data) else { return }
+            guard let newFavorite: Favorite = Favorite.decode(from: data) else { return }
             completionHandler(newFavorite)
         }
     }
@@ -72,7 +54,7 @@ extension Favorite {
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
         authedRequest(path: "/api/favorite/\(self.id)/start", method: "POST", body: self.encode(), username: username, password: password) { _, data in
-            guard let newPomodoro = Pomodoro.decode(from: data) else { return }
+            guard let newPomodoro: Pomodoro = Pomodoro.decode(from: data) else { return }
             completionHandler(newPomodoro)
         }
     }

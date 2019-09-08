@@ -18,26 +18,31 @@ struct Pomodoro: Codable {
     let owner: String
 }
 
-struct PomodoroResponse: Codable {
+struct PomodoroExtendRequest: Codable {
+    let id: Int
+    let end: Date
+}
+
+extension PomodoroExtendRequest: EncodableJson {
+    func update(completionHandler: @escaping (Pomodoro) -> Void) {
+        guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
+        guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
+
+        authedRequest(path: "/api/pomodoro/\(self.id)", method: "PATCH", body: self.encode(), username: username, password: password) { _, data in
+            guard let newPomodoro: Pomodoro = Pomodoro.decode(from: data) else { return }
+            completionHandler(newPomodoro)
+        }
+    }
+}
+
+struct PomodoroResponse: DecodableJson {
     let count: Int
     let next: String?
     let previous: String?
     let results: [Pomodoro]
-
-    static func decode(from data: Data) -> PomodoroResponse? {
-        let decoder = JSONDecoder()
-        // https://stackoverflow.com/a/46538676
-        decoder.dateDecodingStrategy = .custom(dateDecode)
-        do {
-            return try decoder.decode(PomodoroResponse.self, from: data)
-        } catch let error {
-            print(error)
-        }
-        return nil
-    }
 }
 
-extension Pomodoro {
+extension Pomodoro: EncodableJson, DecodableJson {
     init(title: String, category: String, duration: TimeInterval) {
         self.id = 0
         self.owner = ""
@@ -47,30 +52,12 @@ extension Pomodoro {
         self.end = Date.init(timeIntervalSinceNow: duration)
     }
 
-    func encode() -> Data? {
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
-        do {
-            let data = try encoder.encode(self)
-            return data
-        } catch let error {
-            print(error)
-        }
-        return nil
-    }
-
-    static func decode(from data: Data) -> Pomodoro? {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .custom(dateDecode)
-        return try? decoder.decode(self, from: data)
-    }
-
     func submit(completionHandler: @escaping (Pomodoro) -> Void) {
         guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
         authedRequest(path: "/api/pomodoro", method: "POST", body: self.encode(), username: username, password: password) { _, data in
-            guard let newPomodoro = Pomodoro.decode(from: data) else { return }
+            guard let newPomodoro: Pomodoro = Pomodoro.decode(from: data) else { return }
             completionHandler(newPomodoro)
         }
     }
@@ -80,7 +67,7 @@ extension Pomodoro {
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
         authedRequest(path: "/api/pomodoro/\(self.id)", method: "PUT", body: self.encode(), username: username, password: password) { _, data in
-            guard let newPomodoro = Pomodoro.decode(from: data) else { return }
+            guard let newPomodoro: Pomodoro = Pomodoro.decode(from: data) else { return }
             completionHandler(newPomodoro)
         }
     }
@@ -110,7 +97,7 @@ extension Pomodoro {
         let limit = URLQueryItem(name: "limit", value: "100")
 
         authedRequest(path: "/api/pomodoro", method: "GET", queryItems: [limit], username: username, password: password, completionHandler: {_, data in
-            guard let results = PomodoroResponse.decode(from: data) else { return }
+            guard let results: PomodoroResponse = PomodoroResponse.decode(from: data) else { return }
             completionHandler( results.results)
         })
     }

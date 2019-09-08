@@ -9,49 +9,26 @@
 import Foundation
 import os
 
-func checkLogin(username: String, password: String, completionHandler: @escaping (HTTPURLResponse) -> Void) {
-    authedRequest(path: "/api/pomodoro", method: "GET", body: nil, username: username, password: password, completionHandler: {response, _ in
+typealias AuthedRequestResponse = ((HTTPURLResponse, Data) -> Void)
+
+func checkLogin(baseURL: String, username: String, password: String, completionHandler: @escaping (HTTPURLResponse) -> Void) {
+    var base = URLComponents(string: baseURL)!
+    base.path = "/api/pomodoro"
+    authedRequest(url:base, method: "GET", body: nil, username: username, password: password, completionHandler: {response, _ in
         completionHandler(response)
     })
 }
 
-enum DateError: String, Error {
-    case invalidDate
-}
-
-func dateDecode(decoder: Decoder) throws -> Date {
-    let container = try decoder.singleValueContainer()
-    let dateStr = try container.decode(String.self)
-
-    let formatter = DateFormatter()
-    formatter.calendar = Calendar(identifier: .iso8601)
-    formatter.locale = Locale(identifier: "en_US_POSIX")
-    formatter.timeZone = TimeZone(secondsFromGMT: 0)
-    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
-    if let date = formatter.date(from: dateStr) {
-        return date
-    }
-    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
-    if let date = formatter.date(from: dateStr) {
-        return date
-    }
-    throw DateError.invalidDate
-}
-
-typealias AuthedRequestResponse = ((HTTPURLResponse, Data) -> Void)
-
 func authedRequest(path: String, method: String, body: Data? = nil, queryItems: [URLQueryItem]? = [], username: String, password: String, completionHandler: @escaping AuthedRequestResponse) {
-    var components = URLComponents()
-    components.scheme = "https"
-    components.host = "tsundere.co"
+    guard var components = ApplicationSettings.defaults.url(forKey: .server) else { return }
     components.path = path
     components.queryItems = queryItems
 
-    authedRequest(url: components.url!, method: method, body: body, username: username, password: password, completionHandler: completionHandler)
+    authedRequest(url: components, method: method, body: body, username: username, password: password, completionHandler: completionHandler)
 }
 
-func authedRequest(url: URL, method: String, body: Data?, username: String, password: String, completionHandler: @escaping AuthedRequestResponse) {
-    var request = URLRequest(url: url)
+func authedRequest(url: URLComponents, method: String, body: Data?, username: String, password: String, completionHandler: @escaping AuthedRequestResponse) {
+    var request = URLRequest(url: url.url!)
 
     let loginString = "\(username):\(password)"
     guard let loginData = loginString.data(using: String.Encoding.utf8) else {
@@ -67,7 +44,7 @@ func authedRequest(url: URL, method: String, body: Data?, username: String, pass
 
     let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, _ -> Void in
         if let httpResponse = response as? HTTPURLResponse {
-            os_log("Request: %s %s %d", log: Log.networking, type: .debug, method, url.absoluteString, httpResponse.statusCode)
+            os_log("Request: %s %s %d", log: Log.networking, type: .debug, method, httpResponse.url!.absoluteString, httpResponse.statusCode)
             completionHandler(httpResponse, data!)
         }
     })

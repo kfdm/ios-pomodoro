@@ -93,11 +93,8 @@ class SettingsViewController: UITableViewController {
         case [0, 0]:
             UIApplication.shared.open(ApplicationSettings.repository, options: [:], completionHandler: nil)
         case [1, 0]:
-            // TODO: Fix scheme handling
-            guard let url = ApplicationSettings.defaults.url(forKey: .server) else { return}
-            guard var components = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return }
-            components.scheme = "http"
-            UIApplication.shared.open(components.url!, options: [:], completionHandler: nil)
+            guard var url = ApplicationSettings.defaults.url(forKey: .server) else { return}
+            UIApplication.shared.open(url.url!, options: [:], completionHandler: nil)
         default:
             let cell = tableView.cellForRow(at: indexPath)
             cell?.setSelected(true, animated: true)

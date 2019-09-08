@@ -39,8 +39,9 @@ extension UserDefaults {
     func integer(forKey key: ApplicationDomainKeys) -> Int {
         return integer(forKey: key.rawValue)
     }
-    func url(forKey: ApplicationDomainKeys) -> URL? {
-        return url(forKey: forKey.rawValue)
+    func url(forKey: ApplicationDomainKeys) -> URLComponents? {
+        guard let url = string(forKey: forKey) else { return nil }
+        return URLComponents(string: url)
     }
 
     func object<T>(forKey: ApplicationDomainKeys) -> T? where T: Decodable {

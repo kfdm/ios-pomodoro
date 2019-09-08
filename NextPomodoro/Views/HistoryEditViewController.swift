@@ -71,13 +71,13 @@ class HistoryEditViewController: UITableViewController {
 
         case [1, 0]:
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.configure("Save", color: .blue) {
+            cell.configure("Save", style: .default) {
                 self.pomodoro.update { self.updatedPomodoro?($0) }
             }
             return cell
         case [1, 1]:
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.configure("Delete", color: .red) {
+            cell.configure("Delete", style: .default) {
                 self.pomodoro.delete { _ in self.updatedPomodoro?(nil) }
             }
             return cell

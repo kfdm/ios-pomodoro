@@ -9,16 +9,33 @@
 import UIKit
 
 class ButtonTableViewCell: UITableViewCell, ReusableCell {
+    typealias Handler = () -> Void
+    enum Style {
+        case `default`
+        case destructive
+        case cancel
+    }
+
     @IBOutlet weak var buttonObject: UIButton!
     @IBAction func buttonTriggered(_ sender: UIButton) {
         buttonClick?()
     }
 
-    var buttonClick : (() -> Void)?
+    var buttonClick: Handler?
+    var buttonStyle: Style? {
+        didSet {
+            switch buttonStyle! {
+            case .default:
+                buttonObject.setTitleColor(.blue, for: .normal)
+            default:
+                buttonObject.setTitleColor(.red, for: .normal)
+            }
+        }
+    }
 
-    func configure(_ title: String, color: UIColor, handler: @escaping () -> Void) {
+    func configure(_ title: String, style: Style, handler: Handler?) {
         buttonObject.setTitle(title, for: .normal)
-        buttonObject.setTitleColor(color, for: .normal)
+        buttonStyle = style
         buttonClick = handler
     }
 }

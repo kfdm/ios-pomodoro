@@ -54,6 +54,12 @@ class FavoritesViewController: UITableViewController {
         ])
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = FavoriteEditViewController(style: .grouped)
+        vc.selectedFavorite = data[indexPath.row]
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
     // MARK: - Buttons
 
     @IBAction func newFavoriteButton(_ sender: UIBarButtonItem) {

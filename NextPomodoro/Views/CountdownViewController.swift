@@ -198,7 +198,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
             return cell
         case [1, 2]:
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.configure("25 Minutes", color: .blue) {
+            cell.configure("25 Minutes", style: .default) {
                 let newPomodoro = Pomodoro(title: self.newTitle, category: self.newCategory, duration: 25)
                 newPomodoro.submit { self.currentPomodoro = $0 }
             }
@@ -206,7 +206,8 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
             return cell
         case [1, 3]:
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.configure("1 Hour", color: .blue) {
+            let title = NSLocalizedString("1 hour", comment: "1 hour pomodoro")
+            cell.configure(title, style: .default) {
                 let newPomodoro = Pomodoro(title: self.newTitle, category: self.newCategory, duration: 60)
                 newPomodoro.submit { self.currentPomodoro = $0 }
             }
@@ -227,12 +228,14 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
             return cell
         case [2, 2]:
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.configure("Add 5 minutes", color: .blue, handler: self.actionExtendTime)
+            let title = NSLocalizedString("Add 5 minutes", comment: "Add 5 minutes to existing pomodoro")
+            cell.configure(title, style: .default, handler: self.actionExtendTime)
             cell.accessoryType = .none
             return cell
         case [2, 3]:
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.configure("Stop", color: .red, handler: self.actionStopEarly)
+            let title = NSLocalizedString("Stop", comment: "Stop existing pomodoro")
+            cell.configure(title, style: .destructive, handler: self.actionStopEarly)
             cell.accessoryType = .none
             return cell
         default:
@@ -262,7 +265,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         }
     }
 
-    // MARK: - buttons
+    // MARK: - Actions
 
     func actionExtendTime() {
         guard let pomodoro = currentPomodoro else { return }
@@ -287,32 +290,27 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         })
     }
 
+    func actionLogout(action: UIAlertAction) {
+        ApplicationSettings.deleteLogin()
+        self.showLogin()
+    }
+
+    func actionShowSettings(action: UIAlertAction) {
+        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+    }
+
     @IBAction func submitOptionsButton(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "Options", message: nil, preferredStyle: .actionSheet)
+        let alertTitle = NSLocalizedString("Options", comment: "Settings Menu")
+        let alert = UIAlertController(title: alertTitle, message: nil, preferredStyle: .actionSheet)
 
         // Need to attach this to our tabBar for iPad support
         alert.popoverPresentationController?.barButtonItem = sender
         //alert.popoverPresentationController?.sourceView = tabBar
 
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(settingsAction())
-        alert.addAction(logoutAction())
+        alert.addAction(UIAlertAction(localizedTitle: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(localizedTitle: "Settings", style: .default, handler: self.actionShowSettings))
+        alert.addAction(UIAlertAction(localizedTitle: "Logout", style: .destructive, handler: self.actionLogout))
         self.present(alert, animated: true, completion: nil)
-    }
-
-    // MARK: - Actions
-
-    func logoutAction() -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Logout", comment: "Logout"), style: .destructive, handler: { _ in
-            ApplicationSettings.deleteLogin()
-            self.showLogin()
-        })
-    }
-
-    func settingsAction() -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Settings", comment: "Settings"), style: .default, handler: { _ in
-            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-        })
     }
 }
 

@@ -15,6 +15,7 @@ class HistoryEditViewController: UITableViewController {
         super.viewDidLoad()
 
         tableView.register(TextTableViewCell.self)
+        tableView.register(ButtonTableViewCell.self)
         tableView.register(SimpleTableViewCell.self, forCellReuseIdentifier: "Cell")
     }
 
@@ -63,12 +64,16 @@ class HistoryEditViewController: UITableViewController {
             return cell
 
         case [1, 0]:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.textLabel?.text = "Save"
+            let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.configure("Save", color: .blue) {
+                print("Save")
+            }
             return cell
         case [1, 1]:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.textLabel?.text = "Delete"
+            let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.configure("Delete", color: .red) {
+                print("Delete")
+            }
             return cell
         default:
             fatalError("Unknown index \(indexPath)")

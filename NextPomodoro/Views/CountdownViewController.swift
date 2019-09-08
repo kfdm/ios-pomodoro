@@ -11,73 +11,32 @@ import UIKit
 import CocoaMQTT
 
 class CountdownViewController: UITableViewController, UITextFieldDelegate, UITabBarDelegate {
-    var currentPomodoro: Pomodoro?
-    var timer = Timer()
-    var active = false
+    var currentPomodoro: Pomodoro? {
+        didSet {
+            ApplicationSettings.cache = currentPomodoro
+            DispatchQueue.main.async {
+                self.tableView.refreshControl?.endRefreshing()
+                self.tableView.reloadData()
+            }
+        }
+    }
+
+    var active = false {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
     var mqtt: CocoaMQTT?
 
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var categoryLabel: UILabel!
-
-    @IBOutlet weak var startLabel: UITableViewCell!
-    @IBOutlet weak var endLabel: UITableViewCell!
-
-    @IBOutlet weak var countdownLabel: UITableViewCell!
-
-    @IBOutlet weak var titleInput: UITextField!
-    @IBOutlet weak var categoryInput: UITextField!
-
     // MARK: - custom
-
-    func updateView() {
-        guard let pomodoro = currentPomodoro else { return }
-        let formatter = ApplicationSettings.mediumDateTime
-
-        DispatchQueue.main.async {
-            self.titleLabel.text = pomodoro.title
-            self.categoryLabel.text = pomodoro.category
-
-            self.startLabel.detailTextLabel?.text = formatter.string(for: pomodoro.start)
-            self.endLabel.detailTextLabel?.text = formatter.string(for: pomodoro.end)
-
-            self.tableView.refreshControl?.endRefreshing()
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
-        }
-    }
-
-    @objc func updateCounter() {
-        guard let data = currentPomodoro else { return }
-
-        var elapsed = Date().timeIntervalSince(data.end)
-        active = elapsed < 0
-
-        if elapsed > 0 {
-            let color = elapsed > 300 ? Colors.latetimer : Colors.breakTimer
-            let text = ApplicationSettings.shortTime(elapsed)!
-            setCountdown(color: color, text: text)
-        } else {
-            elapsed *= -1
-            let color = Colors.activeTimer
-            let text = ApplicationSettings.shortTime(elapsed)!
-            setCountdown(color: color, text: text)
-        }
-    }
-
-    func setCountdown(color: UIColor, text: String) {
-        DispatchQueue.main.async {
-            self.countdownLabel.textLabel?.backgroundColor = color
-            self.countdownLabel.textLabel?.text = text
-        }
-    }
 
     @objc func refreshData() {
         guard ApplicationSettings.defaults.string(forKey: .username) != nil else { return }
         Pomodoro.list(completionHandler: { favorites in
             guard favorites.count > 0 else { return }
             self.currentPomodoro = favorites.sorted(by: { $0.id > $1.id })[0]
-            self.updateCounter()
-            self.updateView()
         })
     }
 
@@ -85,13 +44,6 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        timer = Timer.scheduledTimer(
-            timeInterval: 1.0,
-            target: self,
-            selector: #selector(updateCounter),
-            userInfo: nil,
-            repeats: true
-        )
         currentPomodoro = ApplicationSettings.cache
     }
 
@@ -122,11 +74,13 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.dataSource = self
-        tableView.delegate = self
+        tableView.register(SimpleTableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(CountdownTableViewCell.self)
+        tableView.register(DateTableViewCell.self)
+        tableView.register(TextTableViewCell.self)
+        tableView.register(ButtonTableViewCell.self)
+
         tableView.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        titleInput.delegate = self
-        categoryInput.delegate = self
 
         NotificationCenter.default.addObserver(self, selector: #selector(completeLogin), name: .authenticationGranted, object: nil)
 
@@ -151,120 +105,118 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
 
     // MARK: - tableView
 
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0: // Countdown View
+            return currentPomodoro == nil ? 0: 3
+        case 1: // New Section
+            return active ? 0: 4
+        case 2: // Detail Section
+            return active ? 4: 0
+        default:
+            fatalError("Unknown section \(section)")
+        }
+    }
+
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.section {
-        case 0: // Countdown Timer
-            if self.currentPomodoro == nil { return 0 }
-            return super.tableView(tableView, heightForRowAt: indexPath)
-        case 1: // Stop Timer
-            if self.currentPomodoro == nil { return 0 }
-            return active ? super.tableView(tableView, heightForRowAt: indexPath) : 0
-        case 2: // New Timer
-            return active ? 0 : super.tableView(tableView, heightForRowAt: indexPath)
+        switch indexPath {
+        case [0, 2]:
+            return 128
         default:
-            return super.tableView(tableView, heightForRowAt: indexPath)
+            return 44
         }
     }
 
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch section {
-        case 0: // Countdown Timer
-            if self.currentPomodoro == nil { return 0.1 }
-            return super.tableView(tableView, heightForHeaderInSection: section)
-        case 1: // Stop Timer
-            if self.currentPomodoro == nil { return 0.1 }
-            return active ? super.tableView(tableView, heightForHeaderInSection: section) : 0.1
-        case 2: // New Timer
-            return active ? 0.1 : super.tableView(tableView, heightForHeaderInSection: section)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath {
+        // Countdown Cells
+        case [0, 0]:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+            cell.textLabel?.text = currentPomodoro?.title
+            return cell
+        case [0, 1]:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+            cell.textLabel?.text = currentPomodoro?.category
+            return cell
+        case [0, 2]:
+            let cell: CountdownTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.countdownDate = currentPomodoro?.end
+            cell.activityChanged = { self.active = $0 }
+            return cell
+        // Register Cells
+        case [1, 0]:
+            let cell: TextTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.label = "Title"
+            return cell
+        case [1, 1]:
+            let cell: TextTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.label = "Category"
+            return cell
+        case [1, 2]:
+            let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.configure("25 Minutes", color: .blue) {
+                print("25 min pomodoro")
+            }
+            return cell
+        case [1, 3]:
+            let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.configure("1 Hour", color: .blue) {
+                print("1 hour pomodoro")
+            }
+            return cell
+        // Detail Cells
+        case [2, 0]:
+            let cell: DateTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.label = "Start"
+            cell.value = currentPomodoro?.start
+            return cell
+        case [2, 1]:
+            let cell: DateTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.label = "End"
+            cell.value = currentPomodoro?.end
+            return cell
+        case [2, 2]:
+            let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.configure("Add 5 minutes", color: .blue, handler: self.actionExtendTime)
+            return cell
+        case [2, 3]:
+            let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.configure("Stop", color: .red, handler: self.actionStopEarly)
+            return cell
         default:
-            return super.tableView(tableView, heightForHeaderInSection: section)
-        }
-    }
-
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        switch section {
-        case 0: // Countdown Timer
-            if self.currentPomodoro == nil { return 0.1 }
-            return super.tableView(tableView, heightForFooterInSection: section)
-        case 1: // Stop Timer
-            if self.currentPomodoro == nil { return 0.1 }
-            return active ? super.tableView(tableView, heightForFooterInSection: section) : 0.1
-        case 2: // New Timer
-            return active ? 0.1 : super.tableView(tableView, heightForFooterInSection: section)
-        default:
-            return super.tableView(tableView, heightForFooterInSection: section)
+            fatalError("Unknown index \(indexPath)")
         }
     }
 
     // MARK: - buttons
 
-    @IBAction func extendButton(_ sender: UIButton) {
-        if let currentPomodoro = self.currentPomodoro {
-            let end = currentPomodoro.end.addingTimeInterval(TimeInterval(300))
-            let editPomodoro = Pomodoro.init(id: currentPomodoro.id, title: currentPomodoro.title, start: currentPomodoro.start, end: end, category: currentPomodoro.category, owner: "")
+    func actionExtendTime() {
+        guard let pomodoro = currentPomodoro else { return }
+        let end = pomodoro.end.addingTimeInterval(TimeInterval(300))
+        let updateRequest = PomodoroExtendRequest(id: pomodoro.id, end: end)
 
-            print("Extend Pomodoro until \(editPomodoro.end)")
-            editPomodoro.update(completionHandler: {  pomodoro in
-                print("Extended pomodoro until \(pomodoro.end)")
-                self.currentPomodoro = pomodoro
-                self.updateCounter()
-                self.updateView()
-            })
-        } else {
-            print("Missing pomodoro?")
-        }
-    }
-
-    @IBAction func stopButton(_ sender: UIButton) {
-        if let currentPomodoro = self.currentPomodoro {
-            let end = Date.init()
-            let editPomodoro = Pomodoro.init(id: currentPomodoro.id, title: currentPomodoro.title, start: currentPomodoro.start, end: end, category: currentPomodoro.category, owner: "")
-
-            print("Stopping Pomodoro")
-            editPomodoro.update(completionHandler: {  pomodoro in
-                print("Stopped Pomodoro at \(pomodoro.end)")
-                self.currentPomodoro = pomodoro
-                self.updateCounter()
-                self.updateView()
-            })
-        } else {
-            print("Missing pomodoro?")
-        }
-    }
-
-    @IBAction func submit25Button(_ sender: UIButton) {
-        titleInput.resignFirstResponder()
-        categoryInput.resignFirstResponder()
-
-        guard let title = titleInput.text else { return }
-        guard let category = categoryInput.text else { return }
-        let duration = TimeInterval(1500)
-
-        let pomodoro = Pomodoro(title: title, category: category, duration: duration)
-
-        pomodoro.submit { pomodoro in
+        updateRequest.update(completionHandler: {  pomodoro in
+            print("Extended pomodoro until \(pomodoro.end)")
             self.currentPomodoro = pomodoro
-            self.updateCounter()
-            self.updateView()
-        }
+        })
+
     }
 
-    @IBAction func submitHourButton(_ sender: UIButton) {
-        titleInput.resignFirstResponder()
-        categoryInput.resignFirstResponder()
+    func actionStopEarly() {
+        guard let pomodoro = currentPomodoro else { return }
+        let end = Date.init()
+        let updateRequest = PomodoroExtendRequest(id: pomodoro.id, end: end)
 
-        guard let title = titleInput.text else { return }
-        guard let category = categoryInput.text else { return }
-        let duration = TimeInterval(3600)
-
-        let pomodoro = Pomodoro(title: title, category: category, duration: duration)
-
-        pomodoro.submit { pomodoro in
+        updateRequest.update(completionHandler: {  pomodoro in
+            print("Stopped pomodoro at \(pomodoro.end)")
             self.currentPomodoro = pomodoro
-            self.updateCounter()
-            self.updateView()
-        }
+        })
     }
+
     @IBAction func submitOptionsButton(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: "Options", message: nil, preferredStyle: .actionSheet)
 
@@ -324,9 +276,8 @@ extension CountdownViewController: CocoaMQTTDelegate {
     func mqtt(_ mqtt: CocoaMQTT, didReceiveMessage message: CocoaMQTTMessage, id: UInt16) {
         switch message.topic {
         case _ where message.match("^pomodoro/.*/recent$"):
-            guard let pomodoro = Pomodoro.decode(from: message.data) else { return }
+            guard let pomodoro: Pomodoro = Pomodoro.decode(from: message.data) else { return }
             self.currentPomodoro = pomodoro
-            self.updateView()
         default:
             print("Unknown topic \(message.topic)")
         }

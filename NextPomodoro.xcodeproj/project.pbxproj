@@ -18,10 +18,18 @@
 		8756548B212947AA00D69D6D /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548A212947AA00D69D6D /* FavoritesViewController.swift */; };
 		8756548D2129586000D69D6D /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548C2129586000D69D6D /* HistoryViewController.swift */; };
 		8756548F2129679100D69D6D /* CountdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548E2129679100D69D6D /* CountdownViewController.swift */; };
+		8758DB542324ADDC008F94F9 /* CountdownTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8758DB522324ADDC008F94F9 /* CountdownTableViewCell.swift */; };
+		8758DB552324ADDC008F94F9 /* CountdownTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8758DB532324ADDC008F94F9 /* CountdownTableViewCell.xib */; };
+		8758DB582324B18F008F94F9 /* DateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8758DB562324B18F008F94F9 /* DateTableViewCell.swift */; };
+		8758DB592324B18F008F94F9 /* DateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8758DB572324B18F008F94F9 /* DateTableViewCell.xib */; };
+		8758DB5B2324B880008F94F9 /* APIBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8758DB5A2324B880008F94F9 /* APIBase.swift */; };
+		8758DB5C2324B8E1008F94F9 /* APIBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8758DB5A2324B880008F94F9 /* APIBase.swift */; };
 		876CA28C23249E2E00388C3F /* HistoryEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CA28B23249E2E00388C3F /* HistoryEditViewController.swift */; };
 		876CA28E23249F5300388C3F /* SimpleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CA28D23249F5300388C3F /* SimpleTableViewCell.swift */; };
 		876CA2912324A00C00388C3F /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CA28F2324A00C00388C3F /* TextTableViewCell.swift */; };
 		876CA2922324A00C00388C3F /* TextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 876CA2902324A00C00388C3F /* TextTableViewCell.xib */; };
+		876CA2952324A5C800388C3F /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CA2932324A5C800388C3F /* ButtonTableViewCell.swift */; };
+		876CA2962324A5C800388C3F /* ButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 876CA2942324A5C800388C3F /* ButtonTableViewCell.xib */; };
 		8773DB122144EE5A00CF52CB /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8773DB112144EE5A00CF52CB /* Favorite.swift */; };
 		8773DB142144EE7E00CF52CB /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8773DB132144EE7E00CF52CB /* Settings.swift */; };
 		8773DB152144EF1D00CF52CB /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8773DB112144EE5A00CF52CB /* Favorite.swift */; };
@@ -86,11 +94,18 @@
 		8756548A212947AA00D69D6D /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		8756548C2129586000D69D6D /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		8756548E2129679100D69D6D /* CountdownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownViewController.swift; sourceTree = "<group>"; };
+		8758DB522324ADDC008F94F9 /* CountdownTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTableViewCell.swift; sourceTree = "<group>"; };
+		8758DB532324ADDC008F94F9 /* CountdownTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountdownTableViewCell.xib; sourceTree = "<group>"; };
+		8758DB562324B18F008F94F9 /* DateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTableViewCell.swift; sourceTree = "<group>"; };
+		8758DB572324B18F008F94F9 /* DateTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateTableViewCell.xib; sourceTree = "<group>"; };
+		8758DB5A2324B880008F94F9 /* APIBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIBase.swift; sourceTree = "<group>"; };
 		875ADE09213A786800841740 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		876CA28B23249E2E00388C3F /* HistoryEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEditViewController.swift; sourceTree = "<group>"; };
 		876CA28D23249F5300388C3F /* SimpleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableViewCell.swift; sourceTree = "<group>"; };
 		876CA28F2324A00C00388C3F /* TextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTableViewCell.swift; sourceTree = "<group>"; };
 		876CA2902324A00C00388C3F /* TextTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextTableViewCell.xib; sourceTree = "<group>"; };
+		876CA2932324A5C800388C3F /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
+		876CA2942324A5C800388C3F /* ButtonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonTableViewCell.xib; sourceTree = "<group>"; };
 		8773DB112144EE5A00CF52CB /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		8773DB132144EE7E00CF52CB /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		87B651732128F0AD006D88AF /* NextPomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextPomodoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -229,6 +244,7 @@
 		87C43BD92144EBBE00E9C687 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8758DB5A2324B880008F94F9 /* APIBase.swift */,
 				870A0499231EA45200A83842 /* Constants.swift */,
 				8773DB112144EE5A00CF52CB /* Favorite.swift */,
 				87C43BDA2144EBE700E9C687 /* Pomodoro.swift */,
@@ -241,6 +257,12 @@
 		87F397F6231E926E000AA82A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				876CA2932324A5C800388C3F /* ButtonTableViewCell.swift */,
+				876CA2942324A5C800388C3F /* ButtonTableViewCell.xib */,
+				8758DB522324ADDC008F94F9 /* CountdownTableViewCell.swift */,
+				8758DB532324ADDC008F94F9 /* CountdownTableViewCell.xib */,
+				8758DB562324B18F008F94F9 /* DateTableViewCell.swift */,
+				8758DB572324B18F008F94F9 /* DateTableViewCell.xib */,
 				870A0495231E9DAE00A83842 /* FavoriteTableViewCell.swift */,
 				870A0496231E9DAE00A83842 /* FavoriteTableViewCell.xib */,
 				87F397F2231E9169000AA82A /* HistoryTableViewCell.swift */,
@@ -363,9 +385,12 @@
 				87B651832128F0AE006D88AF /* LaunchScreen.storyboard in Resources */,
 				87B651802128F0AE006D88AF /* Assets.xcassets in Resources */,
 				876CA2922324A00C00388C3F /* TextTableViewCell.xib in Resources */,
+				876CA2962324A5C800388C3F /* ButtonTableViewCell.xib in Resources */,
 				870A0498231E9DAE00A83842 /* FavoriteTableViewCell.xib in Resources */,
 				87F397F5231E9169000AA82A /* HistoryTableViewCell.xib in Resources */,
 				87B6517E2128F0AD006D88AF /* Main.storyboard in Resources */,
+				8758DB592324B18F008F94F9 /* DateTableViewCell.xib in Resources */,
+				8758DB552324ADDC008F94F9 /* CountdownTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,6 +469,7 @@
 				C19EFB9422EFD37A00DA4666 /* Notification+Constants.swift in Sources */,
 				8756548F2129679100D69D6D /* CountdownViewController.swift in Sources */,
 				87C43BDB2144EBE700E9C687 /* Pomodoro.swift in Sources */,
+				8758DB542324ADDC008F94F9 /* CountdownTableViewCell.swift in Sources */,
 				87B651A52128F45E006D88AF /* PomodoroAPI.swift in Sources */,
 				876CA2912324A00C00388C3F /* TextTableViewCell.swift in Sources */,
 				8756548B212947AA00D69D6D /* FavoritesViewController.swift in Sources */,
@@ -451,6 +477,7 @@
 				870A0497231E9DAE00A83842 /* FavoriteTableViewCell.swift in Sources */,
 				8720384722EF2E47001577EF /* Storyboarded.swift in Sources */,
 				8773DB122144EE5A00CF52CB /* Favorite.swift in Sources */,
+				8758DB5B2324B880008F94F9 /* APIBase.swift in Sources */,
 				87B6518B2128F184006D88AF /* TabBarController.swift in Sources */,
 				87F397F4231E9169000AA82A /* HistoryTableViewCell.swift in Sources */,
 				87B651772128F0AD006D88AF /* AppDelegate.swift in Sources */,
@@ -460,6 +487,8 @@
 				8773DB142144EE7E00CF52CB /* Settings.swift in Sources */,
 				87402D002144FDEC00F0C43A /* NewFavoriteController.swift in Sources */,
 				876CA28C23249E2E00388C3F /* HistoryEditViewController.swift in Sources */,
+				8758DB582324B18F008F94F9 /* DateTableViewCell.swift in Sources */,
+				876CA2952324A5C800388C3F /* ButtonTableViewCell.swift in Sources */,
 				876CA28E23249F5300388C3F /* SimpleTableViewCell.swift in Sources */,
 				8756548D2129586000D69D6D /* HistoryViewController.swift in Sources */,
 				870A049A231EA45200A83842 /* Constants.swift in Sources */,
@@ -475,6 +504,7 @@
 				8773DB152144EF1D00CF52CB /* Favorite.swift in Sources */,
 				87C43BDC2144EBE700E9C687 /* Pomodoro.swift in Sources */,
 				87B651A62128F488006D88AF /* PomodoroAPI.swift in Sources */,
+				8758DB5C2324B8E1008F94F9 /* APIBase.swift in Sources */,
 				8773DB162144EF1F00CF52CB /* Settings.swift in Sources */,
 				870A049B231EA50500A83842 /* Constants.swift in Sources */,
 			);

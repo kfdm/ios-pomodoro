@@ -30,6 +30,9 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     }
     var mqtt: CocoaMQTT?
 
+    var newTitle = ""
+    var newCategory = ""
+
     // MARK: - custom
 
     @objc func refreshData() {
@@ -137,58 +140,90 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         case [0, 0]:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
             cell.textLabel?.text = currentPomodoro?.title
+            cell.accessoryType = .disclosureIndicator
             return cell
         case [0, 1]:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
             cell.textLabel?.text = currentPomodoro?.category
+            cell.accessoryType = .detailDisclosureButton
             return cell
         case [0, 2]:
             let cell: CountdownTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.countdownDate = currentPomodoro?.end
             cell.activityChanged = { self.active = $0 }
+            cell.accessoryType = .none
             return cell
         // Register Cells
         case [1, 0]:
             let cell: TextTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.label = "Title"
+            cell.changed = { self.newTitle = $0 }
+            cell.accessoryType = .none
             return cell
         case [1, 1]:
             let cell: TextTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.label = "Category"
+            cell.changed = { self.newCategory = $0 }
+            cell.accessoryType = .none
             return cell
         case [1, 2]:
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure("25 Minutes", color: .blue) {
-                print("25 min pomodoro")
+                let newPomodoro = Pomodoro(title: self.newTitle, category: self.newCategory, duration: 25)
+                newPomodoro.submit { self.currentPomodoro = $0 }
             }
+            cell.accessoryType = .none
             return cell
         case [1, 3]:
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure("1 Hour", color: .blue) {
-                print("1 hour pomodoro")
+                let newPomodoro = Pomodoro(title: self.newTitle, category: self.newCategory, duration: 60)
+                newPomodoro.submit { self.currentPomodoro = $0 }
             }
+            cell.accessoryType = .none
             return cell
         // Detail Cells
         case [2, 0]:
             let cell: DateTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.label = "Start"
             cell.value = currentPomodoro?.start
+            cell.accessoryType = .none
             return cell
         case [2, 1]:
             let cell: DateTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.label = "End"
             cell.value = currentPomodoro?.end
+            cell.accessoryType = .none
             return cell
         case [2, 2]:
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure("Add 5 minutes", color: .blue, handler: self.actionExtendTime)
+            cell.accessoryType = .none
             return cell
         case [2, 3]:
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure("Stop", color: .red, handler: self.actionStopEarly)
+            cell.accessoryType = .none
             return cell
         default:
             fatalError("Unknown index \(indexPath)")
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath {
+        case [0, 1]:
+            guard let id = currentPomodoro?.id else { return }
+            let vc = SelectCategoryViewController(style: .grouped)
+            vc.title = "Retag Category"
+            vc.selected = {
+                let request = PomodoroRetagRequest(id: id, category: $0)
+                request.update { self.currentPomodoro = $0 }
+                self.navigationController?.popViewController(animated: true)
+            }
+            navigationController?.pushViewController(vc, animated: true)
+        default:
+            print("Unknown index")
         }
     }
 

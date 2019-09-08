@@ -24,6 +24,7 @@
 		8758DB592324B18F008F94F9 /* DateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8758DB572324B18F008F94F9 /* DateTableViewCell.xib */; };
 		8758DB5B2324B880008F94F9 /* APIBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8758DB5A2324B880008F94F9 /* APIBase.swift */; };
 		8758DB5C2324B8E1008F94F9 /* APIBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8758DB5A2324B880008F94F9 /* APIBase.swift */; };
+		8758DB5E2324C0E6008F94F9 /* SelectCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8758DB5D2324C0E6008F94F9 /* SelectCategoryViewController.swift */; };
 		876CA28C23249E2E00388C3F /* HistoryEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CA28B23249E2E00388C3F /* HistoryEditViewController.swift */; };
 		876CA28E23249F5300388C3F /* SimpleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CA28D23249F5300388C3F /* SimpleTableViewCell.swift */; };
 		876CA2912324A00C00388C3F /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CA28F2324A00C00388C3F /* TextTableViewCell.swift */; };
@@ -99,6 +100,7 @@
 		8758DB562324B18F008F94F9 /* DateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTableViewCell.swift; sourceTree = "<group>"; };
 		8758DB572324B18F008F94F9 /* DateTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateTableViewCell.xib; sourceTree = "<group>"; };
 		8758DB5A2324B880008F94F9 /* APIBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIBase.swift; sourceTree = "<group>"; };
+		8758DB5D2324C0E6008F94F9 /* SelectCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoryViewController.swift; sourceTree = "<group>"; };
 		875ADE09213A786800841740 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		876CA28B23249E2E00388C3F /* HistoryEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEditViewController.swift; sourceTree = "<group>"; };
 		876CA28D23249F5300388C3F /* SimpleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableViewCell.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				87B6518C2128F258006D88AF /* LoginViewController.swift */,
 				87B6517C2128F0AD006D88AF /* Main.storyboard */,
 				87402CFF2144FDEC00F0C43A /* NewFavoriteController.swift */,
+				8758DB5D2324C0E6008F94F9 /* SelectCategoryViewController.swift */,
 				87B6518A2128F184006D88AF /* TabBarController.swift */,
 			);
 			path = Views;
@@ -475,6 +478,7 @@
 				8756548B212947AA00D69D6D /* FavoritesViewController.swift in Sources */,
 				87C43BD72144E6F800E9C687 /* Extensions.swift in Sources */,
 				870A0497231E9DAE00A83842 /* FavoriteTableViewCell.swift in Sources */,
+				8758DB5E2324C0E6008F94F9 /* SelectCategoryViewController.swift in Sources */,
 				8720384722EF2E47001577EF /* Storyboarded.swift in Sources */,
 				8773DB122144EE5A00CF52CB /* Favorite.swift in Sources */,
 				8758DB5B2324B880008F94F9 /* APIBase.swift in Sources */,

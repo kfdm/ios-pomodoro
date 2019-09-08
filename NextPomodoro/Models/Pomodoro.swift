@@ -9,21 +9,11 @@
 import Foundation
 import UIKit
 
-struct Pomodoro: Codable {
-    let id: Int
-    let title: String
-    let start: Date
-    let end: Date
-    let category: String
-    let owner: String
+protocol PomodoroBase: EncodableJson {
+    var id: Int { get }
 }
 
-struct PomodoroExtendRequest: Codable {
-    let id: Int
-    let end: Date
-}
-
-extension PomodoroExtendRequest: EncodableJson {
+extension PomodoroBase {
     func update(completionHandler: @escaping (Pomodoro) -> Void) {
         guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
@@ -35,6 +25,26 @@ extension PomodoroExtendRequest: EncodableJson {
     }
 }
 
+struct Pomodoro: EncodableJson {
+    let id: Int
+    let title: String
+    let start: Date
+    let end: Date
+    let category: String
+    let owner: String
+}
+
+struct PomodoroExtendRequest: PomodoroBase {
+    let id: Int
+    let end: Date
+}
+
+struct PomodoroRetagRequest: PomodoroBase {
+    let id: Int
+    let category: String
+}
+
+
 struct PomodoroResponse: DecodableJson {
     let count: Int
     let next: String?
@@ -42,7 +52,7 @@ struct PomodoroResponse: DecodableJson {
     let results: [Pomodoro]
 }
 
-extension Pomodoro: EncodableJson, DecodableJson {
+extension Pomodoro: PomodoroBase, DecodableJson {
     init(title: String, category: String, duration: TimeInterval) {
         self.id = 0
         self.owner = ""

@@ -16,20 +16,9 @@ class ButtonTableViewCell: UITableViewCell, ReusableCell {
 
     var buttonClick : (() -> Void)?
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
     func configure(_ title: String, color: UIColor, handler: @escaping () -> Void) {
         buttonObject.setTitle(title, for: .normal)
         buttonObject.setTitleColor(color, for: .normal)
         buttonClick = handler
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

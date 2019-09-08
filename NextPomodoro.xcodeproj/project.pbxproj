@@ -26,7 +26,7 @@
 		8758DB5C2324B8E1008F94F9 /* APIBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8758DB5A2324B880008F94F9 /* APIBase.swift */; };
 		8758DB5E2324C0E6008F94F9 /* SelectCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8758DB5D2324C0E6008F94F9 /* SelectCategoryViewController.swift */; };
 		876CA28C23249E2E00388C3F /* HistoryEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CA28B23249E2E00388C3F /* HistoryEditViewController.swift */; };
-		876CA28E23249F5300388C3F /* SimpleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CA28D23249F5300388C3F /* SimpleTableViewCell.swift */; };
+		876CA28E23249F5300388C3F /* LeftTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CA28D23249F5300388C3F /* LeftTableViewCell.swift */; };
 		876CA2912324A00C00388C3F /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CA28F2324A00C00388C3F /* TextTableViewCell.swift */; };
 		876CA2922324A00C00388C3F /* TextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 876CA2902324A00C00388C3F /* TextTableViewCell.xib */; };
 		876CA2952324A5C800388C3F /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CA2932324A5C800388C3F /* ButtonTableViewCell.swift */; };
@@ -103,7 +103,7 @@
 		8758DB5D2324C0E6008F94F9 /* SelectCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoryViewController.swift; sourceTree = "<group>"; };
 		875ADE09213A786800841740 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		876CA28B23249E2E00388C3F /* HistoryEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEditViewController.swift; sourceTree = "<group>"; };
-		876CA28D23249F5300388C3F /* SimpleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableViewCell.swift; sourceTree = "<group>"; };
+		876CA28D23249F5300388C3F /* LeftTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftTableViewCell.swift; sourceTree = "<group>"; };
 		876CA28F2324A00C00388C3F /* TextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTableViewCell.swift; sourceTree = "<group>"; };
 		876CA2902324A00C00388C3F /* TextTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextTableViewCell.xib; sourceTree = "<group>"; };
 		876CA2932324A5C800388C3F /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
@@ -270,7 +270,7 @@
 				870A0496231E9DAE00A83842 /* FavoriteTableViewCell.xib */,
 				87F397F2231E9169000AA82A /* HistoryTableViewCell.swift */,
 				87F397F3231E9169000AA82A /* HistoryTableViewCell.xib */,
-				876CA28D23249F5300388C3F /* SimpleTableViewCell.swift */,
+				876CA28D23249F5300388C3F /* LeftTableViewCell.swift */,
 				876CA28F2324A00C00388C3F /* TextTableViewCell.swift */,
 				876CA2902324A00C00388C3F /* TextTableViewCell.xib */,
 			);
@@ -493,7 +493,7 @@
 				876CA28C23249E2E00388C3F /* HistoryEditViewController.swift in Sources */,
 				8758DB582324B18F008F94F9 /* DateTableViewCell.swift in Sources */,
 				876CA2952324A5C800388C3F /* ButtonTableViewCell.swift in Sources */,
-				876CA28E23249F5300388C3F /* SimpleTableViewCell.swift in Sources */,
+				876CA28E23249F5300388C3F /* LeftTableViewCell.swift in Sources */,
 				8756548D2129586000D69D6D /* HistoryViewController.swift in Sources */,
 				870A049A231EA45200A83842 /* Constants.swift in Sources */,
 			);

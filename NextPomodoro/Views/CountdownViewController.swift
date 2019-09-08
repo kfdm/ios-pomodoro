@@ -21,13 +21,11 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         }
     }
 
-    var active = false {
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
+    var isActivePomodoro: Bool {
+        guard let pomodoro = currentPomodoro else { return false }
+        return pomodoro.end > Date()
     }
+
     var mqtt: CocoaMQTT?
 
     var newTitle = ""
@@ -77,7 +75,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.register(SimpleTableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(LeftTableViewCell.self, forCellReuseIdentifier: "Cell")
         tableView.register(CountdownTableViewCell.self)
         tableView.register(DateTableViewCell.self)
         tableView.register(TextTableViewCell.self)
@@ -117,12 +115,29 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         case 0: // Countdown View
             return currentPomodoro == nil ? 0: 3
         case 1: // New Section
-            return active ? 0: 4
+            return isActivePomodoro ? 0: 4
         case 2: // Detail Section
-            return active ? 4: 0
+            return isActivePomodoro ? 4: 0
         default:
             fatalError("Unknown section \(section)")
         }
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return isActivePomodoro
+                ? NSLocalizedString("Current Pomodoro", comment: "Current Pomodoro header label")
+                : NSLocalizedString("Recent Pomodoro", comment: "Recent Pomodoro header label")
+        case 1:
+            return NSLocalizedString("New Pomodoro", comment: "New Pomodoro header label")
+        default:
+            return ""
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -139,18 +154,19 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         // Countdown Cells
         case [0, 0]:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.textLabel?.text = currentPomodoro?.title
-            cell.accessoryType = .disclosureIndicator
+            cell.textLabel?.text = "Title"
+            cell.detailTextLabel?.text = currentPomodoro?.title
+            cell.accessoryType = .detailButton
             return cell
         case [0, 1]:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.textLabel?.text = currentPomodoro?.category
-            cell.accessoryType = .detailDisclosureButton
+            cell.textLabel?.text = "Category"
+            cell.detailTextLabel?.text = currentPomodoro?.category
+            cell.accessoryType = .detailButton
             return cell
         case [0, 2]:
             let cell: CountdownTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.countdownDate = currentPomodoro?.end
-            cell.activityChanged = { self.active = $0 }
             cell.accessoryType = .none
             return cell
         // Register Cells
@@ -211,6 +227,11 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.setSelected(true, animated: true)
+    }
+
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         switch indexPath {
         case [0, 1]:
             guard let id = currentPomodoro?.id else { return }

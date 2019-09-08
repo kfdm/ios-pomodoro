@@ -27,10 +27,10 @@ extension PomodoroBase {
 
 struct Pomodoro: EncodableJson {
     let id: Int
-    let title: String
-    let start: Date
-    let end: Date
-    let category: String
+    var title: String
+    var start: Date
+    var end: Date
+    var category: String
     let owner: String
 }
 
@@ -44,6 +44,10 @@ struct PomodoroRetagRequest: PomodoroBase {
     let category: String
 }
 
+struct PomodoroRenameRequest: PomodoroBase {
+    let id: Int
+    let title: String
+}
 
 struct PomodoroResponse: DecodableJson {
     let count: Int

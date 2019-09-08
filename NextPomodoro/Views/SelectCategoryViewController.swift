@@ -9,7 +9,7 @@
 import UIKit
 
 struct Category {
-    let title : String
+    let title: String
     let count: Int
 }
 
@@ -26,7 +26,7 @@ class SelectCategoryViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(SimpleTableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(LeftTableViewCell.self, forCellReuseIdentifier: "Cell")
         Pomodoro.list { (pomodoros) in
             self.categories = Dictionary(grouping: pomodoros) { $0.category }
                 .map { Category(title: $0, count: $1.count) }

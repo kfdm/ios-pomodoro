@@ -10,11 +10,6 @@ import UIKit
 
 class CountdownTableViewCell: UITableViewCell, ReusableCell {
     var timer = Timer()
-    var active = false {
-        didSet {
-            activityChanged?(active)
-        }
-    }
 
     var countdownDate: Date! {
         didSet {
@@ -30,21 +25,8 @@ class CountdownTableViewCell: UITableViewCell, ReusableCell {
 
     @IBOutlet weak var labelView: UILabel!
 
-    var activityChanged: ((Bool) -> Void)?
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
     @objc func updateCounter() {
         var elapsed = Date().timeIntervalSince(countdownDate)
-        active = elapsed < 0
 
         if elapsed > 0 {
             let color = elapsed > 300 ? Colors.latetimer : Colors.breakTimer

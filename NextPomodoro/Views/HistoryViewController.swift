@@ -104,6 +104,12 @@ class HistoryViewController: UITableViewController {
         let pomodoro = groups[indexPath.section].items[indexPath.row]
         let vc = HistoryEditViewController(style: .grouped)
         vc.pomodoro = pomodoro
+        vc.updatedPomodoro = { _ in
+            DispatchQueue.main.async {
+                self.navigationController?.popViewController(animated: true)
+                self.refreshData()
+            }
+        }
         navigationController?.pushViewController(vc, animated: true)
     }
 }

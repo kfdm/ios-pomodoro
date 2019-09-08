@@ -10,13 +10,14 @@ import UIKit
 
 class HistoryEditViewController: UITableViewController {
     var pomodoro: Pomodoro!
+    var updatedPomodoro: ((Pomodoro?) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.register(TextTableViewCell.self)
         tableView.register(ButtonTableViewCell.self)
-        tableView.register(SimpleTableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(LeftTableViewCell.self, forCellReuseIdentifier: "Cell")
     }
 
     // MARK: - Table view data source
@@ -43,36 +44,40 @@ class HistoryEditViewController: UITableViewController {
             cell.label = "Title"
             cell.value = pomodoro.title
             cell.accessoryType = .none
+            cell.selectionStyle = .none
+            cell.changed = { self.pomodoro.title = $0  }
             return cell
         case [0, 1]:
             let cell: TextTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.label = "Category"
             cell.value = pomodoro.category
             cell.accessoryType = .detailButton
+            cell.selectionStyle = .none
+            cell.changed = { self.pomodoro.category = $0  }
             return cell
         case [0, 2]:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
             cell.textLabel?.text = "Start"
-            cell.detailTextLabel?.text = "\(pomodoro.start)"
+            cell.detailTextLabel?.text = ApplicationSettings.mediumDate(pomodoro.start)
             cell.accessoryType = .disclosureIndicator
             return cell
         case [0, 3]:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
             cell.textLabel?.text = "End"
-            cell.detailTextLabel?.text = "\(pomodoro.end)"
+            cell.detailTextLabel?.text = ApplicationSettings.mediumDate(pomodoro.end)
             cell.accessoryType = .disclosureIndicator
             return cell
 
         case [1, 0]:
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure("Save", color: .blue) {
-                print("Save")
+                self.pomodoro.update { self.updatedPomodoro?($0) }
             }
             return cell
         case [1, 1]:
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure("Delete", color: .red) {
-                print("Delete")
+                self.pomodoro.delete { _ in self.updatedPomodoro?(nil) }
             }
             return cell
         default:
@@ -87,62 +92,23 @@ class HistoryEditViewController: UITableViewController {
         case [0, 3]:
             print("Click start")
         default:
-            print("No selector")
+            let cell = tableView.cellForRow(at: indexPath)
+            cell?.setSelected(true, animated: true)
         }
     }
 
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         switch indexPath {
         case [0, 1]:
-            print("Clicked Category")
+            let vc = SelectCategoryViewController(style: .grouped)
+            vc.selected = {
+                self.pomodoro.category = $0
+                self.navigationController?.popViewController(animated: true)
+                tableView.reloadData()
+            }
+            navigationController?.pushViewController(vc, animated: true)
         default:
             print("pass")
         }
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

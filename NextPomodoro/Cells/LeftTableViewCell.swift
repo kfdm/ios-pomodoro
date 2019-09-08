@@ -1,5 +1,5 @@
 //
-//  SimpleTableViewCell.swift
+//  LeftTableViewCell.swift
 //  MarkdownTodo
 //
 //  Created by Paul Traylor on 2019/08/14.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SimpleTableViewCell: UITableViewCell {
+class LeftTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .value1, reuseIdentifier: reuseIdentifier)
     }

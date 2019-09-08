@@ -168,13 +168,13 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         // Countdown Cells
         case [0, 0]:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.textLabel?.text = "Title"
+            cell.textLabel?.text = NSLocalizedString("Title", comment: "Pomodoro title")
             cell.detailTextLabel?.text = currentPomodoro?.title
             cell.accessoryType = .detailButton
             return cell
         case [0, 1]:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.textLabel?.text = "Category"
+            cell.textLabel?.text = NSLocalizedString("Category", comment: "Pomodoro category")
             cell.detailTextLabel?.text = currentPomodoro?.category
             cell.accessoryType = .detailButton
             return cell
@@ -198,7 +198,8 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
             return cell
         case [1, 2]:
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.configure("25 Minutes", style: .default) {
+            let title = NSLocalizedString("25 Minutes", comment: "25 minute pomodoro")
+            cell.configure(title, style: .default) {
                 let newPomodoro = Pomodoro(title: self.newTitle, category: self.newCategory, duration: 25)
                 newPomodoro.submit { self.currentPomodoro = $0 }
             }
@@ -216,13 +217,13 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         // Detail Cells
         case [2, 0]:
             let cell: DateTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.label = "Start"
+            cell.label = NSLocalizedString("Start", comment: "Pomodoro start time")
             cell.value = currentPomodoro?.start
             cell.accessoryType = .none
             return cell
         case [2, 1]:
             let cell: DateTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.label = "End"
+            cell.label = NSLocalizedString("End", comment: "Pomodoro end time")
             cell.value = currentPomodoro?.end
             cell.accessoryType = .none
             return cell
@@ -253,7 +254,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         case [0, 1]:
             guard let id = currentPomodoro?.id else { return }
             let vc = SelectCategoryViewController(style: .grouped)
-            vc.title = "Retag Category"
+            vc.title = NSLocalizedString("Retag Category", comment: "Retag category title")
             vc.selected = {
                 let request = PomodoroRetagRequest(id: id, category: $0)
                 request.update { self.currentPomodoro = $0 }

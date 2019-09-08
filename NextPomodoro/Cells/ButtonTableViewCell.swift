@@ -34,7 +34,8 @@ class ButtonTableViewCell: UITableViewCell, ReusableCell {
     }
 
     func configure(_ title: String, style: Style, handler: Handler?) {
-        buttonObject.setTitle(title, for: .normal)
+        let localized = NSLocalizedString(title, comment: "")
+        buttonObject.setTitle(localized, for: .normal)
         buttonStyle = style
         buttonClick = handler
     }

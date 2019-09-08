@@ -42,7 +42,7 @@ class HistoryEditViewController: UITableViewController {
         switch indexPath {
         case [0, 0]:
             let cell: TextTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.label = "Title"
+            cell.label = NSLocalizedString("Title", comment: "")
             cell.value = pomodoro.title
             cell.accessoryType = .none
             cell.selectionStyle = .none
@@ -50,7 +50,7 @@ class HistoryEditViewController: UITableViewController {
             return cell
         case [0, 1]:
             let cell: TextTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.label = "Category"
+            cell.label = NSLocalizedString("Category", comment: "")
             cell.value = pomodoro.category
             cell.accessoryType = .detailButton
             cell.selectionStyle = .none
@@ -58,13 +58,13 @@ class HistoryEditViewController: UITableViewController {
             return cell
         case [0, 2]:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.textLabel?.text = "Start"
+            cell.textLabel?.text = NSLocalizedString("Start", comment: "")
             cell.detailTextLabel?.text = ApplicationSettings.mediumDate(pomodoro.start)
             cell.accessoryType = .disclosureIndicator
             return cell
         case [0, 3]:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.textLabel?.text = "End"
+            cell.textLabel?.text = NSLocalizedString("End", comment: "")
             cell.detailTextLabel?.text = ApplicationSettings.mediumDate(pomodoro.end)
             cell.accessoryType = .disclosureIndicator
             return cell
@@ -77,7 +77,7 @@ class HistoryEditViewController: UITableViewController {
             return cell
         case [1, 1]:
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.configure("Delete", style: .default) {
+            cell.configure("Delete", style: .destructive) {
                 self.pomodoro.delete { _ in self.updatedPomodoro?(nil) }
             }
             return cell

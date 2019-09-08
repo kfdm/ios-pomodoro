@@ -1,0 +1,90 @@
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "1FP-LM-QtR"; */
+"1FP-LM-QtR.text" = "Title";
+
+/* Class = "UIButton"; normalTitle = "30:00"; ObjectID = "1H5-Dg-C0k"; */
+"1H5-Dg-C0k.normalTitle" = "30:00";
+
+/* Class = "UITabBarController"; title = "MainTabBarController"; ObjectID = "49e-Tb-3d3"; */
+"49e-Tb-3d3.title" = "MainTabBarController";
+
+/* Class = "UILabel"; text = "Count"; ObjectID = "4zr-dJ-t6I"; */
+"4zr-dJ-t6I.text" = "Count";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "5IV-Lq-sXm"; */
+"5IV-Lq-sXm.text" = "Title";
+
+/* Class = "UIButton"; normalTitle = "05:00"; ObjectID = "7ep-vF-Cf6"; */
+"7ep-vF-Cf6.normalTitle" = "05:00";
+
+/* Class = "UITextField"; placeholder = "Server"; ObjectID = "9Kc-tg-bO3"; */
+"9Kc-tg-bO3.placeholder" = "Server";
+
+/* Class = "UILabel"; text = "Category"; ObjectID = "AFR-kJ-atf"; */
+"AFR-kJ-atf.text" = "Category";
+
+/* Class = "UILabel"; text = "End"; ObjectID = "DKY-X6-pMf"; */
+"DKY-X6-pMf.text" = "End";
+
+/* Class = "UIViewController"; title = "New Favorite"; ObjectID = "Fyb-fk-2Ca"; */
+"Fyb-fk-2Ca.title" = "New Favorite";
+
+/* Class = "UILabel"; text = "Duration"; ObjectID = "G15-vg-mbH"; */
+"G15-vg-mbH.text" = "Duration";
+
+/* Class = "UITextField"; placeholder = "Username"; ObjectID = "HXW-CC-RDk"; */
+"HXW-CC-RDk.placeholder" = "Username";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "Ijq-OI-NpH"; */
+"Ijq-OI-NpH.text" = "Title";
+
+/* Class = "UILabel"; text = "Category"; ObjectID = "J3y-uV-YoO"; */
+"J3y-uV-YoO.text" = "Category";
+
+/* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "KIR-xL-alb"; */
+"KIR-xL-alb.normalTitle" = "Submit";
+
+/* Class = "UITextField"; accessibilityLabel = "Test"; ObjectID = "LiX-Tc-X23"; */
+"LiX-Tc-X23.accessibilityLabel" = "Test";
+
+/* Class = "UITextField"; placeholder = "New Favorite Title"; ObjectID = "LiX-Tc-X23"; */
+"LiX-Tc-X23.placeholder" = "New Favorite Title";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "OpJ-Xj-OYE"; */
+"OpJ-Xj-OYE.text" = "Label";
+
+/* Class = "UITableViewController"; title = "History"; ObjectID = "QJe-R6-GOo"; */
+"QJe-R6-GOo.title" = "History";
+
+/* Class = "UILabel"; text = "Use SSL"; ObjectID = "VB6-py-G6Y"; */
+"VB6-py-G6Y.text" = "Use SSL";
+
+/* Class = "UILabel"; text = "Category"; ObjectID = "Woi-2k-3z0"; */
+"Woi-2k-3z0.text" = "Category";
+
+/* Class = "UILabel"; text = "Duration"; ObjectID = "ag7-lh-Y4Q"; */
+"ag7-lh-Y4Q.text" = "Duration";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "bnZ-tO-nPl"; */
+"bnZ-tO-nPl.normalTitle" = "Login";
+
+/* Class = "UITableViewSection"; headerTitle = "MQTT"; ObjectID = "cWW-YE-Cyl"; */
+"cWW-YE-Cyl.headerTitle" = "MQTT";
+
+/* Class = "UIButton"; normalTitle = "60:00"; ObjectID = "ePQ-3Y-Bn5"; */
+"ePQ-3Y-Bn5.normalTitle" = "60:00";
+
+/* Class = "UITextField"; placeholder = "Port"; ObjectID = "lZE-sZ-EKD"; */
+"lZE-sZ-EKD.placeholder" = "Port";
+
+/* Class = "UITextField"; text = "1883"; ObjectID = "lZE-sZ-EKD"; */
+"lZE-sZ-EKD.text" = "1883";
+
+/* Class = "UITextField"; placeholder = "Broker"; ObjectID = "pi9-VD-ojd"; */
+"pi9-VD-ojd.placeholder" = "Broker";
+
+/* Class = "UITextField"; placeholder = "New Favorite Category"; ObjectID = "pnd-7s-bnI"; */
+"pnd-7s-bnI.placeholder" = "New Favorite Category";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "vJ3-Oi-9FF"; */
+"vJ3-Oi-9FF.placeholder" = "Password";

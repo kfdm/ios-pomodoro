@@ -44,13 +44,14 @@ class LoginViewController: UITableViewController, Storyboarded {
         checkLogin(baseURL: serverField.text!, username: usernameField.text!, password: passwordField.text!) { (response) in
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()
+                ApplicationSettings.defaults.set(response.url!.baseURL!.absoluteString, forKey: .server)
                 ApplicationSettings.defaults.set(self.usernameField.text!, forKey: .username)
-                ApplicationSettings.defaults.set(self.serverField.text!, forKey: .server)
+                ApplicationSettings.keychain.set(self.passwordField.text!, forKey: .server)
+
                 ApplicationSettings.defaults.set(self.brokerField.text!, forKey: .broker)
                 ApplicationSettings.defaults.set(Int(self.brokerPort.text!), forKey: .brokerPort)
                 ApplicationSettings.defaults.set(self.brokerSSL.isOn, forKey: .brokerSSL)
 
-                ApplicationSettings.keychain.set(response.url!.absoluteString, forKey: .server)
                 self.dismiss(animated: true, completion: nil)
                 NotificationCenter.default.post(name: .authenticationGranted, object: nil)
             }

@@ -20,7 +20,7 @@ class FavoriteTableViewCell: UITableViewCell, ReusableCell {
         didSet {
             titleLabel.text = favorite.title
             categoryLabel.text  = favorite.category
-            durationLabel.text = ApplicationSettings.shortTime(favorite!.duration)!
+            durationLabel.text = ApplicationSettings.shortTime(favorite!.duration * 60)!
             countLabel.text = "\(favorite.count)"
 
             if let icon = favorite.icon {

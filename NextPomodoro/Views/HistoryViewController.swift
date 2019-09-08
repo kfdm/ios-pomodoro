@@ -99,4 +99,11 @@ class HistoryViewController: UITableViewController {
 
         return UISwipeActionsConfiguration(actions: [repeatAction])
     }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let pomodoro = groups[indexPath.section].items[indexPath.row]
+        let vc = HistoryEditViewController(style: .grouped)
+        vc.pomodoro = pomodoro
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }

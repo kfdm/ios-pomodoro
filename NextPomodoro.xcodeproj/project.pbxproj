@@ -18,6 +18,10 @@
 		8756548B212947AA00D69D6D /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548A212947AA00D69D6D /* FavoritesViewController.swift */; };
 		8756548D2129586000D69D6D /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548C2129586000D69D6D /* HistoryViewController.swift */; };
 		8756548F2129679100D69D6D /* CountdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548E2129679100D69D6D /* CountdownViewController.swift */; };
+		876CA28C23249E2E00388C3F /* HistoryEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CA28B23249E2E00388C3F /* HistoryEditViewController.swift */; };
+		876CA28E23249F5300388C3F /* SimpleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CA28D23249F5300388C3F /* SimpleTableViewCell.swift */; };
+		876CA2912324A00C00388C3F /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CA28F2324A00C00388C3F /* TextTableViewCell.swift */; };
+		876CA2922324A00C00388C3F /* TextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 876CA2902324A00C00388C3F /* TextTableViewCell.xib */; };
 		8773DB122144EE5A00CF52CB /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8773DB112144EE5A00CF52CB /* Favorite.swift */; };
 		8773DB142144EE7E00CF52CB /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8773DB132144EE7E00CF52CB /* Settings.swift */; };
 		8773DB152144EF1D00CF52CB /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8773DB112144EE5A00CF52CB /* Favorite.swift */; };
@@ -83,6 +87,10 @@
 		8756548C2129586000D69D6D /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		8756548E2129679100D69D6D /* CountdownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownViewController.swift; sourceTree = "<group>"; };
 		875ADE09213A786800841740 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		876CA28B23249E2E00388C3F /* HistoryEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEditViewController.swift; sourceTree = "<group>"; };
+		876CA28D23249F5300388C3F /* SimpleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableViewCell.swift; sourceTree = "<group>"; };
+		876CA28F2324A00C00388C3F /* TextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTableViewCell.swift; sourceTree = "<group>"; };
+		876CA2902324A00C00388C3F /* TextTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextTableViewCell.xib; sourceTree = "<group>"; };
 		8773DB112144EE5A00CF52CB /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		8773DB132144EE7E00CF52CB /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		87B651732128F0AD006D88AF /* NextPomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextPomodoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,6 +158,7 @@
 			children = (
 				8756548E2129679100D69D6D /* CountdownViewController.swift */,
 				8756548A212947AA00D69D6D /* FavoritesViewController.swift */,
+				876CA28B23249E2E00388C3F /* HistoryEditViewController.swift */,
 				8756548C2129586000D69D6D /* HistoryViewController.swift */,
 				87B6518C2128F258006D88AF /* LoginViewController.swift */,
 				87B6517C2128F0AD006D88AF /* Main.storyboard */,
@@ -236,6 +245,9 @@
 				870A0496231E9DAE00A83842 /* FavoriteTableViewCell.xib */,
 				87F397F2231E9169000AA82A /* HistoryTableViewCell.swift */,
 				87F397F3231E9169000AA82A /* HistoryTableViewCell.xib */,
+				876CA28D23249F5300388C3F /* SimpleTableViewCell.swift */,
+				876CA28F2324A00C00388C3F /* TextTableViewCell.swift */,
+				876CA2902324A00C00388C3F /* TextTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -244,10 +256,10 @@
 			isa = PBXGroup;
 			children = (
 				87C43BD62144E6F800E9C687 /* Extensions.swift */,
+				C1711A6E231F443100BF4B93 /* Log.swift */,
 				C19EFB9322EFD37A00DA4666 /* Notification+Constants.swift */,
 				8720384622EF2E47001577EF /* Storyboarded.swift */,
 				870A0490231E946E00A83842 /* UITableViewController+ReuseableCell.swift */,
-				C1711A6E231F443100BF4B93 /* Log.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -350,6 +362,7 @@
 			files = (
 				87B651832128F0AE006D88AF /* LaunchScreen.storyboard in Resources */,
 				87B651802128F0AE006D88AF /* Assets.xcassets in Resources */,
+				876CA2922324A00C00388C3F /* TextTableViewCell.xib in Resources */,
 				870A0498231E9DAE00A83842 /* FavoriteTableViewCell.xib in Resources */,
 				87F397F5231E9169000AA82A /* HistoryTableViewCell.xib in Resources */,
 				87B6517E2128F0AD006D88AF /* Main.storyboard in Resources */,
@@ -432,6 +445,7 @@
 				8756548F2129679100D69D6D /* CountdownViewController.swift in Sources */,
 				87C43BDB2144EBE700E9C687 /* Pomodoro.swift in Sources */,
 				87B651A52128F45E006D88AF /* PomodoroAPI.swift in Sources */,
+				876CA2912324A00C00388C3F /* TextTableViewCell.swift in Sources */,
 				8756548B212947AA00D69D6D /* FavoritesViewController.swift in Sources */,
 				87C43BD72144E6F800E9C687 /* Extensions.swift in Sources */,
 				870A0497231E9DAE00A83842 /* FavoriteTableViewCell.swift in Sources */,
@@ -445,6 +459,8 @@
 				C1711A6F231F443100BF4B93 /* Log.swift in Sources */,
 				8773DB142144EE7E00CF52CB /* Settings.swift in Sources */,
 				87402D002144FDEC00F0C43A /* NewFavoriteController.swift in Sources */,
+				876CA28C23249E2E00388C3F /* HistoryEditViewController.swift in Sources */,
+				876CA28E23249F5300388C3F /* SimpleTableViewCell.swift in Sources */,
 				8756548D2129586000D69D6D /* HistoryViewController.swift in Sources */,
 				870A049A231EA45200A83842 /* Constants.swift in Sources */,
 			);

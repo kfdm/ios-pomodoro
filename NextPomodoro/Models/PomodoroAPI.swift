@@ -14,7 +14,7 @@ typealias AuthedRequestResponse = ((HTTPURLResponse, Data) -> Void)
 func checkLogin(baseURL: String, username: String, password: String, completionHandler: @escaping (HTTPURLResponse) -> Void) {
     var base = URLComponents(string: baseURL)!
     base.path = "/api/pomodoro"
-    authedRequest(url:base, method: "GET", body: nil, username: username, password: password, completionHandler: {response, _ in
+    authedRequest(url: base, method: "GET", body: nil, username: username, password: password, completionHandler: {response, _ in
         completionHandler(response)
     })
 }

@@ -15,4 +15,5 @@ struct Log {
     static let networking = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "Networking")
     static let mqtt = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "MQTT")
     static let view = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "ViewController")
+    static let today = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "TodayWidget")
 }

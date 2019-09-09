@@ -8,10 +8,16 @@
 
 import UIKit
 import NotificationCenter
+import os
 
 class TodayViewController: UITableViewController, NCWidgetProviding {
-    var data: Pomodoro?
     var timer = Timer()
+    var currentPomodoro: Pomodoro? {
+        didSet {
+            updateView()
+            updateCounter()
+        }
+    }
 
     @IBOutlet weak var titleCell: UITableViewCell!
     @IBOutlet weak var categoryCell: UITableViewCell!
@@ -20,29 +26,28 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
     // MARK: - custom
 
     @objc func updateCounter() {
-        if let data = data {
+        guard let pomodoro = currentPomodoro else { return }
 
-            var elapsed = Date().timeIntervalSince(data.end)
+        var elapsed = Date().timeIntervalSince(pomodoro.end)
 
-            if elapsed > 0 {
-                let color = elapsed > 300 ? Colors.latetimer : Colors.breakTimer
-                let text = ApplicationSettings.shortTime(elapsed)!
-                setCountdown(color: color, text: text)
-            } else {
-                elapsed *= -1
-                let color = Colors.activeTimer
-                let text = ApplicationSettings.shortTime(elapsed)!
-                setCountdown(color: color, text: text)
-            }
+        if elapsed > 0 {
+            let color = elapsed > 300 ? Colors.latetimer : Colors.breakTimer
+            let text = ApplicationSettings.shortTime(elapsed)!
+            setCountdown(color: color, text: text)
+        } else {
+            elapsed *= -1
+            let color = Colors.activeTimer
+            let text = ApplicationSettings.shortTime(elapsed)!
+            setCountdown(color: color, text: text)
         }
+
     }
 
     func updateView() {
+        guard let pomodoro = currentPomodoro else { return }
         DispatchQueue.main.async {
-            if let data = self.data {
-                self.titleCell.detailTextLabel?.text = data.title
-                self.categoryCell.detailTextLabel?.text = data.category
-            }
+            self.titleCell.detailTextLabel?.text = pomodoro.title
+            self.categoryCell.detailTextLabel?.text = pomodoro.category
         }
     }
 
@@ -61,12 +66,6 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
 
     // MARK: - lifecycle
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate = self
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -80,9 +79,7 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         )
 
         // Restore Saved State
-        self.data = ApplicationSettings.defaults.object(forKey: .cache)
-        self.updateView()
-        self.updateCounter()
+        currentPomodoro = ApplicationSettings.defaults.object(forKey: .cache)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -97,14 +94,10 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         }
         // Perform any setup necessary in order to update the view.
         DispatchQueue.global(qos: .background).async {
+            os_log("Updating widget", log: Log.today, type: .debug)
             Pomodoro.list(completionHandler: { favorites in
-                self.data = favorites.sorted(by: { $0.id > $1.id })[0]
-                self.updateView()
-                self.updateCounter()
-
-                // Save state
-                ApplicationSettings.defaults.cache(self.data, forKey: .cache)
-
+                self.currentPomodoro = favorites.sorted(by: { $0.id > $1.id })[0]
+                ApplicationSettings.defaults.cache(self.currentPomodoro, forKey: .cache)
                 completionHandler(NCUpdateResult.newData)
             })
         }

@@ -6,15 +6,18 @@
   Copyright © 2019 Paul Traylor. All rights reserved.
 */
 
-"Start" = "始まる時間";
-"End" = "終わる時間";
-"Stop" = "止まる";
+"Start" = "始まり";
+"End" = "終わり";
+"Start Time" = "始まる時間";
+"End Time" = "終わる時間";
+"Stop" = "終了";
 "Add 5 minutes" = "5分追加する";
 "1 hour" = "１時間";
 "25 Minutes" = "２５分";
 
 "Title" = "タイトル";
 "Category" = "カテゴリー";
+"Duration" = " デュレイション ";
 
 "Delete" = "削除";
 "Save" = "保存";

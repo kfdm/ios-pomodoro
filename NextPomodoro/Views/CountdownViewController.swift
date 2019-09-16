@@ -197,7 +197,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             let title = NSLocalizedString("25 Minutes", comment: "25 minute pomodoro")
             cell.configure(title, style: .default) {
-                let newPomodoro = Pomodoro(title: self.newTitle, category: self.newCategory, duration: 25)
+                let newPomodoro = Pomodoro(title: self.newTitle, category: self.newCategory, minutes: 25)
                 newPomodoro.submit { self.currentPomodoro = $0 }
             }
             cell.accessoryType = .none
@@ -206,7 +206,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             let title = NSLocalizedString("1 hour", comment: "1 hour pomodoro")
             cell.configure(title, style: .default) {
-                let newPomodoro = Pomodoro(title: self.newTitle, category: self.newCategory, duration: 60)
+                let newPomodoro = Pomodoro(title: self.newTitle, category: self.newCategory, minutes: 60)
                 newPomodoro.submit { self.currentPomodoro = $0 }
             }
             cell.accessoryType = .none
@@ -214,13 +214,13 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         // Detail Cells
         case [2, 0]:
             let cell: DateTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.label = NSLocalizedString("Start", comment: "Pomodoro start time")
+            cell.label = NSLocalizedString("Start Time", comment: "Pomodoro start time")
             cell.value = currentPomodoro?.start
             cell.accessoryType = .none
             return cell
         case [2, 1]:
             let cell: DateTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.label = NSLocalizedString("End", comment: "Pomodoro end time")
+            cell.label = NSLocalizedString("End Time", comment: "Pomodoro end time")
             cell.value = currentPomodoro?.end
             cell.accessoryType = .none
             return cell

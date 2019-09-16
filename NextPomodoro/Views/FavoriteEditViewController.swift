@@ -40,19 +40,18 @@ class FavoriteEditViewController: UITableViewController {
         switch indexPath {
         case [0, 0]:
             let cell: TextTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.label = "Title"
+            cell.label = NSLocalizedString("Title", comment: "Title for favorite")
             cell.value = selectedFavorite.title
             return cell
         case [0, 1]:
             let cell: TextTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.label = "Category"
+            cell.label = NSLocalizedString("Category", comment: "Category for favorite")
             cell.value = selectedFavorite.category
             return cell
         case [0, 2]:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.textLabel?.text = "Duration"
+            cell.textLabel?.text = NSLocalizedString("Duration", comment: "Category for favorite")
             return cell
-
         case [1, 0]:
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure("Save", style: .default, handler: nil)

@@ -57,13 +57,13 @@ struct PomodoroResponse: DecodableJson {
 }
 
 extension Pomodoro: PomodoroBase, DecodableJson {
-    init(title: String, category: String, duration: TimeInterval) {
+    init(title: String, category: String, minutes: Int) {
         self.id = 0
         self.owner = ""
         self.title = title
         self.category = category
         self.start = Date()
-        self.end = Date.init(timeIntervalSinceNow: duration)
+        self.end = Date.init(timeIntervalSinceNow: TimeInterval(minutes * 60))
     }
 
     func submit(completionHandler: @escaping (Pomodoro) -> Void) {

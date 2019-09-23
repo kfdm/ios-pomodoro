@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0EFC01A5E7C43C96F60FF147 /* Pods_NextPomodoro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7802FDCD750068EC1BE696DC /* Pods_NextPomodoro.framework */; };
 		870A0491231E946E00A83842 /* UITableViewController+ReuseableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A0490231E946E00A83842 /* UITableViewController+ReuseableCell.swift */; };
 		870A0497231E9DAE00A83842 /* FavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A0495231E9DAE00A83842 /* FavoriteTableViewCell.swift */; };
 		870A0498231E9DAE00A83842 /* FavoriteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 870A0496231E9DAE00A83842 /* FavoriteTableViewCell.xib */; };
@@ -39,6 +38,8 @@
 		8773DB142144EE7E00CF52CB /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8773DB132144EE7E00CF52CB /* Settings.swift */; };
 		8773DB152144EF1D00CF52CB /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8773DB112144EE5A00CF52CB /* Favorite.swift */; };
 		8773DB162144EF1F00CF52CB /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8773DB132144EE7E00CF52CB /* Settings.swift */; };
+		878808062335A730001C58D3 /* UITextField+Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878808052335A730001C58D3 /* UITextField+Validator.swift */; };
+		878808082335AC4B001C58D3 /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878808072335AC4B001C58D3 /* Info.swift */; };
 		87B651772128F0AD006D88AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B651762128F0AD006D88AF /* AppDelegate.swift */; };
 		87B6517E2128F0AD006D88AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87B6517C2128F0AD006D88AF /* Main.storyboard */; };
 		87B651802128F0AE006D88AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87B6517F2128F0AE006D88AF /* Assets.xcassets */; };
@@ -60,7 +61,6 @@
 		C1711A70231F47CD00BF4B93 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1711A6E231F443100BF4B93 /* Log.swift */; };
 		C19EC700212CEC5D005F5A2F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87B6517F2128F0AE006D88AF /* Assets.xcassets */; };
 		C19EFB9422EFD37A00DA4666 /* Notification+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19EFB9322EFD37A00DA4666 /* Notification+Constants.swift */; };
-		D6797A91CEAB983113B50514 /* Pods_NextPomodoroToday.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B1FD18465026C5BEA2AEE8 /* Pods_NextPomodoroToday.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,8 +88,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7802FDCD750068EC1BE696DC /* Pods_NextPomodoro.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NextPomodoro.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8490648A9A3C99382157AEA9 /* Pods-NextPomodoro.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NextPomodoro.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NextPomodoro/Pods-NextPomodoro.debug.xcconfig"; sourceTree = "<group>"; };
 		870A0490231E946E00A83842 /* UITableViewController+ReuseableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewController+ReuseableCell.swift"; sourceTree = "<group>"; };
 		870A0495231E9DAE00A83842 /* FavoriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewCell.swift; sourceTree = "<group>"; };
 		870A0496231E9DAE00A83842 /* FavoriteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteTableViewCell.xib; sourceTree = "<group>"; };
@@ -121,6 +119,8 @@
 		876CA2942324A5C800388C3F /* ButtonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonTableViewCell.xib; sourceTree = "<group>"; };
 		8773DB112144EE5A00CF52CB /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		8773DB132144EE7E00CF52CB /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		878808052335A730001C58D3 /* UITextField+Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Validator.swift"; sourceTree = "<group>"; };
+		878808072335AC4B001C58D3 /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
 		87B651732128F0AD006D88AF /* NextPomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextPomodoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87B651762128F0AD006D88AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		87B6517D2128F0AD006D88AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -139,14 +139,10 @@
 		87C43BDA2144EBE700E9C687 /* Pomodoro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pomodoro.swift; sourceTree = "<group>"; };
 		87F397F2231E9169000AA82A /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		87F397F3231E9169000AA82A /* HistoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryTableViewCell.xib; sourceTree = "<group>"; };
-		88B1FD18465026C5BEA2AEE8 /* Pods_NextPomodoroToday.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NextPomodoroToday.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		95A5AC4DEE93F9F2F16BD43E /* Pods-NextPomodoroToday.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NextPomodoroToday.release.xcconfig"; path = "Pods/Target Support Files/Pods-NextPomodoroToday/Pods-NextPomodoroToday.release.xcconfig"; sourceTree = "<group>"; };
-		A9CB0A262F1FF88FF3345417 /* Pods-NextPomodoroToday.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NextPomodoroToday.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NextPomodoroToday/Pods-NextPomodoroToday.debug.xcconfig"; sourceTree = "<group>"; };
 		C1711A6E231F443100BF4B93 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		C19EC6FE212CEBDB005F5A2F /* NextPomodoroToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextPomodoroToday.entitlements; sourceTree = "<group>"; };
 		C19EC6FF212CEBE8005F5A2F /* NextPomodoro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextPomodoro.entitlements; sourceTree = "<group>"; };
 		C19EFB9322EFD37A00DA4666 /* Notification+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Constants.swift"; sourceTree = "<group>"; };
-		CD83A8F4A3FBFDB9065C0F6E /* Pods-NextPomodoro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NextPomodoro.release.xcconfig"; path = "Pods/Target Support Files/Pods-NextPomodoro/Pods-NextPomodoro.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,7 +150,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0EFC01A5E7C43C96F60FF147 /* Pods_NextPomodoro.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,24 +158,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				87B651952128F422006D88AF /* NotificationCenter.framework in Frameworks */,
-				D6797A91CEAB983113B50514 /* Pods_NextPomodoroToday.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0AEBC47428D8201EA7D1D6DF /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				8490648A9A3C99382157AEA9 /* Pods-NextPomodoro.debug.xcconfig */,
-				CD83A8F4A3FBFDB9065C0F6E /* Pods-NextPomodoro.release.xcconfig */,
-				A9CB0A262F1FF88FF3345417 /* Pods-NextPomodoroToday.debug.xcconfig */,
-				95A5AC4DEE93F9F2F16BD43E /* Pods-NextPomodoroToday.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		8756548921293C2400D69D6D /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,7 +188,6 @@
 				87B651932128F422006D88AF /* Frameworks */,
 				87B651752128F0AD006D88AF /* NextPomodoro */,
 				87B651962128F422006D88AF /* NextPomodoroToday */,
-				0AEBC47428D8201EA7D1D6DF /* Pods */,
 				87B651742128F0AD006D88AF /* Products */,
 				875ADE09213A786800841740 /* README.md */,
 			);
@@ -241,8 +223,6 @@
 			isa = PBXGroup;
 			children = (
 				87B651942128F422006D88AF /* NotificationCenter.framework */,
-				7802FDCD750068EC1BE696DC /* Pods_NextPomodoro.framework */,
-				88B1FD18465026C5BEA2AEE8 /* Pods_NextPomodoroToday.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -267,6 +247,7 @@
 				87C43BDA2144EBE700E9C687 /* Pomodoro.swift */,
 				87B651A42128F45E006D88AF /* PomodoroAPI.swift */,
 				8773DB132144EE7E00CF52CB /* Settings.swift */,
+				878808072335AC4B001C58D3 /* Info.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -300,6 +281,7 @@
 				8720384622EF2E47001577EF /* Storyboarded.swift */,
 				8758DB752324F766008F94F9 /* UIAlert+Localized.swift */,
 				870A0490231E946E00A83842 /* UITableViewController+ReuseableCell.swift */,
+				878808052335A730001C58D3 /* UITextField+Validator.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -311,12 +293,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 87B651872128F0AE006D88AF /* Build configuration list for PBXNativeTarget "NextPomodoro" */;
 			buildPhases = (
-				4BB1C1EB80966AC5BA7BFF8E /* [CP] Check Pods Manifest.lock */,
 				87B6516F2128F0AD006D88AF /* Sources */,
 				87B651702128F0AD006D88AF /* Frameworks */,
 				87B651712128F0AD006D88AF /* Resources */,
 				87B651A32128F422006D88AF /* Embed App Extensions */,
-				E1F5264AFF69F67A5760632F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -332,7 +312,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 87B651A02128F422006D88AF /* Build configuration list for PBXNativeTarget "NextPomodoroToday" */;
 			buildPhases = (
-				70F0CFA1BA2D643646F2DB62 /* [CP] Check Pods Manifest.lock */,
 				87B6518E2128F422006D88AF /* Sources */,
 				87B6518F2128F422006D88AF /* Frameworks */,
 				87B651902128F422006D88AF /* Resources */,
@@ -425,62 +404,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		4BB1C1EB80966AC5BA7BFF8E /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-NextPomodoro-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		70F0CFA1BA2D643646F2DB62 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-NextPomodoroToday-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E1F5264AFF69F67A5760632F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NextPomodoro/Pods-NextPomodoro-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NextPomodoro/Pods-NextPomodoro-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NextPomodoro/Pods-NextPomodoro-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		87B6516F2128F0AD006D88AF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -503,6 +426,7 @@
 				8758DB762324F766008F94F9 /* UIAlert+Localized.swift in Sources */,
 				87F397F4231E9169000AA82A /* HistoryTableViewCell.swift in Sources */,
 				87B651772128F0AD006D88AF /* AppDelegate.swift in Sources */,
+				878808082335AC4B001C58D3 /* Info.swift in Sources */,
 				87B6518D2128F258006D88AF /* LoginViewController.swift in Sources */,
 				870A0491231E946E00A83842 /* UITableViewController+ReuseableCell.swift in Sources */,
 				C1711A6F231F443100BF4B93 /* Log.swift in Sources */,
@@ -516,6 +440,7 @@
 				876CA28E23249F5300388C3F /* LeftTableViewCell.swift in Sources */,
 				8756548D2129586000D69D6D /* HistoryViewController.swift in Sources */,
 				870A049A231EA45200A83842 /* Constants.swift in Sources */,
+				878808062335A730001C58D3 /* UITextField+Validator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -709,7 +634,6 @@
 		};
 		87B651882128F0AE006D88AF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8490648A9A3C99382157AEA9 /* Pods-NextPomodoro.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -730,7 +654,6 @@
 		};
 		87B651892128F0AE006D88AF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD83A8F4A3FBFDB9065C0F6E /* Pods-NextPomodoro.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -751,7 +674,6 @@
 		};
 		87B651A12128F422006D88AF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A9CB0A262F1FF88FF3345417 /* Pods-NextPomodoroToday.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = NextPomodoroToday/NextPomodoroToday.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -773,7 +695,6 @@
 		};
 		87B651A22128F422006D88AF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 95A5AC4DEE93F9F2F16BD43E /* Pods-NextPomodoroToday.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = NextPomodoroToday/NextPomodoroToday.entitlements;
 				CODE_SIGN_STYLE = Automatic;

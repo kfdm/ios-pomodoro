@@ -25,36 +25,31 @@ class LoginViewController: UITableViewController, Storyboarded {
         super.viewDidLoad()
     }
 
-    @IBAction func editingEnded(_ sender: UITextField) {
-        loginButton.isEnabled = [
-            usernameField.text,
-            passwordField.text,
-            serverField.text,
-            brokerField.text,
-            brokerPort.text
-            ].allSatisfy { $0 != "" }
-    }
+    func showAlert(for message: String) {
 
-    @IBAction func toggleSSL(_ sender: UISwitch) {
-        brokerPort.text = sender.isOn ? "8883" : "1883"
     }
 
     @IBAction func loginClick(_ sender: UIButton) {
-        spinner.startAnimating()
-        checkLogin(baseURL: serverField.text!, username: usernameField.text!, password: passwordField.text!) { (response) in
-            DispatchQueue.main.async {
+        do {
+            let username = try usernameField.validateText([.required])
+            let password = try passwordField.validateText([.required])
+            let server = try serverField.validateText([.required, .url])
+
+            spinner.startAnimating()
+            Info.get(baseURL: server, username: username, password: password) { (info) in
                 self.spinner.stopAnimating()
-                ApplicationSettings.defaults.set(response.url!.baseURL!.absoluteString, forKey: .server)
-                ApplicationSettings.defaults.set(self.usernameField.text!, forKey: .username)
-                ApplicationSettings.keychain.set(self.passwordField.text!, forKey: .server)
+                ApplicationSettings.defaults.set(username, forKey: .username)
+                ApplicationSettings.defaults.set(server, forKey: .server)
+                ApplicationSettings.keychain.set(password, forKey: .server)
 
-                ApplicationSettings.defaults.set(self.brokerField.text!, forKey: .broker)
-                ApplicationSettings.defaults.set(Int(self.brokerPort.text!), forKey: .brokerPort)
-                ApplicationSettings.defaults.set(self.brokerSSL.isOn, forKey: .brokerSSL)
-
-                self.dismiss(animated: true, completion: nil)
-                NotificationCenter.default.post(name: .authenticationGranted, object: nil)
+                if let mqtt = info.mqtt, let broker = URLComponents(url: mqtt, resolvingAgainstBaseURL: false) {
+                    ApplicationSettings.defaults.set(broker.url?.baseURL?.absoluteString, forKey: .broker)
+                    ApplicationSettings.defaults.set(broker.port, forKey: .brokerPort)
+                    ApplicationSettings.defaults.set(broker.scheme == "mqtts", forKey: .brokerSSL)
+                }
             }
+        } catch(let error) {
+            showAlert(for: (error as! ValidationError).message)
         }
     }
 }

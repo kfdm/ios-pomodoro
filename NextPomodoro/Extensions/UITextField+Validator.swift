@@ -31,7 +31,6 @@ class ValidatorURL: Validator {
         }
     }
 
-
 }
 
 enum ValidatorType {
@@ -49,7 +48,6 @@ extension ValidatorType {
         }
     }
 }
-
 
 extension UITextField {
     func validateText(_ validators: [ValidatorType]) throws -> String {

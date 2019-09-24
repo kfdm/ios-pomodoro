@@ -15,14 +15,11 @@ class LoginViewController: UITableViewController, Storyboarded {
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var serverField: UITextField!
-    @IBOutlet weak var brokerField: UITextField!
-    @IBOutlet weak var brokerPort: UITextField!
-    @IBOutlet weak var brokerSSL: UISwitch!
-
     @IBOutlet weak var loginButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        serverField.becomeFirstResponder()
     }
 
     func showAlert(for message: String) {
@@ -37,15 +34,22 @@ class LoginViewController: UITableViewController, Storyboarded {
 
             spinner.startAnimating()
             Info.get(baseURL: server, username: username, password: password) { (info) in
-                self.spinner.stopAnimating()
+                DispatchQueue.main.async {
+                    self.spinner.stopAnimating()
+                }
                 ApplicationSettings.defaults.set(username, forKey: .username)
                 ApplicationSettings.defaults.set(server, forKey: .server)
                 ApplicationSettings.keychain.set(password, forKey: .server)
 
                 if let mqtt = info.mqtt, let broker = URLComponents(url: mqtt, resolvingAgainstBaseURL: false) {
-                    ApplicationSettings.defaults.set(broker.url?.baseURL?.absoluteString, forKey: .broker)
+                    ApplicationSettings.defaults.set(broker.host, forKey: .broker)
                     ApplicationSettings.defaults.set(broker.port, forKey: .brokerPort)
                     ApplicationSettings.defaults.set(broker.scheme == "mqtts", forKey: .brokerSSL)
+                }
+
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true, completion: nil)
+                    NotificationCenter.default.post(name: .authenticationGranted, object: nil)
                 }
             }
         } catch(let error) {

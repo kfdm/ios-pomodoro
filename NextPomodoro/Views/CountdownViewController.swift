@@ -44,10 +44,10 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
 
     // MARK: - lifecycle
 
-    func connect() -> CocoaMQTT {
-        let clientID = "iosPomodoro-" + String(ProcessInfo().processIdentifier)
-        let host = ApplicationSettings.defaults.string(forKey: .broker)!
+    func connect() -> CocoaMQTT? {
+        guard let host = ApplicationSettings.defaults.string(forKey: .broker) else { return nil }
         let port = ApplicationSettings.defaults.integer(forKey: .brokerPort)
+        let clientID = "iosPomodoro-" + String(ProcessInfo().processIdentifier)
         let mqtt = CocoaMQTT(clientID: clientID, host: host, port: UInt16(port))
         mqtt.enableSSL = ApplicationSettings.defaults.bool(forKey: .brokerSSL)
         mqtt.username = ApplicationSettings.defaults.string(forKey: .username)
@@ -91,8 +91,8 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     }
 
     @objc func completeLogin() {
-        mqtt = connect()
         refreshData()
+        mqtt = connect()
     }
 
     // MARK: - textField

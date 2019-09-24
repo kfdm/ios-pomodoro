@@ -20,7 +20,10 @@ func checkLogin(baseURL: String, username: String, password: String, completionH
 }
 
 func authedRequest(path: String, method: String, body: Data? = nil, queryItems: [URLQueryItem]? = [], username: String, password: String, completionHandler: @escaping AuthedRequestResponse) {
-    guard var components = ApplicationSettings.defaults.url(forKey: .server) else { return }
+    guard let host = ApplicationSettings.defaults.string(forKey: .server) else { return }
+    var components = URLComponents()
+    components.scheme = "https"
+    components.host = host
     components.path = path
     components.queryItems = queryItems
 
@@ -48,6 +51,5 @@ func authedRequest(url: URLComponents, method: String, body: Data?, username: St
             completionHandler(httpResponse, data!)
         }
     })
-
     task.resume()
 }

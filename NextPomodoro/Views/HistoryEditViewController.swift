@@ -19,6 +19,7 @@ class HistoryEditViewController: UITableViewController {
         tableView.register(TextTableViewCell.self)
         tableView.register(ButtonTableViewCell.self)
         tableView.register(LeftTableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(MarkdownTableViewCell.self)
     }
 
     // MARK: - Table view data source
@@ -30,7 +31,7 @@ class HistoryEditViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 4
+            return 5
         case 1:
             return 2
         default:
@@ -67,6 +68,12 @@ class HistoryEditViewController: UITableViewController {
             cell.textLabel?.text = NSLocalizedString("End", comment: "")
             cell.detailTextLabel?.text = ApplicationSettings.mediumDate(pomodoro.end)
             cell.accessoryType = .disclosureIndicator
+            return cell
+        case [0, 4]:
+            let cell: MarkdownTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.label = NSLocalizedString("Memo", comment: "")
+            cell.value = pomodoro.memo
+            cell.accessoryType = .none
             return cell
 
         case [1, 0]:
@@ -110,6 +117,15 @@ class HistoryEditViewController: UITableViewController {
             navigationController?.pushViewController(vc, animated: true)
         default:
             os_log("accessoryButtonTappedForRowWith: %s", log: Log.view, type: .debug, indexPath.debugDescription)
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath {
+        case [0, 4]:
+            return 128
+        default:
+            return 44
         }
     }
 }

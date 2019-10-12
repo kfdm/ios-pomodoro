@@ -56,6 +56,8 @@
 		87BA35222351C83F006C6409 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 87BA35212351C83F006C6409 /* SwiftPackageProductDependency */; };
 		87BA35252351C864006C6409 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 87BA35242351C864006C6409 /* SwiftPackageProductDependency */; };
 		87BA35272351C8C8006C6409 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 87BA35262351C8C8006C6409 /* SwiftPackageProductDependency */; };
+		87BA352A2351CDAB006C6409 /* MarkdownTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BA35282351CDAB006C6409 /* MarkdownTableViewCell.swift */; };
+		87BA352B2351CDAB006C6409 /* MarkdownTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87BA35292351CDAB006C6409 /* MarkdownTableViewCell.xib */; };
 		87C43BD72144E6F800E9C687 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C43BD62144E6F800E9C687 /* Extensions.swift */; };
 		87C43BDB2144EBE700E9C687 /* Pomodoro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C43BDA2144EBE700E9C687 /* Pomodoro.swift */; };
 		87C43BDC2144EBE700E9C687 /* Pomodoro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C43BDA2144EBE700E9C687 /* Pomodoro.swift */; };
@@ -139,6 +141,8 @@
 		87B6519A2128F422006D88AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		87B6519C2128F422006D88AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87B651A42128F45E006D88AF /* PomodoroAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroAPI.swift; sourceTree = "<group>"; };
+		87BA35282351CDAB006C6409 /* MarkdownTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTableViewCell.swift; sourceTree = "<group>"; };
+		87BA35292351CDAB006C6409 /* MarkdownTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkdownTableViewCell.xib; sourceTree = "<group>"; };
 		87C43BD62144E6F800E9C687 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		87C43BDA2144EBE700E9C687 /* Pomodoro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pomodoro.swift; sourceTree = "<group>"; };
 		87F397F2231E9169000AA82A /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
@@ -274,6 +278,8 @@
 				87F397F2231E9169000AA82A /* HistoryTableViewCell.swift */,
 				87F397F3231E9169000AA82A /* HistoryTableViewCell.xib */,
 				876CA28D23249F5300388C3F /* LeftTableViewCell.swift */,
+				87BA35282351CDAB006C6409 /* MarkdownTableViewCell.swift */,
+				87BA35292351CDAB006C6409 /* MarkdownTableViewCell.xib */,
 				876CA28F2324A00C00388C3F /* TextTableViewCell.swift */,
 				876CA2902324A00C00388C3F /* TextTableViewCell.xib */,
 			);
@@ -410,6 +416,7 @@
 				87F397F5231E9169000AA82A /* HistoryTableViewCell.xib in Resources */,
 				87B6517E2128F0AD006D88AF /* Main.storyboard in Resources */,
 				8758DB592324B18F008F94F9 /* DateTableViewCell.xib in Resources */,
+				87BA352B2351CDAB006C6409 /* MarkdownTableViewCell.xib in Resources */,
 				8758DB552324ADDC008F94F9 /* CountdownTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -438,6 +445,7 @@
 				876CA2912324A00C00388C3F /* TextTableViewCell.swift in Sources */,
 				8756548B212947AA00D69D6D /* FavoritesViewController.swift in Sources */,
 				87C43BD72144E6F800E9C687 /* Extensions.swift in Sources */,
+				87BA352A2351CDAB006C6409 /* MarkdownTableViewCell.swift in Sources */,
 				870A0497231E9DAE00A83842 /* FavoriteTableViewCell.swift in Sources */,
 				8758DB5E2324C0E6008F94F9 /* SelectCategoryViewController.swift in Sources */,
 				8720384722EF2E47001577EF /* Storyboarded.swift in Sources */,

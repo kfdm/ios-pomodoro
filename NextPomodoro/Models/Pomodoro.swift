@@ -32,6 +32,7 @@ struct Pomodoro: EncodableJson {
     var end: Date
     var category: String
     let owner: String
+    var memo: String?
 }
 
 struct PomodoroExtendRequest: PomodoroBase {

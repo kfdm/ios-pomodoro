@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import CocoaMQTT
+import SwiftMQTT
 
 extension Data {
     func toString() -> String? {
@@ -35,7 +35,7 @@ extension DateFormatter {
     }()
 }
 
-extension CocoaMQTTMessage {
+extension MQTTMessage {
     func match(_ pattern: String) -> Bool {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else { return false}
         return regex.numberOfMatches(in: self.topic, options: .anchored, range: .init(self.topic.startIndex..., in: self.topic)) > 0

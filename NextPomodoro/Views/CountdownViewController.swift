@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import CocoaMQTT
+import SwiftMQTT
 import os
 
 class CountdownViewController: UITableViewController, UITextFieldDelegate, UITabBarDelegate {
@@ -27,7 +27,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         return pomodoro.end > Date()
     }
 
-    var mqtt: CocoaMQTT?
+    var mqtt: MQTTSession?
 
     var newTitle = ""
     var newCategory = ""
@@ -44,18 +44,15 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
 
     // MARK: - lifecycle
 
-    func connect() -> CocoaMQTT? {
+    func connect() -> MQTTSession? {
         guard let host = ApplicationSettings.defaults.string(forKey: .broker) else { return nil }
         let port = ApplicationSettings.defaults.integer(forKey: .brokerPort)
         let clientID = "iosPomodoro-" + String(ProcessInfo().processIdentifier)
-        let mqtt = CocoaMQTT(clientID: clientID, host: host, port: UInt16(port))
-        mqtt.enableSSL = ApplicationSettings.defaults.bool(forKey: .brokerSSL)
+        let mqtt = MQTTSession(host: host, port: UInt16(port), clientID: clientID, cleanSession: true, keepAlive: 15, useSSL: true)
         mqtt.username = ApplicationSettings.defaults.string(forKey: .username)
         mqtt.password = ApplicationSettings.keychain.string(forKey: .server)
-        mqtt.keepAlive = 60
         mqtt.delegate = self
-        mqtt.autoReconnect = true
-        _ = mqtt.connect()
+        mqtt.connect(completion: self.mqttConnected)
         return mqtt
     }
 
@@ -289,48 +286,38 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     }
 }
 
-extension CountdownViewController: CocoaMQTTDelegate {
-    func mqttDidPing(_ mqtt: CocoaMQTT) {
-        os_log("mqttDidPing", log: Log.mqtt, type: .debug)
+extension CountdownViewController: MQTTSessionDelegate {
+    func mqttDidDisconnect(session: MQTTSession, error: MQTTSessionError) {
+        os_log(.error, "mqtt disconnected")
     }
 
-    func mqttDidReceivePong(_ mqtt: CocoaMQTT) {
-        os_log("mqttDidReceivePong", log: Log.mqtt, type: .debug)
-    }
-
-    func mqttDidDisconnect(_ mqtt: CocoaMQTT, withError err: Error?) {
-        os_log("mqttDidDisconnect: %@", log: Log.mqtt, type: .error, err.debugDescription)
-    }
-
-    func mqtt(_ mqtt: CocoaMQTT, didConnectAck ack: CocoaMQTTConnAck) {
-        guard let username = mqtt.username else { return }
-        mqtt.subscribe("pomodoro/\(username)/recent")
-    }
-
-    func mqtt(_ mqtt: CocoaMQTT, didPublishMessage message: CocoaMQTTMessage, id: UInt16) {
-        os_log("didPublishMessage", log: Log.mqtt, type: .debug)
-    }
-
-    func mqtt(_ mqtt: CocoaMQTT, didPublishAck id: UInt16) {
-        os_log("didPublishAck", log: Log.mqtt, type: .debug)
-    }
-
-    func mqtt(_ mqtt: CocoaMQTT, didReceiveMessage message: CocoaMQTTMessage, id: UInt16) {
+    func mqttDidReceive(message: MQTTMessage, from session: MQTTSession) {
         switch message.topic {
         case _ where message.match("^pomodoro/.*/recent$"):
             guard let pomodoro: Pomodoro = Pomodoro.decode(from: message.data) else { return }
             self.currentPomodoro = pomodoro
         default:
-            os_log("unknown topic: %@", log: Log.mqtt, type: .debug, message.topic)
+            os_log(.debug, log: Log.mqtt, "unknown topic: %@", message.topic)
         }
     }
 
-    func mqtt(_ mqtt: CocoaMQTT, didSubscribeTopic topics: [String]) {
-        os_log("didSubscribeTopic: %@", log: Log.mqtt, type: .debug, topics)
+    func mqttDidAcknowledgePing(from session: MQTTSession) {
+        os_log(.debug, log: Log.mqtt, "Ack")
     }
 
-    func mqtt(_ mqtt: CocoaMQTT, didUnsubscribeTopic topic: String) {
-        os_log("didUnsubscribeTopic: %@", log: Log.mqtt, type: .debug, topic)
+    func mqttConnected(error: MQTTSessionError) {
+        switch error {
+        case .none:
+            guard let mqtt = mqtt else { return }
+            guard let username = mqtt.username else { return }
+            mqtt.subscribe(to: "pomodoro/\(username)/recent", delivering: .atLeastOnce, completion: self.mqttDidSubscribe)
+        default:
+            os_log(.error, log: Log.mqtt, "Error connecting %s", error.description)
+        }
+
     }
 
+    func mqttDidSubscribe(error: MQTTSessionError) {
+        print(error)
+    }
 }

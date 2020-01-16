@@ -33,26 +33,34 @@ class LoginViewController: UITableViewController, Storyboarded {
             let server = try serverField.validateText([.required, .url])
 
             spinner.startAnimating()
-            Info.get(baseURL: server, username: username, password: password) { (info) in
+            Info.get(baseURL: server, username: username, password: password) { result in
                 DispatchQueue.main.async {
                     self.spinner.stopAnimating()
                 }
-                ApplicationSettings.defaults.set(value: username, forKey: .username)
-                ApplicationSettings.defaults.set(value: server, forKey: .server)
-                ApplicationSettings.keychain.set(password, forKey: .server)
 
-                if let mqtt = info.mqtt, let broker = URLComponents(url: mqtt, resolvingAgainstBaseURL: false) {
-                    ApplicationSettings.defaults.set(value: broker.host!, forKey: .broker)
-                    ApplicationSettings.defaults.set(value: broker.port!, forKey: .brokerPort)
-                    ApplicationSettings.defaults.set(value: broker.scheme == "mqtts", forKey: .brokerSSL)
-                }
+                switch result {
+                case .success(let data):
+                    ApplicationSettings.defaults.set(value: username, forKey: .username)
+                    ApplicationSettings.defaults.set(value: server, forKey: .server)
+                    ApplicationSettings.keychain.set(password, forKey: .server)
 
-                DispatchQueue.main.async {
-                    self.dismiss(animated: true, completion: nil)
-                    NotificationCenter.default.post(name: .authenticationGranted, object: nil)
+                    if let info: Info = Info.fromData(data) {
+                        if let mqtt = info.mqtt, let broker = URLComponents(url: mqtt, resolvingAgainstBaseURL: false) {
+                            ApplicationSettings.defaults.set(value: broker.host!, forKey: .broker)
+                            ApplicationSettings.defaults.set(value: broker.port!, forKey: .brokerPort)
+                            ApplicationSettings.defaults.set(value: broker.scheme == "mqtts", forKey: .brokerSSL)
+                        }
+                    }
+
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true, completion: nil)
+                        NotificationCenter.default.post(name: .authenticationGranted, object: nil)
+                    }
+                case .failure(let error):
+                    self.showAlert(for: error.localizedDescription)
                 }
             }
-        } catch(let error) {
+        } catch let error {
             showAlert(for: (error as! ValidationError).message)
         }
     }

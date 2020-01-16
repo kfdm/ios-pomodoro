@@ -14,22 +14,7 @@ struct Info: Codable {
 }
 
 extension Info {
-    static func get(baseURL: String, username: String, password: String, completionHandler handler: @escaping ((Info) -> Void)) {
-        var request = URLComponents()
-        request.host = baseURL
-        request.path = "/api/info"
-        request.scheme = "https"
-
-        URLSession.shared.authedRequest(url: request, method: .GET) { result in
-            switch result {
-            case .success(let data):
-                guard let newInfo: Info = Info.fromData(data) else { return }
-                handler(newInfo)
-            case .failure(let error):
-                print(error)
-            }
-
-        }
-
+    static func get(baseURL: String, username: String, password: String, completionHandler handler: @escaping AuthedRequestResponse) {
+        URLSession.shared.checkLogin(baseURL: baseURL, username: username, password: password, completionHandler: handler)
     }
 }

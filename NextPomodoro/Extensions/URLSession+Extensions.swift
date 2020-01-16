@@ -20,9 +20,11 @@ extension URLSession {
         case PATCH
     }
     func checkLogin(baseURL: String, username: String, password: String, completionHandler: @escaping AuthedRequestResponse) {
-        var base = URLComponents(string: baseURL)!
-        base.path = "/api/pomodoro"
-        authedRequest(url: base, method: .GET, username: username, password: password, completionHandler: completionHandler)
+        var request = URLComponents()
+        request.host = baseURL
+        request.path = "/api/info"
+        request.scheme = "https"
+        authedRequest(url: request, method: .GET, username: username, password: password, completionHandler: completionHandler)
     }
 
     func authedRequest(path: String, method: URLSession.Methods, body: Data? = nil, queryItems: [URLQueryItem]? = [], completionHandler: @escaping AuthedRequestResponse) {

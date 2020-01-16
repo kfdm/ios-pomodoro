@@ -34,14 +34,3 @@ extension DateFormatter {
         return formatter
     }()
 }
-
-extension MQTTMessage {
-    func match(_ pattern: String) -> Bool {
-        guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else { return false}
-        return regex.numberOfMatches(in: self.topic, options: .anchored, range: .init(self.topic.startIndex..., in: self.topic)) > 0
-    }
-
-    var data: Data {
-        return Data(bytes: payload)
-    }
-}

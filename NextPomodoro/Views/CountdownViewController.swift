@@ -44,18 +44,6 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
 
     // MARK: - lifecycle
 
-    func connect() -> MQTTSession? {
-        guard let host = ApplicationSettings.defaults.string(forKey: .broker) else { return nil }
-        let port = ApplicationSettings.defaults.integer(forKey: .brokerPort)
-        let clientID = "iosPomodoro-" + String(ProcessInfo().processIdentifier)
-        let mqtt = MQTTSession(host: host, port: UInt16(port), clientID: clientID, cleanSession: true, keepAlive: 15, useSSL: true)
-        mqtt.username = ApplicationSettings.defaults.string(forKey: .username)
-        mqtt.password = ApplicationSettings.keychain.string(forKey: .server)
-        mqtt.delegate = self
-        mqtt.connect(completion: self.mqttConnected)
-        return mqtt
-    }
-
     fileprivate func showLogin() {
         let login = LoginViewController.instantiate()
         let nav = UINavigationController(rootViewController: login)
@@ -89,7 +77,16 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
 
     @objc func completeLogin() {
         refreshData()
-        mqtt = connect()
+
+        // Connect and register MQTT Session
+        switch MQTTSession.connectionFactory() {
+        case .success(let session):
+            session.delegate = self
+            session.connect(completion: mqttDidConnect(error:))
+            mqtt = session
+        case .failure(let error):
+            print(error)
+        }
     }
 
     // MARK: - textField
@@ -305,7 +302,7 @@ extension CountdownViewController: MQTTSessionDelegate {
         os_log(.debug, log: Log.mqtt, "Ack")
     }
 
-    func mqttConnected(error: MQTTSessionError) {
+    func mqttDidConnect(error: MQTTSessionError) {
         switch error {
         case .none:
             guard let mqtt = mqtt else { return }

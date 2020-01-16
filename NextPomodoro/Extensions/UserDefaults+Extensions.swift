@@ -40,8 +40,9 @@ extension UserDefaults {
         return url(forKey: key.rawValue)
     }
 
-    func object(forKey key: ApplicationSettingsKeys) -> Any? {
-        return object(forKey: key.rawValue)
+    func object<T: Decodable>(forKey: ApplicationSettingsKeys) -> T? {
+        guard let data = data(forKey: forKey.rawValue) else {return nil}
+        return try? PropertyListDecoder().decode(T.self, from: data) as T
     }
 
     // MARK: - Setters
@@ -61,8 +62,8 @@ extension UserDefaults {
         set(value, forKey: key.rawValue)
     }
 
-    func set(value: Any, forKey key: ApplicationSettingsKeys) {
-        set(value, forKey: key.rawValue)
+    func set<T: Encodable>(_ value: T, forKey: ApplicationSettingsKeys) {
+        set(try? PropertyListEncoder().encode(value), forKey: forKey.rawValue)
     }
 
     // MARK: - Other

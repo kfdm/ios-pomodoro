@@ -14,7 +14,7 @@ import os
 class CountdownViewController: UITableViewController, UITextFieldDelegate, UITabBarDelegate {
     var currentPomodoro: Pomodoro? {
         didSet {
-            ApplicationSettings.defaults.cache(currentPomodoro, forKey: .cache)
+            ApplicationSettings.defaults.set(currentPomodoro, forKey: .cache)
             DispatchQueue.main.async {
                 self.tableView.refreshControl?.endRefreshing()
                 self.tableView.reloadData()

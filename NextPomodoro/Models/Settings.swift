@@ -68,14 +68,3 @@ extension ApplicationSettings {
         defaults.removeSuite(named: ApplicationSettings.identifier)
     }
 }
-
-extension UserDefaults {
-    func cache<T>(_ value: T, forKey: ApplicationSettingsKeys) where T: Encodable {
-        set(try? PropertyListEncoder().encode(value), forKey: forKey.rawValue)
-    }
-
-    func object<T>(forKey: ApplicationSettingsKeys) -> T? where T: Decodable {
-        guard let data = data(forKey: forKey.rawValue) else {return nil}
-        return try? PropertyListDecoder().decode(T.self, from: data) as T
-    }
-}

@@ -27,45 +27,19 @@ struct FavoriteResponse: Codable {
 }
 
 extension Favorite {
-    func submit(completionHandler: @escaping (Favorite) -> Void) {
-        URLSession.shared.authedRequest(path: "/api/favorite", method: .POST, body: self.toData()) { result in
-            switch result {
-            case .success(let data):
-                guard let newFavorite: Favorite = Favorite.fromData(data) else { return }
-                completionHandler(newFavorite)
-            case .failure(let error):
-                print(error)
-            }
-        }
+    func submit(completionHandler handler: @escaping AuthedRequestResponse) {
+        URLSession.shared.authedRequest(path: "/api/favorite", method: .POST, body: self.toData(), completionHandler: handler)
     }
 
-    func start(completionHandler: @escaping (Pomodoro) -> Void) {
-        URLSession.shared.authedRequest(path: "/api/favorite/\(self.id)/start", method: .POST, body: self.toData()) { result in
-            switch result {
-            case .success(let data):
-                guard let newPomodoro: Pomodoro = Pomodoro.fromData(data) else { return }
-                completionHandler(newPomodoro)
-            case .failure(let error):
-                print(error)
-            }
-        }
+    func start(completionHandler handler: @escaping AuthedRequestResponse) {
+        URLSession.shared.authedRequest(path: "/api/favorite/\(self.id)/start", method: .POST, body: self.toData(), completionHandler: handler )
     }
 
-    static func list(completionHandler: @escaping ([Favorite]) -> Void) {
-        URLSession.shared.authedRequest(path: "/api/favorite", method: .GET, body: nil, completionHandler: {result in
-            switch result {
-            case .success(let data):
-                guard let response: FavoriteResponse = FavoriteResponse.fromData(data) else { return }
-                completionHandler(response.results)
-            case .failure(let error):
-                print(error)
-            }
-        })
+    static func list(completionHandler handler: @escaping AuthedRequestResponse) {
+        URLSession.shared.authedRequest(path: "/api/favorite", method: .GET, body: nil, completionHandler: handler)
     }
 
-    func delete(completionHandler: @escaping (Bool) -> Void) {
-        URLSession.shared.authedRequest(path: "/api/favorite/\(self.id)", method: .DELETE, body: self.toData(), completionHandler: {_ in
-                completionHandler(true)
-        })
+    func delete(completionHandler handler: @escaping AuthedRequestResponse) {
+        URLSession.shared.authedRequest(path: "/api/favorite/\(self.id)", method: .DELETE, body: self.toData(), completionHandler: handler)
     }
 }

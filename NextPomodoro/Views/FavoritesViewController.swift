@@ -31,9 +31,16 @@ class FavoritesViewController: UITableViewController {
     }
 
     @objc func refreshData() {
-        Favorite.list(completionHandler: { favorites in
-            self.data = favorites.sorted(by: { $0.count > $1.count })
-        })
+        Favorite.list { result in
+            switch result {
+            case .success(let data):
+                if let favorites: FavoriteResponse = FavoriteResponse.fromData(data) {
+                    self.data = favorites.results.sorted(by: { $0.count > $1.count })
+                }
+            case .failure(let error):
+                os_log(.error, log: .favorites, "Error fetching favorites: %{public}s", error.localizedDescription)
+            }
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -77,16 +84,23 @@ class FavoritesViewController: UITableViewController {
         // TODO: Fix case with already running pomodoro
         let action = UIContextualAction(style: .normal, title: title) { (_, view, completionHandler) in
             os_log("Starting Favorite: %s %s %d", log: .favorites, type: .debug, favorite.title, favorite.category, favorite.duration)
-            favorite.start { (pomodoro) in
-                os_log("Starting Pomodoro: %s %s until %s", log: .favorites, type: .debug, pomodoro.title, pomodoro.category, "\(pomodoro.end)")
-                if let view = self.tabBarController?.viewControllers?[0] {
-                    DispatchQueue.main.async {
-                        self.tabBarController?.selectedViewController = view
-                        view.viewDidLoad()
-                        // TODO: Fix refreshing new Pomodoro
+
+            favorite.start { result in
+                switch result {
+                case .success(let data):
+                    if let _ : Pomodoro = Pomodoro.fromData(data) {
+                        if let view = self.tabBarController?.viewControllers?[0] {
+                            DispatchQueue.main.async {
+                                self.tabBarController?.selectedViewController = view
+                                view.viewDidLoad()
+                                // TODO: Fix refreshing new Pomodoro
+                            }
+                        }
+                        completionHandler(true)
                     }
+                case .failure(let error):
+                    os_log(.error, log: .favorites, "Error starting Favorite", error.localizedDescription)
                 }
-                completionHandler(true)
             }
         }
         action.backgroundColor = color

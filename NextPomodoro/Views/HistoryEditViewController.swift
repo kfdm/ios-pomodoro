@@ -79,7 +79,16 @@ class HistoryEditViewController: UITableViewController {
         case [1, 0]:
             let cell: ButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure("Save", style: .default) {
-                self.pomodoro.update { self.updatedPomodoro?($0) }
+                self.pomodoro.update { result in
+                    switch result {
+                    case .success(let data):
+                        if let updated: Pomodoro = Pomodoro.fromData(data) {
+                            self.updatedPomodoro?(updated)
+                        }
+                    case .failure(let error):
+                        os_log(.error, log: .pomodoro, "Error updating: %{public}s", error.localizedDescription)
+                    }
+                }
             }
             return cell
         case [1, 1]:

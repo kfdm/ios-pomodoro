@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import os
 
 struct Category {
     let title: String
@@ -27,10 +28,17 @@ class SelectCategoryViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(LeftTableViewCell.self, forCellReuseIdentifier: "Cell")
-        Pomodoro.list { (pomodoros) in
-            self.categories = Dictionary(grouping: pomodoros) { $0.category }
-                .map { Category(title: $0, count: $1.count) }
-                .sorted { $0.count > $1.count }
+        Pomodoro.list { result in
+            switch result {
+            case .success(let data):
+                if let pomodoros: PomodoroResponse = PomodoroResponse.fromData(data) {
+                    self.categories = Dictionary(grouping: pomodoros.results) { $0.category }
+                    .map { Category(title: $0, count: $1.count) }
+                    .sorted { $0.count > $1.count }
+                }
+            case .failure(let error):
+                os_log(.error, log: .pomodoro, "Error getting categories: %{public}s", error.localizedDescription)
+            }
         }
     }
 

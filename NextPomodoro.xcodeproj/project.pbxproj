@@ -56,7 +56,6 @@
 		87BA35272351C8C8006C6409 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 87BA35262351C8C8006C6409 /* SwiftPackageProductDependency */; };
 		87BA352A2351CDAB006C6409 /* MarkdownTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BA35282351CDAB006C6409 /* MarkdownTableViewCell.swift */; };
 		87BA352B2351CDAB006C6409 /* MarkdownTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87BA35292351CDAB006C6409 /* MarkdownTableViewCell.xib */; };
-		87C43BD72144E6F800E9C687 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C43BD62144E6F800E9C687 /* Extensions.swift */; };
 		87C43BDB2144EBE700E9C687 /* Pomodoro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C43BDA2144EBE700E9C687 /* Pomodoro.swift */; };
 		87C43BDC2144EBE700E9C687 /* Pomodoro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C43BDA2144EBE700E9C687 /* Pomodoro.swift */; };
 		87F397F4231E9169000AA82A /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F397F2231E9169000AA82A /* HistoryTableViewCell.swift */; };
@@ -147,7 +146,6 @@
 		87B651A42128F45E006D88AF /* PomodoroAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroAPI.swift; sourceTree = "<group>"; };
 		87BA35282351CDAB006C6409 /* MarkdownTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTableViewCell.swift; sourceTree = "<group>"; };
 		87BA35292351CDAB006C6409 /* MarkdownTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkdownTableViewCell.xib; sourceTree = "<group>"; };
-		87C43BD62144E6F800E9C687 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		87C43BDA2144EBE700E9C687 /* Pomodoro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pomodoro.swift; sourceTree = "<group>"; };
 		87F397F2231E9169000AA82A /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		87F397F3231E9169000AA82A /* HistoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryTableViewCell.xib; sourceTree = "<group>"; };
@@ -296,7 +294,6 @@
 		C19EFB9222EFD36900DA4666 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				87C43BD62144E6F800E9C687 /* Extensions.swift */,
 				C15BDF7F23D06B6F00765567 /* JSON+Extensions.swift */,
 				C15BDF7823D064C500765567 /* Keychain+Extensions.swift */,
 				C15BDF7323D0619C00765567 /* MQTT+Extensions.swift */,
@@ -455,7 +452,6 @@
 				87B651A52128F45E006D88AF /* PomodoroAPI.swift in Sources */,
 				876CA2912324A00C00388C3F /* TextTableViewCell.swift in Sources */,
 				8756548B212947AA00D69D6D /* FavoritesViewController.swift in Sources */,
-				87C43BD72144E6F800E9C687 /* Extensions.swift in Sources */,
 				87BA352A2351CDAB006C6409 /* MarkdownTableViewCell.swift in Sources */,
 				C15BDF8023D06B6F00765567 /* JSON+Extensions.swift in Sources */,
 				870A0497231E9DAE00A83842 /* FavoriteTableViewCell.swift in Sources */,

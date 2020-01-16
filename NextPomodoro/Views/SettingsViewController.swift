@@ -72,7 +72,7 @@ class SettingsViewController: UITableViewController {
         case [2, 1]:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
             cell.textLabel?.text = "SSL"
-            cell.detailTextLabel?.text = ApplicationSettings.defaults.bool(forKey: .brokerSSL) ? "YES": "NO"
+            cell.detailTextLabel?.text = ApplicationSettings.defaults.bool(forKey: .brokerSSL)! ? "YES": "NO"
             return cell
         case [2, 2]:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
@@ -93,8 +93,8 @@ class SettingsViewController: UITableViewController {
         case [0, 0]:
             UIApplication.shared.open(ApplicationSettings.repository, options: [:], completionHandler: nil)
         case [1, 0]:
-            guard var url = ApplicationSettings.defaults.url(forKey: .server) else { return}
-            UIApplication.shared.open(url.url!, options: [:], completionHandler: nil)
+            guard let url = ApplicationSettings.defaults.url(forKey: .server) else { return}
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         default:
             let cell = tableView.cellForRow(at: indexPath)
             cell?.setSelected(true, animated: true)

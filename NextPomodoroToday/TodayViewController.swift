@@ -79,7 +79,7 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         )
 
         // Restore Saved State
-        currentPomodoro = ApplicationSettings.defaults.object(forKey: .cache)
+        currentPomodoro = ApplicationSettings.defaults.object(forKey: .cache) as? Pomodoro
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -97,7 +97,7 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
             os_log("Updating widget", log: Log.today, type: .debug)
             Pomodoro.list(completionHandler: { favorites in
                 self.currentPomodoro = favorites.sorted(by: { $0.id > $1.id })[0]
-                ApplicationSettings.defaults.cache(self.currentPomodoro, forKey: .cache)
+                ApplicationSettings.defaults.set(value: self.currentPomodoro, forKey: .cache)
                 completionHandler(NCUpdateResult.newData)
             })
         }

@@ -6,79 +6,30 @@
 //  Copyright © 2018年 Paul Traylor. All rights reserved.
 //
 
-import Foundation
+import  Foundation
 import KeychainAccess
 
-enum ApplicationDomainKeys: String {
-    case suiteName = "group.net.kungfudiscomonkey.pomodoro"
-
-    case server
-    case username
-    case broker
-    case brokerSSL
-    case brokerPort
-
-    case cache
-}
-
-enum ApplicationPasswords: String {
-    case server
-    case broker
-}
-
-extension UserDefaults {
-    func string(forKey: ApplicationDomainKeys) -> String? {
-        return string(forKey: forKey.rawValue)
-    }
-    func value(forKey: ApplicationDomainKeys) -> Any? {
-        return value(forKey: forKey.rawValue)
-    }
-    func bool(forKey key: ApplicationDomainKeys) -> Bool {
-        return bool(forKey: key.rawValue)
-    }
-    func integer(forKey key: ApplicationDomainKeys) -> Int {
-        return integer(forKey: key.rawValue)
-    }
-    func url(forKey: ApplicationDomainKeys) -> URLComponents? {
-        guard let url = string(forKey: forKey) else { return nil }
-        return URLComponents(string: url)
-    }
-
-    func object<T>(forKey: ApplicationDomainKeys) -> T? where T: Decodable {
-        guard let data = data(forKey: forKey.rawValue) else {return nil}
-        return try? PropertyListDecoder().decode(T.self, from: data) as T
-    }
-
-    func set(_ value: String?, forKey: ApplicationDomainKeys) {
-        set(value, forKey: forKey.rawValue)
-    }
-    func set(_ value: Int?, forKey key: ApplicationDomainKeys) {
-        set(value, forKey: key.rawValue)
-    }
-    func set(_ value: Bool, forKey key: ApplicationDomainKeys) {
-        set(value, forKey: key.rawValue)
-    }
-    func set(_ value: Data?, forKey: ApplicationDomainKeys) {
-        set(value, forKey: forKey.rawValue)
-    }
-
-    func cache<T>(_ value: T, forKey: ApplicationDomainKeys) where T: Encodable {
-        set(try? PropertyListEncoder().encode(value), forKey: forKey.rawValue)
-    }
-}
-
-extension Keychain {
-    func string(forKey key: ApplicationPasswords) -> String? {
-        return try? get(key.rawValue)
-    }
-    func set(_ value: String, forKey key: ApplicationPasswords) {
-        try? set(value, key: key.rawValue)
-    }
-}
-
 struct ApplicationSettings {
-    static let defaults = UserDefaults(suiteName: ApplicationDomainKeys.suiteName.rawValue)!
-    static let keychain = Keychain(accessGroup: ApplicationDomainKeys.suiteName.rawValue)
+    static let identifier = "group.net.kungfudiscomonkey.pomodoro"
+    static let defaults = UserDefaults(suiteName: ApplicationSettings.identifier)!
+    static let keychain = Keychain(accessGroup: ApplicationSettings.identifier)
+
+    static func loadDefaults() {
+        ApplicationSettings.defaults.checkDefault("tsundere.co", forKey: .server)
+        ApplicationSettings.defaults.checkDefault(8883, forKey: .brokerPort)
+        ApplicationSettings.defaults.checkDefault(true, forKey: .brokerSSL)
+    }
+
+    static var lastPomodoro: Pomodoro? {
+        get {
+            guard let data = defaults.value(forKey: ApplicationSettingsKeys.cache.rawValue) as? Data else {return nil}
+            return try? PropertyListDecoder().decode(Pomodoro.self, from: data)
+        }
+        set {
+            defaults.set(try? PropertyListEncoder().encode(newValue), forKey: ApplicationSettingsKeys.cache.rawValue)
+        }
+    }
+
     static let repository = URL(string: "https://github.com/kfdm/ios-pomodoro")!
 
     static func shortTime(_ duration: Int) -> String? {
@@ -114,6 +65,17 @@ extension ApplicationSettings {
     }
 
     static func deleteLogin() {
-        defaults.removeSuite(named: ApplicationDomainKeys.suiteName.rawValue)
+        defaults.removeSuite(named: ApplicationSettings.identifier)
+    }
+}
+
+extension UserDefaults {
+    func cache<T>(_ value: T, forKey: ApplicationSettingsKeys) where T: Encodable {
+        set(try? PropertyListEncoder().encode(value), forKey: forKey.rawValue)
+    }
+
+    func object<T>(forKey: ApplicationSettingsKeys) -> T? where T: Decodable {
+        guard let data = data(forKey: forKey.rawValue) else {return nil}
+        return try? PropertyListDecoder().decode(T.self, from: data) as T
     }
 }

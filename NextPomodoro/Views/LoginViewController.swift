@@ -37,14 +37,14 @@ class LoginViewController: UITableViewController, Storyboarded {
                 DispatchQueue.main.async {
                     self.spinner.stopAnimating()
                 }
-                ApplicationSettings.defaults.set(username, forKey: .username)
-                ApplicationSettings.defaults.set(server, forKey: .server)
+                ApplicationSettings.defaults.set(value: username, forKey: .username)
+                ApplicationSettings.defaults.set(value: server, forKey: .server)
                 ApplicationSettings.keychain.set(password, forKey: .server)
 
                 if let mqtt = info.mqtt, let broker = URLComponents(url: mqtt, resolvingAgainstBaseURL: false) {
-                    ApplicationSettings.defaults.set(broker.host, forKey: .broker)
-                    ApplicationSettings.defaults.set(broker.port, forKey: .brokerPort)
-                    ApplicationSettings.defaults.set(broker.scheme == "mqtts", forKey: .brokerSSL)
+                    ApplicationSettings.defaults.set(value: broker.host!, forKey: .broker)
+                    ApplicationSettings.defaults.set(value: broker.port!, forKey: .brokerPort)
+                    ApplicationSettings.defaults.set(value: broker.scheme == "mqtts", forKey: .brokerSSL)
                 }
 
                 DispatchQueue.main.async {

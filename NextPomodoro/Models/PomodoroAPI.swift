@@ -20,7 +20,7 @@ func checkLogin(baseURL: String, username: String, password: String, completionH
 }
 
 func authedRequest(path: String, method: String, body: Data? = nil, queryItems: [URLQueryItem]? = [], username: String, password: String, completionHandler: @escaping AuthedRequestResponse) {
-    guard let host = ApplicationSettings.defaults.string(forKey: .server) else { return }
+    guard let host = ApplicationSettings.defaults.string(forKey: .server) else { print("missing host"); return }
     var components = URLComponents()
     components.scheme = "https"
     components.host = host
@@ -31,10 +31,12 @@ func authedRequest(path: String, method: String, body: Data? = nil, queryItems: 
 }
 
 func authedRequest(url: URLComponents, method: String, body: Data?, username: String, password: String, completionHandler: @escaping AuthedRequestResponse) {
+    print("authed request")
     var request = URLRequest(url: url.url!)
 
     let loginString = "\(username):\(password)"
     guard let loginData = loginString.data(using: String.Encoding.utf8) else {
+        print("failed loggin")
         return
     }
     let base64LoginString = loginData.base64EncodedString()
@@ -46,10 +48,14 @@ func authedRequest(url: URLComponents, method: String, body: Data?, username: St
     request.httpBody = body
 
     let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, _ -> Void in
+        print("running task?")
+        print(data)
         if let httpResponse = response as? HTTPURLResponse {
             os_log("Request: %s %s %d", log: Log.networking, type: .debug, method, httpResponse.url!.absoluteString, httpResponse.statusCode)
             completionHandler(httpResponse, data!)
         }
+        print(response)
     })
     task.resume()
+    print("running task")
 }

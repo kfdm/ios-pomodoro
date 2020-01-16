@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 
 protocol PomodoroBase: EncodableJson {
     var id: Int { get }
@@ -55,6 +54,14 @@ struct PomodoroResponse: DecodableJson {
     let next: String?
     let previous: String?
     let results: [Pomodoro]
+}
+
+//typealias Handler = (Result<Data, LoadingError>) -> Void
+typealias PomodoroListHandler = (Result<PomodoroResponse, Error>) -> Void
+typealias PomodoroHandler = (Result<Pomodoro, Error>) -> Void
+
+class DecodingError: Error {
+
 }
 
 extension Pomodoro: PomodoroBase, DecodableJson {
@@ -106,14 +113,20 @@ extension Pomodoro: PomodoroBase, DecodableJson {
         })
     }
 
-    static func list(completionHandler: @escaping ([Pomodoro]) -> Void) {
-        guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
-        guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
+    static func list(completionHandler: @escaping PomodoroListHandler) {
         let limit = URLQueryItem(name: "limit", value: "100")
 
-        authedRequest(path: "/api/pomodoro", method: "GET", queryItems: [limit], username: username, password: password, completionHandler: {_, data in
-            guard let results: PomodoroResponse = PomodoroResponse.decode(from: data) else { return }
-            completionHandler( results.results)
-        })
+        API.shared.authedRequest(path: "/api/pomodoro", method: "GET", queryItems: [limit]) { result in
+            switch result {
+            case .failure(let error):
+                completionHandler(.failure(error))
+            case .success(let data):
+                guard let results: PomodoroResponse = PomodoroResponse.decode(from: data) else {
+                    completionHandler(.failure(DecodingError()))
+                    return
+                }
+                completionHandler(.success(results))
+            }
+        }
     }
 }

@@ -9,6 +9,61 @@
 import Foundation
 import os
 
+class API {
+    typealias HttpResult = (Result<Data, Error>) -> Void
+    enum Errors: Error {
+        case MissingUser
+        case MissingPassword
+        case MissingHost
+    }
+    static var shared = API()
+
+    func authedRequest(path: String, method: String, body: Data? = nil, queryItems: [URLQueryItem]? = [], completionHandler: @escaping HttpResult) {
+        guard let host = ApplicationSettings.defaults.string(forKey: .server) else {
+            completionHandler(.failure(API.Errors.MissingHost))
+            return }
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = host
+        components.path = path
+        components.queryItems = queryItems
+
+        authedRequest(url: components, method: method, body: body, handler: completionHandler)
+    }
+
+    func authedRequest(url: URLComponents, method: String, body: Data?, handler: @escaping HttpResult) {
+        guard let username = ApplicationSettings.defaults.string(forKey: .username) else {
+            handler(.failure(API.Errors.MissingUser))
+            return }
+        guard let password = ApplicationSettings.keychain.string(forKey: .server) else {
+            handler(.failure(API.Errors.MissingPassword))
+            return }
+
+        var request = URLRequest(url: url.url!)
+
+        let loginString = "\(username):\(password)"
+        guard let loginData = loginString.data(using: String.Encoding.utf8) else {
+            print("failed loggin")
+            return
+        }
+        let base64LoginString = loginData.base64EncodedString()
+        request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        request.httpMethod = method
+        request.httpBody = body
+
+        let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, _ -> Void in
+            if let httpResponse = response as? HTTPURLResponse {
+                os_log("Request: %s %s %d", log: Log.networking, type: .debug, method, httpResponse.url!.absoluteString, httpResponse.statusCode)
+                handler(.success(data!))
+            }
+        })
+        task.resume()
+    }
+}
+
 protocol EncodableJson: Codable {
     func encode() -> Data?
 }

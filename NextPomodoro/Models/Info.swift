@@ -20,9 +20,15 @@ extension Info {
         request.path = "/api/info"
         request.scheme = "https"
 
-        URLSession.shared.authedRequest(url: request, method: .GET) { (_, data) in
-            guard let newInfo: Info = Info.fromData(data) else { return }
-            handler(newInfo)
+        URLSession.shared.authedRequest(url: request, method: .GET) { result in
+            switch result {
+            case .success(let data):
+                guard let newInfo: Info = Info.fromData(data) else { return }
+                handler(newInfo)
+            case .failure(let error):
+                print(error)
+            }
+
         }
 
     }

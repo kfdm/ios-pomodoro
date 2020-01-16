@@ -15,9 +15,14 @@ protocol PomodoroBase: Codable {
 
 extension PomodoroBase {
     func update(completionHandler: @escaping (Pomodoro) -> Void) {
-        URLSession.shared.authedRequest(path: "/api/pomodoro/\(self.id)", method: .PATCH, body: self.toData()) { _, data in
-            guard let newPomodoro: Pomodoro = Pomodoro.fromData(data) else { return }
-            completionHandler(newPomodoro)
+        URLSession.shared.authedRequest(path: "/api/pomodoro/\(self.id)", method: .PATCH, body: self.toData()) { result in
+            switch result {
+            case .success(let data):
+                guard let newPomodoro: Pomodoro = Pomodoro.fromData(data) else { return }
+                completionHandler(newPomodoro)
+            case .failure(let error):
+                print(error)
+            }
         }
     }
 }
@@ -65,16 +70,26 @@ extension Pomodoro: PomodoroBase {
     }
 
     func submit(completionHandler: @escaping (Pomodoro) -> Void) {
-        URLSession.shared.authedRequest(path: "/api/pomodoro", method: .POST, body: self.toData()) { _, data in
-            guard let newPomodoro: Pomodoro = Pomodoro.fromData(data) else { return }
-            completionHandler(newPomodoro)
+        URLSession.shared.authedRequest(path: "/api/pomodoro", method: .POST, body: self.toData()) { result in
+            switch result {
+            case .success(let data):
+                guard let newPomodoro: Pomodoro = Pomodoro.fromData(data) else { return }
+                completionHandler(newPomodoro)
+            case .failure(let error):
+                print(error)
+            }
         }
     }
 
     func update(completionHandler: @escaping (Pomodoro) -> Void) {
-        URLSession.shared.authedRequest(path: "/api/pomodoro/\(self.id)", method: .PUT, body: self.toData()) { _, data in
-            guard let newPomodoro: Pomodoro = Pomodoro.fromData(data) else { return }
-            completionHandler(newPomodoro)
+        URLSession.shared.authedRequest(path: "/api/pomodoro/\(self.id)", method: .PUT, body: self.toData()) { result in
+            switch result {
+            case .success(let data):
+                guard let newPomodoro: Pomodoro = Pomodoro.fromData(data) else { return }
+                completionHandler(newPomodoro)
+            case .failure(let error):
+                print(error)
+            }
         }
     }
 
@@ -88,7 +103,7 @@ extension Pomodoro: PomodoroBase {
     }
 
     func delete(completionHandler: @escaping (Bool) -> Void) {
-        URLSession.shared.authedRequest(path: "/api/pomodoro/\(self.id)", method: .DELETE, body: self.toData(), completionHandler: {_, _  in
+        URLSession.shared.authedRequest(path: "/api/pomodoro/\(self.id)", method: .DELETE, body: self.toData(), completionHandler: {_  in
             // TODO: Handle error
             completionHandler(true)
         })
@@ -97,9 +112,14 @@ extension Pomodoro: PomodoroBase {
     static func list(completionHandler: @escaping ([Pomodoro]) -> Void) {
         let limit = URLQueryItem(name: "limit", value: "100")
 
-        URLSession.shared.authedRequest(path: "/api/pomodoro", method: .GET, queryItems: [limit], completionHandler: {_, data in
-            guard let results: PomodoroResponse = PomodoroResponse.fromData(data) else { return }
-            completionHandler( results.results)
+        URLSession.shared.authedRequest(path: "/api/pomodoro", method: .GET, queryItems: [limit], completionHandler: {result in
+            switch result {
+            case .success(let data):
+                guard let results: PomodoroResponse = PomodoroResponse.fromData(data) else { return }
+                completionHandler( results.results)
+            case .failure(let error):
+                print(error)
+            }
         })
     }
 }

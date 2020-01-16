@@ -15,10 +15,7 @@ protocol PomodoroBase: Codable {
 
 extension PomodoroBase {
     func update(completionHandler: @escaping (Pomodoro) -> Void) {
-        guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
-        guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
-
-        authedRequest(path: "/api/pomodoro/\(self.id)", method: "PATCH", body: self.toData(), username: username, password: password) { _, data in
+        URLSession.shared.authedRequest(path: "/api/pomodoro/\(self.id)", method: .PATCH, body: self.toData()) { _, data in
             guard let newPomodoro: Pomodoro = Pomodoro.fromData(data) else { return }
             completionHandler(newPomodoro)
         }
@@ -68,20 +65,14 @@ extension Pomodoro: PomodoroBase {
     }
 
     func submit(completionHandler: @escaping (Pomodoro) -> Void) {
-        guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
-        guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
-
-        authedRequest(path: "/api/pomodoro", method: "POST", body: self.toData(), username: username, password: password) { _, data in
+        URLSession.shared.authedRequest(path: "/api/pomodoro", method: .POST, body: self.toData()) { _, data in
             guard let newPomodoro: Pomodoro = Pomodoro.fromData(data) else { return }
             completionHandler(newPomodoro)
         }
     }
 
     func update(completionHandler: @escaping (Pomodoro) -> Void) {
-        guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
-        guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
-
-        authedRequest(path: "/api/pomodoro/\(self.id)", method: "PUT", body: self.toData(), username: username, password: password) { _, data in
+        URLSession.shared.authedRequest(path: "/api/pomodoro/\(self.id)", method: .PUT, body: self.toData()) { _, data in
             guard let newPomodoro: Pomodoro = Pomodoro.fromData(data) else { return }
             completionHandler(newPomodoro)
         }
@@ -97,21 +88,16 @@ extension Pomodoro: PomodoroBase {
     }
 
     func delete(completionHandler: @escaping (Bool) -> Void) {
-        guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
-        guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
-
-        authedRequest(path: "/api/pomodoro/\(self.id)", method: "DELETE", body: self.toData(), username: username, password: password, completionHandler: {_, _  in
+        URLSession.shared.authedRequest(path: "/api/pomodoro/\(self.id)", method: .DELETE, body: self.toData(), completionHandler: {_, _  in
             // TODO: Handle error
             completionHandler(true)
         })
     }
 
     static func list(completionHandler: @escaping ([Pomodoro]) -> Void) {
-        guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
-        guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
         let limit = URLQueryItem(name: "limit", value: "100")
 
-        authedRequest(path: "/api/pomodoro", method: "GET", queryItems: [limit], username: username, password: password, completionHandler: {_, data in
+        URLSession.shared.authedRequest(path: "/api/pomodoro", method: .GET, queryItems: [limit], completionHandler: {_, data in
             guard let results: PomodoroResponse = PomodoroResponse.fromData(data) else { return }
             completionHandler( results.results)
         })

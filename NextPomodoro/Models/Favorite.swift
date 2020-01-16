@@ -28,40 +28,28 @@ struct FavoriteResponse: Codable {
 
 extension Favorite {
     func submit(completionHandler: @escaping (Favorite) -> Void) {
-        guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
-        guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
-
-        authedRequest(path: "/api/favorite", method: "POST", body: self.toData(), username: username, password: password) { _, data in
+        URLSession.shared.authedRequest(path: "/api/favorite", method: .POST, body: self.toData()) { _, data in
             guard let newFavorite: Favorite = Favorite.fromData(data) else { return }
             completionHandler(newFavorite)
         }
     }
 
     func start(completionHandler: @escaping (Pomodoro) -> Void) {
-        guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
-        guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
-
-        authedRequest(path: "/api/favorite/\(self.id)/start", method: "POST", body: self.toData(), username: username, password: password) { _, data in
+        URLSession.shared.authedRequest(path: "/api/favorite/\(self.id)/start", method: .POST, body: self.toData()) { _, data in
             guard let newPomodoro: Pomodoro = Pomodoro.fromData(data) else { return }
             completionHandler(newPomodoro)
         }
     }
 
     static func list(completionHandler: @escaping ([Favorite]) -> Void) {
-        guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
-        guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
-
-        authedRequest(path: "/api/favorite", method: "GET", body: nil, username: username, password: password, completionHandler: {_, data in
+        URLSession.shared.authedRequest(path: "/api/favorite", method: .GET, body: nil, completionHandler: {_, data in
             guard let response: FavoriteResponse = FavoriteResponse.fromData(data) else { return }
             completionHandler(response.results)
         })
     }
 
     func delete(completionHandler: @escaping (Bool) -> Void) {
-        guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
-        guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
-
-        authedRequest(path: "/api/favorite/\(self.id)", method: "DELETE", body: self.toData(), username: username, password: password, completionHandler: {_, _  in
+        URLSession.shared.authedRequest(path: "/api/favorite/\(self.id)", method: .DELETE, body: self.toData(), completionHandler: {_, _  in
                 completionHandler(true)
         })
     }

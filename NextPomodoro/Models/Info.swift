@@ -20,7 +20,7 @@ extension Info {
         request.path = "/api/info"
         request.scheme = "https"
 
-        authedRequest(url: request, method: "GET", body: nil, username: username, password: password) { (_, data) in
+        URLSession.shared.authedRequest(url: request, method: .GET) { (_, data) in
             guard let newInfo: Info = Info.fromData(data) else { return }
             handler(newInfo)
         }

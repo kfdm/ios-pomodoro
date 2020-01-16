@@ -48,8 +48,6 @@
 		87B651982128F422006D88AF /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B651972128F422006D88AF /* TodayViewController.swift */; };
 		87B6519B2128F422006D88AF /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87B651992128F422006D88AF /* MainInterface.storyboard */; };
 		87B6519F2128F422006D88AF /* NextPomodoroToday.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 87B651922128F422006D88AF /* NextPomodoroToday.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		87B651A52128F45E006D88AF /* PomodoroAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B651A42128F45E006D88AF /* PomodoroAPI.swift */; };
-		87B651A62128F488006D88AF /* PomodoroAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B651A42128F45E006D88AF /* PomodoroAPI.swift */; };
 		87BA351F2351C80C006C6409 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 87BA351E2351C80C006C6409 /* SwiftPackageProductDependency */; };
 		87BA35222351C83F006C6409 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 87BA35212351C83F006C6409 /* SwiftPackageProductDependency */; };
 		87BA35252351C864006C6409 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 87BA35242351C864006C6409 /* SwiftPackageProductDependency */; };
@@ -67,6 +65,8 @@
 		C15BDF7E23D0657400765567 /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BDF7A23D0651100765567 /* UserDefaults+Extensions.swift */; };
 		C15BDF8023D06B6F00765567 /* JSON+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BDF7F23D06B6F00765567 /* JSON+Extensions.swift */; };
 		C15BDF8123D06B6F00765567 /* JSON+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BDF7F23D06B6F00765567 /* JSON+Extensions.swift */; };
+		C15BDF8323D0733800765567 /* URLSession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BDF8223D0733800765567 /* URLSession+Extensions.swift */; };
+		C15BDF8423D073E700765567 /* URLSession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BDF8223D0733800765567 /* URLSession+Extensions.swift */; };
 		C1711A6F231F443100BF4B93 /* OSLog+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1711A6E231F443100BF4B93 /* OSLog+Extensions.swift */; };
 		C1711A70231F47CD00BF4B93 /* OSLog+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1711A6E231F443100BF4B93 /* OSLog+Extensions.swift */; };
 		C19EC700212CEC5D005F5A2F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87B6517F2128F0AE006D88AF /* Assets.xcassets */; };
@@ -143,7 +143,6 @@
 		87B651972128F422006D88AF /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		87B6519A2128F422006D88AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		87B6519C2128F422006D88AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		87B651A42128F45E006D88AF /* PomodoroAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroAPI.swift; sourceTree = "<group>"; };
 		87BA35282351CDAB006C6409 /* MarkdownTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTableViewCell.swift; sourceTree = "<group>"; };
 		87BA35292351CDAB006C6409 /* MarkdownTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkdownTableViewCell.xib; sourceTree = "<group>"; };
 		87C43BDA2144EBE700E9C687 /* Pomodoro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pomodoro.swift; sourceTree = "<group>"; };
@@ -153,6 +152,7 @@
 		C15BDF7823D064C500765567 /* Keychain+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keychain+Extensions.swift"; sourceTree = "<group>"; };
 		C15BDF7A23D0651100765567 /* UserDefaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extensions.swift"; sourceTree = "<group>"; };
 		C15BDF7F23D06B6F00765567 /* JSON+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSON+Extensions.swift"; sourceTree = "<group>"; };
+		C15BDF8223D0733800765567 /* URLSession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extensions.swift"; sourceTree = "<group>"; };
 		C1711A6E231F443100BF4B93 /* OSLog+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSLog+Extensions.swift"; sourceTree = "<group>"; };
 		C19EC6FE212CEBDB005F5A2F /* NextPomodoroToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextPomodoroToday.entitlements; sourceTree = "<group>"; };
 		C19EC6FF212CEBE8005F5A2F /* NextPomodoro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextPomodoro.entitlements; sourceTree = "<group>"; };
@@ -263,7 +263,6 @@
 				8773DB112144EE5A00CF52CB /* Favorite.swift */,
 				878808072335AC4B001C58D3 /* Info.swift */,
 				87C43BDA2144EBE700E9C687 /* Pomodoro.swift */,
-				87B651A42128F45E006D88AF /* PomodoroAPI.swift */,
 				8773DB132144EE7E00CF52CB /* Settings.swift */,
 			);
 			path = Models;
@@ -303,6 +302,7 @@
 				8758DB752324F766008F94F9 /* UIAlert+Localized.swift */,
 				870A0490231E946E00A83842 /* UITableViewController+ReuseableCell.swift */,
 				878808052335A730001C58D3 /* UITextField+Validator.swift */,
+				C15BDF8223D0733800765567 /* URLSession+Extensions.swift */,
 				C15BDF7A23D0651100765567 /* UserDefaults+Extensions.swift */,
 			);
 			path = Extensions;
@@ -449,10 +449,10 @@
 				8756548F2129679100D69D6D /* CountdownViewController.swift in Sources */,
 				87C43BDB2144EBE700E9C687 /* Pomodoro.swift in Sources */,
 				8758DB542324ADDC008F94F9 /* CountdownTableViewCell.swift in Sources */,
-				87B651A52128F45E006D88AF /* PomodoroAPI.swift in Sources */,
 				876CA2912324A00C00388C3F /* TextTableViewCell.swift in Sources */,
 				8756548B212947AA00D69D6D /* FavoritesViewController.swift in Sources */,
 				87BA352A2351CDAB006C6409 /* MarkdownTableViewCell.swift in Sources */,
+				C15BDF8323D0733800765567 /* URLSession+Extensions.swift in Sources */,
 				C15BDF8023D06B6F00765567 /* JSON+Extensions.swift in Sources */,
 				870A0497231E9DAE00A83842 /* FavoriteTableViewCell.swift in Sources */,
 				8758DB5E2324C0E6008F94F9 /* SelectCategoryViewController.swift in Sources */,
@@ -488,10 +488,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				87B651982128F422006D88AF /* TodayViewController.swift in Sources */,
+				C15BDF8423D073E700765567 /* URLSession+Extensions.swift in Sources */,
 				C1711A70231F47CD00BF4B93 /* OSLog+Extensions.swift in Sources */,
 				8773DB152144EF1D00CF52CB /* Favorite.swift in Sources */,
 				87C43BDC2144EBE700E9C687 /* Pomodoro.swift in Sources */,
-				87B651A62128F488006D88AF /* PomodoroAPI.swift in Sources */,
 				8773DB162144EF1F00CF52CB /* Settings.swift in Sources */,
 				870A049B231EA50500A83842 /* Constants.swift in Sources */,
 				C15BDF7D23D0655F00765567 /* Keychain+Extensions.swift in Sources */,

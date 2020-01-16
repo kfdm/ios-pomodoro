@@ -9,26 +9,29 @@
 import  Foundation
 import KeychainAccess
 
+extension UserDefaults {
+    enum Keys: String {
+        case server
+        case username
+        case broker
+        case brokerSSL
+        case brokerPort
+
+        case cache
+    }
+}
+
+extension Keychain {
+    enum Keys: String {
+        case server
+        case broker
+    }
+}
+
 struct ApplicationSettings {
     static let identifier = "group.net.kungfudiscomonkey.pomodoro"
     static let defaults = UserDefaults(suiteName: ApplicationSettings.identifier)!
     static let keychain = Keychain(accessGroup: ApplicationSettings.identifier)
-
-    static func loadDefaults() {
-        ApplicationSettings.defaults.checkDefault("tsundere.co", forKey: .server)
-        ApplicationSettings.defaults.checkDefault(8883, forKey: .brokerPort)
-        ApplicationSettings.defaults.checkDefault(true, forKey: .brokerSSL)
-    }
-
-    static var lastPomodoro: Pomodoro? {
-        get {
-            guard let data = defaults.value(forKey: ApplicationSettingsKeys.cache.rawValue) as? Data else {return nil}
-            return try? PropertyListDecoder().decode(Pomodoro.self, from: data)
-        }
-        set {
-            defaults.set(try? PropertyListEncoder().encode(newValue), forKey: ApplicationSettingsKeys.cache.rawValue)
-        }
-    }
 
     static let repository = URL(string: "https://github.com/kfdm/ios-pomodoro")!
 

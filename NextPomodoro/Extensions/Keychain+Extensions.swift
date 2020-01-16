@@ -9,16 +9,11 @@
 import Foundation
 import KeychainAccess
 
-enum ApplicationPasswords: String {
-    case server
-    case broker
-}
-
 extension Keychain {
-    func string(forKey key: ApplicationPasswords) -> String? {
+    func string(forKey key: Keychain.Keys) -> String? {
         return try? get(key.rawValue)
     }
-    func set(_ value: String, forKey key: ApplicationPasswords) {
+    func set(_ value: String, forKey key: Keychain.Keys) {
         try? set(value, key: key.rawValue)
     }
 }

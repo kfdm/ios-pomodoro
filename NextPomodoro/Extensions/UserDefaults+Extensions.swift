@@ -8,80 +8,70 @@
 
 import Foundation
 
-enum ApplicationSettingsKeys: String {
-    case server
-    case username
-    case broker
-    case brokerSSL
-    case brokerPort
-
-    case cache
-}
-
 extension UserDefaults {
     // MARK: - Getters
-    func string(forKey key: ApplicationSettingsKeys) -> String? {
+    func string(forKey key: UserDefaults.Keys) -> String? {
         return string(forKey: key.rawValue)
     }
 
-    func integer(forKey key: ApplicationSettingsKeys) -> Int {
+    func integer(forKey key: UserDefaults.Keys) -> Int {
         return integer(forKey: key.rawValue)
     }
 
-    func date(forKey key: ApplicationSettingsKeys) -> Date? {
+    func date(forKey key: UserDefaults.Keys) -> Date? {
         return object(forKey: key.rawValue) as? Date
     }
 
-    func bool(forKey key: ApplicationSettingsKeys) -> Bool? {
+    func bool(forKey key: UserDefaults.Keys) -> Bool? {
         return bool(forKey: key.rawValue)
     }
 
-    func url(forKey key: ApplicationSettingsKeys) -> URL? {
+    func url(forKey key: UserDefaults.Keys) -> URL? {
         return url(forKey: key.rawValue)
     }
 
-    func object<T: Decodable>(forKey: ApplicationSettingsKeys) -> T? {
+    func object<T: Decodable>(forKey: UserDefaults.Keys) -> T? {
         guard let data = data(forKey: forKey.rawValue) else {return nil}
         return try? PropertyListDecoder().decode(T.self, from: data) as T
     }
 
     // MARK: - Setters
-    func set(value: String, forKey key: ApplicationSettingsKeys) {
+    func set(value: String, forKey key: UserDefaults.Keys) {
         set(value, forKey: key.rawValue)
     }
 
-    func set(value: Int, forKey key: ApplicationSettingsKeys) {
+    func set(value: Int, forKey key: UserDefaults.Keys) {
         set(value, forKey: key.rawValue)
     }
 
-    func set(value: Date, forKey key: ApplicationSettingsKeys) {
+    func set(value: Date, forKey key: UserDefaults.Keys) {
         set(value, forKey: key.rawValue)
     }
 
-    func set(value: Bool, forKey key: ApplicationSettingsKeys) {
+    func set(value: Bool, forKey key: UserDefaults.Keys) {
         set(value, forKey: key.rawValue)
     }
 
-    func set<T: Encodable>(_ value: T, forKey: ApplicationSettingsKeys) {
+    func set<T: Encodable>(_ value: T, forKey: UserDefaults.Keys) {
         set(try? PropertyListEncoder().encode(value), forKey: forKey.rawValue)
     }
 
     // MARK: - Other
-    func removeObject(forKey key: ApplicationSettingsKeys) {
+    func removeObject(forKey key: UserDefaults.Keys) {
         removeObject(forKey: key.rawValue)
     }
 
-    func checkDefault(_ defaultValue: String, forKey key: ApplicationSettingsKeys ) {
+    func checkDefault(_ defaultValue: String, forKey key: UserDefaults.Keys ) {
         if string(forKey: key) == nil {
             set(defaultValue, forKey: key.rawValue)
         }
     }
-    func checkDefault(_ defaultValue: Int, forKey key: ApplicationSettingsKeys) {
+    func checkDefault(_ defaultValue: Int, forKey key: UserDefaults.Keys) {
         if object(forKey: key.rawValue) == nil {
             set(defaultValue, forKey: key.rawValue)
         }
     }
-    func checkDefault(_ defaultValue: Bool, forKey key: ApplicationSettingsKeys) {
+    func checkDefault(_ defaultValue: Bool, forKey key: UserDefaults.Keys) {
         if object(forKey: key.rawValue) == nil {
             set(defaultValue, forKey: key.rawValue)
         }

@@ -253,7 +253,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
             }
             navigationController?.pushViewController(vc, animated: true)
         default:
-            os_log("accessoryButtonTappedForRowWith: %@", log: Log.view, type: .info, indexPath.debugDescription)
+            os_log("accessoryButtonTappedForRowWith: %@", log: .view, type: .info, indexPath.debugDescription)
         }
     }
 
@@ -265,7 +265,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         let updateRequest = PomodoroExtendRequest(id: pomodoro.id, end: end)
 
         updateRequest.update(completionHandler: {  pomodoro in
-            os_log("Extended pomodoro until", log: Log.pomodoro, type: .debug, pomodoro.end.debugDescription)
+            os_log("Extended pomodoro until", log: .pomodoro, type: .debug, pomodoro.end.debugDescription)
             self.currentPomodoro = pomodoro
         })
 
@@ -277,7 +277,7 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         let updateRequest = PomodoroExtendRequest(id: pomodoro.id, end: end)
 
         updateRequest.update(completionHandler: {  pomodoro in
-            os_log("Stopped pomodoro at", log: Log.pomodoro, type: .debug, pomodoro.end.debugDescription)
+            os_log("Stopped pomodoro at", log: .pomodoro, type: .debug, pomodoro.end.debugDescription)
             self.currentPomodoro = pomodoro
         })
     }
@@ -285,21 +285,36 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
 
 extension CountdownViewController: MQTTSessionDelegate {
     func mqttDidDisconnect(session: MQTTSession, error: MQTTSessionError) {
-        os_log(.error, "mqtt disconnected")
+        switch error {
+        case .streamError(let e):
+            os_log(.error, log: .mqtt, "%{public}s: %{public}s: Reconnecting in 10 seconds. ", error.localizedDescription, e.debugDescription)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                session.connect(completion: self.mqttDidConnect(error:))
+            }
+        case .socketError:
+            os_log(.error, log: .mqtt, "%{public}s: Reconnecting in 10 seconds.", error.description)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                session.connect(completion: self.mqttDidConnect(error:))
+            }
+        case .connectionError(let response):
+            os_log(.error, log: .mqtt, "%{public}s: %{public}s", error.localizedDescription, response.localizedDescription)
+        default:
+            os_log(.error, log: .mqtt, "%{public}s: Not reconnecting", error.localizedDescription)
+        }
     }
 
     func mqttDidReceive(message: MQTTMessage, from session: MQTTSession) {
         switch message.topic {
         case _ where message.match("^pomodoro/.*/recent$"):
-            guard let pomodoro: Pomodoro = Pomodoro.decode(from: message.data) else { return }
+            guard let pomodoro: Pomodoro = Pomodoro.fromData(message.data) else { return }
             self.currentPomodoro = pomodoro
         default:
-            os_log(.debug, log: Log.mqtt, "unknown topic: %@", message.topic)
+            os_log(.debug, log: .mqtt, "unknown topic: %@", message.topic)
         }
     }
 
     func mqttDidAcknowledgePing(from session: MQTTSession) {
-        os_log(.debug, log: Log.mqtt, "Ack")
+        os_log(.debug, log: .mqtt, "Ack")
     }
 
     func mqttDidConnect(error: MQTTSessionError) {
@@ -309,12 +324,11 @@ extension CountdownViewController: MQTTSessionDelegate {
             guard let username = mqtt.username else { return }
             mqtt.subscribe(to: "pomodoro/\(username)/recent", delivering: .atLeastOnce, completion: self.mqttDidSubscribe)
         default:
-            os_log(.error, log: Log.mqtt, "Error connecting %s", error.description)
+            os_log(.error, log: .mqtt, "%{public}s", error.description)
         }
-
     }
 
     func mqttDidSubscribe(error: MQTTSessionError) {
-        print(error)
+        os_log(.error, log: .mqtt, "subscriptionError %{public}s", error.description)
     }
 }

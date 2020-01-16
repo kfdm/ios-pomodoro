@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         if url.scheme == "pomodoro.tsundere.co" {
-            os_log("openURL: %s", log: Log.view, type: .debug, url.debugDescription)
+            os_log("openURL: %s", log: .view, type: .debug, url.debugDescription)
         }
         return true
     }

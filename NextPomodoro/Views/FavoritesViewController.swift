@@ -76,9 +76,9 @@ class FavoritesViewController: UITableViewController {
     func swipeActionStart(title: String, color: UIColor, for favorite: Favorite) -> UIContextualAction {
         // TODO: Fix case with already running pomodoro
         let action = UIContextualAction(style: .normal, title: title) { (_, view, completionHandler) in
-            os_log("Starting Favorite: %s %s %d", log: Log.favorites, type: .debug, favorite.title, favorite.category, favorite.duration)
+            os_log("Starting Favorite: %s %s %d", log: .favorites, type: .debug, favorite.title, favorite.category, favorite.duration)
             favorite.start { (pomodoro) in
-                os_log("Starting Pomodoro: %s %s until %s", log: Log.favorites, type: .debug, pomodoro.title, pomodoro.category, "\(pomodoro.end)")
+                os_log("Starting Pomodoro: %s %s until %s", log: .favorites, type: .debug, pomodoro.title, pomodoro.category, "\(pomodoro.end)")
                 if let view = self.tabBarController?.viewControllers?[0] {
                     DispatchQueue.main.async {
                         self.tabBarController?.selectedViewController = view

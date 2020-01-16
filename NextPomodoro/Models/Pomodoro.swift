@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol PomodoroBase: EncodableJson {
+protocol PomodoroBase: Codable {
     var id: Int { get }
 }
 
@@ -18,14 +18,14 @@ extension PomodoroBase {
         guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
-        authedRequest(path: "/api/pomodoro/\(self.id)", method: "PATCH", body: self.encode(), username: username, password: password) { _, data in
-            guard let newPomodoro: Pomodoro = Pomodoro.decode(from: data) else { return }
+        authedRequest(path: "/api/pomodoro/\(self.id)", method: "PATCH", body: self.toData(), username: username, password: password) { _, data in
+            guard let newPomodoro: Pomodoro = Pomodoro.fromData(data) else { return }
             completionHandler(newPomodoro)
         }
     }
 }
 
-struct Pomodoro: EncodableJson {
+struct Pomodoro: Codable {
     let id: Int
     var title: String
     var start: Date
@@ -50,14 +50,14 @@ struct PomodoroRenameRequest: PomodoroBase {
     let title: String
 }
 
-struct PomodoroResponse: DecodableJson {
+struct PomodoroResponse: Codable {
     let count: Int
     let next: String?
     let previous: String?
     let results: [Pomodoro]
 }
 
-extension Pomodoro: PomodoroBase, DecodableJson {
+extension Pomodoro: PomodoroBase {
     init(title: String, category: String, minutes: Int) {
         self.id = 0
         self.owner = ""
@@ -71,8 +71,8 @@ extension Pomodoro: PomodoroBase, DecodableJson {
         guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
-        authedRequest(path: "/api/pomodoro", method: "POST", body: self.encode(), username: username, password: password) { _, data in
-            guard let newPomodoro: Pomodoro = Pomodoro.decode(from: data) else { return }
+        authedRequest(path: "/api/pomodoro", method: "POST", body: self.toData(), username: username, password: password) { _, data in
+            guard let newPomodoro: Pomodoro = Pomodoro.fromData(data) else { return }
             completionHandler(newPomodoro)
         }
     }
@@ -81,8 +81,8 @@ extension Pomodoro: PomodoroBase, DecodableJson {
         guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
-        authedRequest(path: "/api/pomodoro/\(self.id)", method: "PUT", body: self.encode(), username: username, password: password) { _, data in
-            guard let newPomodoro: Pomodoro = Pomodoro.decode(from: data) else { return }
+        authedRequest(path: "/api/pomodoro/\(self.id)", method: "PUT", body: self.toData(), username: username, password: password) { _, data in
+            guard let newPomodoro: Pomodoro = Pomodoro.fromData(data) else { return }
             completionHandler(newPomodoro)
         }
     }
@@ -100,7 +100,7 @@ extension Pomodoro: PomodoroBase, DecodableJson {
         guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
-        authedRequest(path: "/api/pomodoro/\(self.id)", method: "DELETE", body: self.encode(), username: username, password: password, completionHandler: {_, _  in
+        authedRequest(path: "/api/pomodoro/\(self.id)", method: "DELETE", body: self.toData(), username: username, password: password, completionHandler: {_, _  in
             // TODO: Handle error
             completionHandler(true)
         })
@@ -112,7 +112,7 @@ extension Pomodoro: PomodoroBase, DecodableJson {
         let limit = URLQueryItem(name: "limit", value: "100")
 
         authedRequest(path: "/api/pomodoro", method: "GET", queryItems: [limit], username: username, password: password, completionHandler: {_, data in
-            guard let results: PomodoroResponse = PomodoroResponse.decode(from: data) else { return }
+            guard let results: PomodoroResponse = PomodoroResponse.fromData(data) else { return }
             completionHandler( results.results)
         })
     }

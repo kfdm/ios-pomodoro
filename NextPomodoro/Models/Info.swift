@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Info: DecodableJson {
+struct Info: Codable {
     let registrations: Bool
     let mqtt: URL?
 }
@@ -21,8 +21,7 @@ extension Info {
         request.scheme = "https"
 
         authedRequest(url: request, method: "GET", body: nil, username: username, password: password) { (_, data) in
-            print(data.toString())
-            guard let newInfo: Info = Info.decode(from: data) else { return }
+            guard let newInfo: Info = Info.fromData(data) else { return }
             handler(newInfo)
         }
 

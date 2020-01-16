@@ -47,7 +47,7 @@ func authedRequest(url: URLComponents, method: String, body: Data?, username: St
 
     let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, _ -> Void in
         if let httpResponse = response as? HTTPURLResponse {
-            os_log("Request: %s %s %d", log: Log.networking, type: .debug, method, httpResponse.url!.absoluteString, httpResponse.statusCode)
+            os_log("Request: %s %s %d", log: .networking, type: .debug, method, httpResponse.url!.absoluteString, httpResponse.statusCode)
             completionHandler(httpResponse, data!)
         }
     })

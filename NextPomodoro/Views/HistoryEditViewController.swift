@@ -96,9 +96,9 @@ class HistoryEditViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath {
         case [0, 2]:
-            os_log("Not yet implemented: %s", log: Log.view, type: .default, indexPath.debugDescription)
+            os_log("Not yet implemented: %s", log: .view, type: .default, indexPath.debugDescription)
         case [0, 3]:
-            os_log("Not yet implemented: %s", log: Log.view, type: .default, indexPath.debugDescription)
+            os_log("Not yet implemented: %s", log: .view, type: .default, indexPath.debugDescription)
         default:
             let cell = tableView.cellForRow(at: indexPath)
             cell?.setSelected(true, animated: true)
@@ -116,7 +116,7 @@ class HistoryEditViewController: UITableViewController {
             }
             navigationController?.pushViewController(vc, animated: true)
         default:
-            os_log("accessoryButtonTappedForRowWith: %s", log: Log.view, type: .debug, indexPath.debugDescription)
+            os_log("accessoryButtonTappedForRowWith: %s", log: .view, type: .debug, indexPath.debugDescription)
         }
     }
 

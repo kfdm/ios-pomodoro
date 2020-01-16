@@ -26,7 +26,7 @@ class TabBarController: UITabBarController {
                 self.selectedViewController = view
             }
         } else {
-            os_log("Unable to select tab %d", log: Log.view, type: .error, index)
+            os_log("Unable to select tab %d", log: .view, type: .error, index)
         }
     }
 }

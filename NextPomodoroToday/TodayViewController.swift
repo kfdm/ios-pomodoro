@@ -94,7 +94,7 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         }
         // Perform any setup necessary in order to update the view.
         DispatchQueue.global(qos: .background).async {
-            os_log("Updating widget", log: Log.today, type: .debug)
+            os_log("Updating widget", log: .today, type: .debug)
             Pomodoro.list(completionHandler: { favorites in
                 self.currentPomodoro = favorites.sorted(by: { $0.id > $1.id })[0]
                 ApplicationSettings.defaults.set(self.currentPomodoro, forKey: .cache)

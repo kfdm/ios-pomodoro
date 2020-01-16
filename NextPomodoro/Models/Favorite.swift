@@ -19,20 +19,20 @@ struct Favorite: Codable {
     let count: Int
 }
 
-struct FavoriteResponse: DecodableJson {
+struct FavoriteResponse: Codable {
     let count: Int
     let next: String?
     let previous: String?
     let results: [Favorite]
 }
 
-extension Favorite: EncodableJson, DecodableJson {
+extension Favorite {
     func submit(completionHandler: @escaping (Favorite) -> Void) {
         guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
-        authedRequest(path: "/api/favorite", method: "POST", body: self.encode(), username: username, password: password) { _, data in
-            guard let newFavorite: Favorite = Favorite.decode(from: data) else { return }
+        authedRequest(path: "/api/favorite", method: "POST", body: self.toData(), username: username, password: password) { _, data in
+            guard let newFavorite: Favorite = Favorite.fromData(data) else { return }
             completionHandler(newFavorite)
         }
     }
@@ -41,8 +41,8 @@ extension Favorite: EncodableJson, DecodableJson {
         guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
-        authedRequest(path: "/api/favorite/\(self.id)/start", method: "POST", body: self.encode(), username: username, password: password) { _, data in
-            guard let newPomodoro: Pomodoro = Pomodoro.decode(from: data) else { return }
+        authedRequest(path: "/api/favorite/\(self.id)/start", method: "POST", body: self.toData(), username: username, password: password) { _, data in
+            guard let newPomodoro: Pomodoro = Pomodoro.fromData(data) else { return }
             completionHandler(newPomodoro)
         }
     }
@@ -52,7 +52,7 @@ extension Favorite: EncodableJson, DecodableJson {
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
         authedRequest(path: "/api/favorite", method: "GET", body: nil, username: username, password: password, completionHandler: {_, data in
-            guard let response: FavoriteResponse = FavoriteResponse.decode(from: data) else { return }
+            guard let response: FavoriteResponse = FavoriteResponse.fromData(data) else { return }
             completionHandler(response.results)
         })
     }
@@ -61,7 +61,7 @@ extension Favorite: EncodableJson, DecodableJson {
         guard let username = ApplicationSettings.defaults.string(forKey: .username) else { return }
         guard let password = ApplicationSettings.keychain.string(forKey: .server) else { return }
 
-        authedRequest(path: "/api/favorite/\(self.id)", method: "DELETE", body: self.encode(), username: username, password: password, completionHandler: {_, _  in
+        authedRequest(path: "/api/favorite/\(self.id)", method: "DELETE", body: self.toData(), username: username, password: password, completionHandler: {_, _  in
                 completionHandler(true)
         })
     }

@@ -24,8 +24,8 @@ extension MQTTMessage {
 
 extension MQTTSession {
     static func connectionFactory() -> Result<MQTTSession, Error> {
-        let clientID = "MacNagger-" + String(ProcessInfo().processIdentifier)
-        let host = ApplicationSettings.defaults.string(forKey: .server)!
+        let clientID = "iOS-Timebox-" + String(ProcessInfo().processIdentifier)
+        let host = ApplicationSettings.defaults.string(forKey: .broker)!
         let port = UInt16(ApplicationSettings.defaults.integer(forKey: .brokerPort))
         let mqtt = MQTTSession(host: host, port: port, clientID: clientID, cleanSession: true, keepAlive: 15, useSSL: true)
         mqtt.username = ApplicationSettings.defaults.string(forKey: .username)

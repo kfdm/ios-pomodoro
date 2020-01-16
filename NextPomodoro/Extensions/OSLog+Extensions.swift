@@ -9,7 +9,7 @@
 import os
 import Foundation
 
-struct Log {
+extension OSLog {
     static let favorites = OSLog.init(subsystem: Bundle.main.bundleIdentifier!, category: "Favorites")
     static let pomodoro = OSLog.init(subsystem: Bundle.main.bundleIdentifier!, category: "Pomodoro")
     static let networking = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "Networking")

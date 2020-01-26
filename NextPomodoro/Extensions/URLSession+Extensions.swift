@@ -11,6 +11,10 @@ import Foundation
 
 typealias AuthedRequestResponse = ((Result<Data, Error>) -> Void)
 
+enum RequestErrors: Error {
+    case generic
+}
+
 extension URLSession {
     enum Methods: String {
         case GET
@@ -19,6 +23,7 @@ extension URLSession {
         case PUT
         case PATCH
     }
+
     func checkLogin(baseURL: String, username: String, password: String, completionHandler: @escaping AuthedRequestResponse) {
         var request = URLComponents()
         request.host = baseURL
@@ -68,7 +73,12 @@ extension URLSession {
         let task = dataTask(with: request, completionHandler: {data, response, error -> Void in
             if let httpResponse = response as? HTTPURLResponse {
                 os_log("Request: %s %s %d", log: .networking, type: .debug, method.rawValue, httpResponse.url!.absoluteString, httpResponse.statusCode)
-                completionHandler(.success(data!))
+                switch httpResponse.statusCode {
+                case 200...299:
+                    completionHandler(.success(data!))
+                default:
+                    completionHandler(.failure(RequestErrors.generic))
+                }
             } else {
                 completionHandler(.failure(error!))
             }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
@@ -106,8 +107,8 @@ class SettingsViewController: UITableViewController {
     func actionLogout() {
         ApplicationSettings.deleteLogin()
 
-        let login = LoginViewController.instantiate()
-        let nav = UINavigationController(rootViewController: login)
+        let vc = UIHostingController(rootView: LoginView())
+        let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .fullScreen
         DispatchQueue.main.async {
             self.present(nav, animated: true, completion: nil)

@@ -48,7 +48,6 @@
 		87B651982128F422006D88AF /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B651972128F422006D88AF /* TodayViewController.swift */; };
 		87B6519B2128F422006D88AF /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87B651992128F422006D88AF /* MainInterface.storyboard */; };
 		87B6519F2128F422006D88AF /* NextPomodoroToday.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 87B651922128F422006D88AF /* NextPomodoroToday.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		87BA351F2351C80C006C6409 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 87BA351E2351C80C006C6409 /* SwiftPackageProductDependency */; };
 		87BA35222351C83F006C6409 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 87BA35212351C83F006C6409 /* SwiftPackageProductDependency */; };
 		87BA35252351C864006C6409 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 87BA35242351C864006C6409 /* SwiftPackageProductDependency */; };
 		87BA35272351C8C8006C6409 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 87BA35262351C8C8006C6409 /* SwiftPackageProductDependency */; };
@@ -56,6 +55,7 @@
 		87BA352B2351CDAB006C6409 /* MarkdownTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87BA35292351CDAB006C6409 /* MarkdownTableViewCell.xib */; };
 		87C43BDB2144EBE700E9C687 /* Pomodoro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C43BDA2144EBE700E9C687 /* Pomodoro.swift */; };
 		87C43BDC2144EBE700E9C687 /* Pomodoro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C43BDA2144EBE700E9C687 /* Pomodoro.swift */; };
+		87E9950123DE456000F2B3C8 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 87E9950023DE456000F2B3C8 /* SwiftPackageProductDependency */; };
 		87F397F4231E9169000AA82A /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F397F2231E9169000AA82A /* HistoryTableViewCell.swift */; };
 		87F397F5231E9169000AA82A /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87F397F3231E9169000AA82A /* HistoryTableViewCell.xib */; };
 		C15BDF7423D0619C00765567 /* MQTT+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15BDF7323D0619C00765567 /* MQTT+Extensions.swift */; };
@@ -165,8 +165,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				87BA35222351C83F006C6409 /* BuildFile in Frameworks */,
-				87BA351F2351C80C006C6409 /* BuildFile in Frameworks */,
 				87BA35252351C864006C6409 /* BuildFile in Frameworks */,
+				87E9950123DE456000F2B3C8 /* BuildFile in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,9 +335,9 @@
 			);
 			name = NextPomodoro;
 			packageProductDependencies = (
-				87BA351E2351C80C006C6409 /* SwiftPackageProductDependency */,
 				87BA35212351C83F006C6409 /* SwiftPackageProductDependency */,
 				87BA35242351C864006C6409 /* SwiftPackageProductDependency */,
+				87E9950023DE456000F2B3C8 /* SwiftPackageProductDependency */,
 			);
 			productName = NextPomodoro;
 			productReference = 87B651732128F0AD006D88AF /* NextPomodoro.app */;
@@ -404,9 +404,9 @@
 			);
 			mainGroup = 87B6516A2128F0AD006D88AF;
 			packageReferences = (
-				87BA351D2351C80C006C6409 /* RemoteSwiftPackageReference */,
 				87BA35202351C83F006C6409 /* RemoteSwiftPackageReference */,
 				87BA35232351C864006C6409 /* RemoteSwiftPackageReference */,
+				87E994FF23DE456000F2B3C8 /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = 87B651742128F0AD006D88AF /* Products */;
 			projectDirPath = "";
@@ -596,7 +596,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -659,7 +659,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -726,7 +726,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = NextPomodoroToday/NextPomodoroToday.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
 				INFOPLIST_FILE = NextPomodoroToday/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -747,7 +747,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = NextPomodoroToday/NextPomodoroToday.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = QX3B8ZS54S;
 				INFOPLIST_FILE = NextPomodoroToday/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -796,14 +796,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		87BA351D2351C80C006C6409 /* RemoteSwiftPackageReference */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/aciidb0mb3r/SwiftMQTT";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.1;
-			};
-		};
 		87BA35202351C83F006C6409 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
@@ -820,14 +812,17 @@
 				minimumVersion = 3.2.0;
 			};
 		};
+		87E994FF23DE456000F2B3C8 /* RemoteSwiftPackageReference */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mikegrb/SwiftMQTT";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		87BA351E2351C80C006C6409 /* SwiftPackageProductDependency */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 87BA351D2351C80C006C6409 /* RemoteSwiftPackageReference */;
-			productName = SwiftMQTT;
-		};
 		87BA35212351C83F006C6409 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 87BA35202351C83F006C6409 /* RemoteSwiftPackageReference */;
@@ -842,6 +837,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 87BA35232351C864006C6409 /* RemoteSwiftPackageReference */;
 			productName = KeychainAccess;
+		};
+		87E9950023DE456000F2B3C8 /* SwiftPackageProductDependency */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87E994FF23DE456000F2B3C8 /* RemoteSwiftPackageReference */;
+			productName = SwiftMQTT;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

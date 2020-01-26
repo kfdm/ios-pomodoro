@@ -30,12 +30,10 @@ class SelectCategoryViewController: UITableViewController {
         tableView.register(LeftTableViewCell.self, forCellReuseIdentifier: "Cell")
         Pomodoro.list { result in
             switch result {
-            case .success(let data):
-                if let pomodoros: PomodoroResponse = PomodoroResponse.fromData(data) {
-                    self.categories = Dictionary(grouping: pomodoros.results) { $0.category }
-                    .map { Category(title: $0, count: $1.count) }
-                    .sorted { $0.count > $1.count }
-                }
+            case .success(let pomodoros):
+                self.categories = Dictionary(grouping: pomodoros) { $0.category }
+                .map { Category(title: $0, count: $1.count) }
+                .sorted { $0.count > $1.count }
             case .failure(let error):
                 os_log(.error, log: .pomodoro, "Error getting categories: %{public}s", error.localizedDescription)
             }

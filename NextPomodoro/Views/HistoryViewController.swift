@@ -39,15 +39,13 @@ class HistoryViewController: UITableViewController {
     @objc func refreshData() {
         Pomodoro.list(completionHandler: { result in
             switch result {
-            case .success(let data):
-                if let pomodoros: PomodoroResponse = PomodoroResponse.fromData(data) {
-                    let groupedPomodoro = Dictionary.init(grouping: pomodoros.results) { Calendar.current.startOfDay(for: $0.end) }
-                    let mappedPomodoro = groupedPomodoro.map({ (date, list) -> HistoryGroup in
-                        return HistoryGroup(date: date, items: list)
-                    })
+            case .success(let pomodoros):
+                let groupedPomodoro = Dictionary.init(grouping: pomodoros) { Calendar.current.startOfDay(for: $0.end) }
+                let mappedPomodoro = groupedPomodoro.map({ (date, list) -> HistoryGroup in
+                    return HistoryGroup(date: date, items: list)
+                })
 
-                    self.groups = mappedPomodoro.sorted { $0.date > $1.date }
-                }
+                self.groups = mappedPomodoro.sorted { $0.date > $1.date }
             case .failure(let error):
                 os_log(.error, log: .pomodoro, "Error fetching: %{public}s", error.localizedDescription)
             }

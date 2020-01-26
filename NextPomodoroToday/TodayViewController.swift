@@ -97,12 +97,10 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
             os_log("Updating widget", log: .today, type: .debug)
             Pomodoro.list(completionHandler: { response in
                 switch response {
-                case .success(let data):
-                    if let pomodoros: PomodoroResponse = PomodoroResponse.fromData(data) {
-                        self.currentPomodoro = pomodoros.results.sorted(by: { $0.id > $1.id }).first
-                        ApplicationSettings.defaults.set(self.currentPomodoro, forKey: .cache)
-                        completionHandler(NCUpdateResult.newData)
-                    }
+                case .success(let pomodoros):
+                    self.currentPomodoro = pomodoros.sorted(by: { $0.id > $1.id }).first
+                    ApplicationSettings.defaults.set(self.currentPomodoro, forKey: .cache)
+                    completionHandler(NCUpdateResult.newData)
                 case .failure(let error):
                     os_log(.error, log: .pomodoro, "Error fetching list: %{public}s", error.localizedDescription)
                 }

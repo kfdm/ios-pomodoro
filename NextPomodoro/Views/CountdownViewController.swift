@@ -38,10 +38,8 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         guard ApplicationSettings.defaults.string(forKey: .username) != nil else { return }
         Pomodoro.list(completionHandler: { result in
             switch result {
-            case .success(let data):
-                if let pomodoros: PomodoroResponse = PomodoroResponse.fromData(data) {
-                    self.currentPomodoro = pomodoros.results.sorted(by: { $0.id > $1.id }).first
-                }
+            case .success(let pomodoros):
+                self.currentPomodoro = pomodoros.sorted(by: { $0.id > $1.id }).first
             case .failure(let error):
                 os_log(.error, log: .pomodoro, "Error fetching pomodoros: %{public}s", error.localizedDescription)
             }
@@ -199,10 +197,8 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
             cell.configure(title, style: .default) {
                 Pomodoro(title: self.newTitle, category: self.newCategory, minutes: 25).submit { result in
                     switch result {
-                    case .success(let data):
-                        if let newPomodoro: Pomodoro = Pomodoro.fromData(data) {
-                            self.currentPomodoro = newPomodoro
-                        }
+                    case .success(let newPomodoro):
+                        self.currentPomodoro = newPomodoro
                     case .failure(let error):
                         os_log(.error, log: .pomodoro, "Error starting: %{public}s", error.localizedDescription)
                     }
@@ -216,10 +212,8 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
             cell.configure(title, style: .default) {
                 Pomodoro(title: self.newTitle, category: self.newCategory, minutes: 60).submit { result in
                     switch result {
-                    case .success(let data):
-                        if let newPomodoro: Pomodoro = Pomodoro.fromData(data) {
-                            self.currentPomodoro = newPomodoro
-                        }
+                    case .success(let newPomodoro):
+                        self.currentPomodoro = newPomodoro
                     case .failure(let error):
                         os_log(.error, log: .pomodoro, "Error starting: %{public}s", error.localizedDescription)
                     }
@@ -271,12 +265,8 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
             vc.selected = {
                 PomodoroRetagRequest(id: id, category: $0).update { result in
                     switch result {
-                    case .success(let data):
-                        if let pomodoro: Pomodoro = Pomodoro.fromData(data) {
-                            self.currentPomodoro = pomodoro
-                        } else {
-                            print("Error decoding")
-                        }
+                    case .success(let pomodoro):
+                        self.currentPomodoro = pomodoro
                     case .failure(let error):
                         print(error)
                     }
@@ -296,11 +286,9 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         let end = pomodoro.end.addingTimeInterval(TimeInterval(300))
         PomodoroExtendRequest(id: pomodoro.id, end: end).update { result in
             switch result {
-            case .success(let data):
-                if let pomodoro: Pomodoro = Pomodoro.fromData(data) {
-                    os_log("Extended pomodoro to %{public}s", log: .pomodoro, type: .debug, pomodoro.end.debugDescription)
-                    self.currentPomodoro = pomodoro
-                }
+            case .success(let pomodoro):
+                os_log("Extended pomodoro to %{public}s", log: .pomodoro, type: .debug, pomodoro.end.debugDescription)
+                self.currentPomodoro = pomodoro
             case .failure(let error):
                 os_log(.error, log: .pomodoro, "Unable to extend time: %{public}s", error.localizedDescription)
             }
@@ -312,11 +300,9 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
         let end = Date.init()
         PomodoroExtendRequest(id: pomodoro.id, end: end).update { result in
             switch result {
-            case .success(let data):
-                if let pomodoro: Pomodoro = Pomodoro.fromData(data) {
-                    os_log("Stopped pomodoro at %{public}s", log: .pomodoro, type: .debug, pomodoro.end.debugDescription)
-                    self.currentPomodoro = pomodoro
-                }
+            case .success(let pomodoro):
+                os_log("Stopped pomodoro at %{public}s", log: .pomodoro, type: .debug, pomodoro.end.debugDescription)
+                self.currentPomodoro = pomodoro
             case .failure(let error):
                 os_log(.error, log: .pomodoro, "Failure to extend: %{public}s", error.localizedDescription)
             }

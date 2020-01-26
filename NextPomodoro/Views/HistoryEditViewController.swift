@@ -81,10 +81,8 @@ class HistoryEditViewController: UITableViewController {
             cell.configure("Save", style: .default) {
                 self.pomodoro.update { result in
                     switch result {
-                    case .success(let data):
-                        if let updated: Pomodoro = Pomodoro.fromData(data) {
-                            self.updatedPomodoro?(updated)
-                        }
+                    case .success(let updated):
+                        self.updatedPomodoro?(updated)
                     case .failure(let error):
                         os_log(.error, log: .pomodoro, "Error updating: %{public}s", error.localizedDescription)
                     }

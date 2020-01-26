@@ -18,11 +18,18 @@ struct LoginView: View {
 
     var body: some View {
         VStack {
-            TextField("Username", text: $loginstring)
+            Image("AppIcon")
+
+            TextField("Login: user@server", text: $loginstring)
                 .keyboardType(.emailAddress)
                 .autocapitalization(.none)
+                .padding()
+                .cornerRadius(4.0)
+
 
             SecureField("Password", text: $password)
+                .padding()
+                .cornerRadius(4.0)
 
             if authenticationFailure {
                 Text(authenticationError)
@@ -30,7 +37,7 @@ struct LoginView: View {
 
             Button(action: submit) {
                 Text("Login")
-            }
+            }.disabled(loginstring == "" || password == "")
         }.padding()
     }
 

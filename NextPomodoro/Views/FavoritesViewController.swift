@@ -33,10 +33,8 @@ class FavoritesViewController: UITableViewController {
     @objc func refreshData() {
         Favorite.list { result in
             switch result {
-            case .success(let data):
-                if let favorites: FavoriteResponse = FavoriteResponse.fromData(data) {
-                    self.data = favorites.results.sorted(by: { $0.count > $1.count })
-                }
+            case .success(let favorites):
+                self.data = favorites.sorted(by: { $0.count > $1.count })
             case .failure(let error):
                 os_log(.error, log: .favorites, "Error fetching favorites: %{public}s", error.localizedDescription)
             }
@@ -87,17 +85,15 @@ class FavoritesViewController: UITableViewController {
 
             favorite.start { result in
                 switch result {
-                case .success(let data):
-                    if let _ : Pomodoro = Pomodoro.fromData(data) {
-                        if let view = self.tabBarController?.viewControllers?[0] {
-                            DispatchQueue.main.async {
-                                self.tabBarController?.selectedViewController = view
-                                view.viewDidLoad()
-                                // TODO: Fix refreshing new Pomodoro
-                            }
+                case .success:
+                    if let view = self.tabBarController?.viewControllers?[0] {
+                        DispatchQueue.main.async {
+                            self.tabBarController?.selectedViewController = view
+                            view.viewDidLoad()
+                            // TODO: Fix refreshing new Pomodoro
                         }
-                        completionHandler(true)
                     }
+                    completionHandler(true)
                 case .failure(let error):
                     os_log(.error, log: .favorites, "Error starting Favorite", error.localizedDescription)
                 }

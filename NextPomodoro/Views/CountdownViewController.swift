@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import SwiftMQTT
 import os
+import SwiftUI
 
 class CountdownViewController: UITableViewController, UITextFieldDelegate, UITabBarDelegate {
     var currentPomodoro: Pomodoro? {
@@ -49,8 +50,8 @@ class CountdownViewController: UITableViewController, UITextFieldDelegate, UITab
     // MARK: - lifecycle
 
     fileprivate func showLogin() {
-        let login = LoginViewController.instantiate()
-        let nav = UINavigationController(rootViewController: login)
+        let vc = UIHostingController(rootView: LoginView())
+        let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .fullScreen
         DispatchQueue.main.async {
             self.present(nav, animated: true, completion: nil)

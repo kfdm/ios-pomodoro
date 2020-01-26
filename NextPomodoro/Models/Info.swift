@@ -14,7 +14,11 @@ struct Info: Codable {
 }
 
 extension Info {
-    static func get(baseURL: String, username: String, password: String, completionHandler handler: @escaping AuthedRequestResponse) {
-        URLSession.shared.checkLogin(baseURL: baseURL, username: username, password: password, completionHandler: handler)
+    static func get(baseURL: String, username: String, password: String, completionHandler handler: @escaping (Result<Info, Error>) -> Void) {
+        URLSession.shared.checkLogin(baseURL: baseURL, username: username, password: password) { result in
+            handler(result.map({ (data) -> Info in
+                return Info.fromData(data)!
+            }))
+        }
     }
 }

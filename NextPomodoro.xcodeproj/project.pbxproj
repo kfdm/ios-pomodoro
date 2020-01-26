@@ -13,6 +13,7 @@
 		870A049A231EA45200A83842 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A0499231EA45200A83842 /* Constants.swift */; };
 		870A049B231EA50500A83842 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A0499231EA45200A83842 /* Constants.swift */; };
 		8720384722EF2E47001577EF /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720384622EF2E47001577EF /* Storyboarded.swift */; };
+		8722CB3223DD66E200564DA8 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8722CB3123DD66E200564DA8 /* LoginView.swift */; };
 		873AF08523251D3F00D6E9E3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873AF08423251D3F00D6E9E3 /* SettingsViewController.swift */; };
 		87402D002144FDEC00F0C43A /* NewFavoriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87402CFF2144FDEC00F0C43A /* NewFavoriteController.swift */; };
 		8756548B212947AA00D69D6D /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756548A212947AA00D69D6D /* FavoritesViewController.swift */; };
@@ -43,7 +44,6 @@
 		87B651802128F0AE006D88AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87B6517F2128F0AE006D88AF /* Assets.xcassets */; };
 		87B651832128F0AE006D88AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87B651812128F0AE006D88AF /* LaunchScreen.storyboard */; };
 		87B6518B2128F184006D88AF /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B6518A2128F184006D88AF /* TabBarController.swift */; };
-		87B6518D2128F258006D88AF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B6518C2128F258006D88AF /* LoginViewController.swift */; };
 		87B651952128F422006D88AF /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87B651942128F422006D88AF /* NotificationCenter.framework */; };
 		87B651982128F422006D88AF /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B651972128F422006D88AF /* TodayViewController.swift */; };
 		87B6519B2128F422006D88AF /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87B651992128F422006D88AF /* MainInterface.storyboard */; };
@@ -103,6 +103,7 @@
 		870A0496231E9DAE00A83842 /* FavoriteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteTableViewCell.xib; sourceTree = "<group>"; };
 		870A0499231EA45200A83842 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8720384622EF2E47001577EF /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
+		8722CB3123DD66E200564DA8 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		873AF08423251D3F00D6E9E3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		87402CFF2144FDEC00F0C43A /* NewFavoriteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFavoriteController.swift; sourceTree = "<group>"; };
 		8756548A212947AA00D69D6D /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -137,7 +138,6 @@
 		87B651822128F0AE006D88AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		87B651842128F0AE006D88AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87B6518A2128F184006D88AF /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		87B6518C2128F258006D88AF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		87B651922128F422006D88AF /* NextPomodoroToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NextPomodoroToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		87B651942128F422006D88AF /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		87B651972128F422006D88AF /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -190,7 +190,7 @@
 				8756548A212947AA00D69D6D /* FavoritesViewController.swift */,
 				876CA28B23249E2E00388C3F /* HistoryEditViewController.swift */,
 				8756548C2129586000D69D6D /* HistoryViewController.swift */,
-				87B6518C2128F258006D88AF /* LoginViewController.swift */,
+				8722CB3123DD66E200564DA8 /* LoginView.swift */,
 				87B6517C2128F0AD006D88AF /* Main.storyboard */,
 				87402CFF2144FDEC00F0C43A /* NewFavoriteController.swift */,
 				8758DB5D2324C0E6008F94F9 /* SelectCategoryViewController.swift */,
@@ -464,7 +464,6 @@
 				87F397F4231E9169000AA82A /* HistoryTableViewCell.swift in Sources */,
 				87B651772128F0AD006D88AF /* AppDelegate.swift in Sources */,
 				878808082335AC4B001C58D3 /* Info.swift in Sources */,
-				87B6518D2128F258006D88AF /* LoginViewController.swift in Sources */,
 				870A0491231E946E00A83842 /* UITableViewController+ReuseableCell.swift in Sources */,
 				C1711A6F231F443100BF4B93 /* OSLog+Extensions.swift in Sources */,
 				8758DB782324F78F008F94F9 /* FavoriteEditViewController.swift in Sources */,
@@ -475,6 +474,7 @@
 				876CA28C23249E2E00388C3F /* HistoryEditViewController.swift in Sources */,
 				8758DB582324B18F008F94F9 /* DateTableViewCell.swift in Sources */,
 				876CA2952324A5C800388C3F /* ButtonTableViewCell.swift in Sources */,
+				8722CB3223DD66E200564DA8 /* LoginView.swift in Sources */,
 				C15BDF7423D0619C00765567 /* MQTT+Extensions.swift in Sources */,
 				876CA28E23249F5300388C3F /* LeftTableViewCell.swift in Sources */,
 				8756548D2129586000D69D6D /* HistoryViewController.swift in Sources */,
@@ -606,7 +606,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -663,7 +663,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;

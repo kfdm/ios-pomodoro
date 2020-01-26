@@ -182,7 +182,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8756548921293C2400D69D6D /* Views */ = {
+		8722CB3323DD775C00564DA8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8722CB3123DD66E200564DA8 /* LoginView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		8756548921293C2400D69D6D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				8756548E2129679100D69D6D /* CountdownViewController.swift */,
@@ -190,14 +198,13 @@
 				8756548A212947AA00D69D6D /* FavoritesViewController.swift */,
 				876CA28B23249E2E00388C3F /* HistoryEditViewController.swift */,
 				8756548C2129586000D69D6D /* HistoryViewController.swift */,
-				8722CB3123DD66E200564DA8 /* LoginView.swift */,
 				87B6517C2128F0AD006D88AF /* Main.storyboard */,
 				87402CFF2144FDEC00F0C43A /* NewFavoriteController.swift */,
 				8758DB5D2324C0E6008F94F9 /* SelectCategoryViewController.swift */,
 				873AF08423251D3F00D6E9E3 /* SettingsViewController.swift */,
 				87B6518A2128F184006D88AF /* TabBarController.swift */,
 			);
-			path = Views;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		87B6516A2128F0AD006D88AF = {
@@ -224,9 +231,10 @@
 			isa = PBXGroup;
 			children = (
 				87F397F6231E926E000AA82A /* Cells */,
+				8756548921293C2400D69D6D /* Controllers */,
 				C19EFB9222EFD36900DA4666 /* Extensions */,
 				87C43BD92144EBBE00E9C687 /* Models */,
-				8756548921293C2400D69D6D /* Views */,
+				8722CB3323DD775C00564DA8 /* Views */,
 				87B651762128F0AD006D88AF /* AppDelegate.swift */,
 				87B6517F2128F0AE006D88AF /* Assets.xcassets */,
 				87B651842128F0AE006D88AF /* Info.plist */,
